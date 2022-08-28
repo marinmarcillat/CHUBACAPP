@@ -1,0 +1,8 @@
+[MODULE Init3DRecon]: Initialize Sfm from data
+
+[MODULE Init3DRecon]: usable #File(s) listed in sfm_data: 37
+usable #Intrinsic(s) listed in sfm_data: 1
+[MODULE Init3DRecon]:  took 3.426 seconds
+
+[MODULE Matching3D]: Features matching started
+

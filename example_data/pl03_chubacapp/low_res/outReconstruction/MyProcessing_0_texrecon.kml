@@ -1,0 +1,27 @@
+<kml>
+  <!--Generated with MATISSE 3D -->
+  <Placemark>
+    <name>MyProcessing_0_texrecon</name>
+    <Model>
+      <altitudeMode>absolute</altitudeMode>
+      <Location>
+        <longitude>-176.56666270</longitude>
+        <latitude>-21.98917722</latitude>
+        <altitude>-1854.140</altitude>
+      </Location>
+      <Orientation>
+        <heading>0</heading>
+        <tilt>0</tilt>
+        <roll>0</roll>
+      </Orientation>
+      <Scale>
+        <x>1</x>
+        <y>1</y>
+        <z>1</z>
+      </Scale>
+      <Link>
+        <href>MyProcessing_0_texrecon.obj</href>
+      </Link>
+    </Model>
+  </Placemark>
+</kml>

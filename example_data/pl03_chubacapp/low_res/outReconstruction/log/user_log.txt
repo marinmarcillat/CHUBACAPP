@@ -1,0 +1,23 @@
+[MODULE Init3DRecon]: Initialize Sfm from data
+
+[MODULE Init3DRecon]: usable #File(s) listed in sfm_data: 37
+usable #Intrinsic(s) listed in sfm_data: 1
+[MODULE Init3DRecon]:  took 0.084 seconds
+
+[MODULE Matching3D]: Features matching started
+
+[MODULE Matching3D]:  took 1009.57 seconds
+
+[MODULE SfmBundleAdjustment]: Bundle adjustement started
+
+[MODULE SfmBundleAdjustment]: RMS error between nav and sfm = 0.0671429 m
+[MODULE SfmBundleAdjustment]:  took 200.973 seconds
+
+[MODULE Meshing3D]: Meshing started
+
+[MODULE Meshing3D]:  took 32.902 seconds
+
+[MODULE Texturing3D]: Texturing started
+
+[MODULE Texturing3D]:  took 76.17 seconds
+

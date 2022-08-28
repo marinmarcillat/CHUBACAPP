@@ -1,0 +1,63 @@
+newmtl material0000
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0000_map_Kd.png
+newmtl material0001
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0001_map_Kd.png
+newmtl material0002
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0002_map_Kd.png
+newmtl material0003
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0003_map_Kd.png
+newmtl material0004
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0004_map_Kd.png
+newmtl material0005
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0005_map_Kd.png
+newmtl material0006
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0006_map_Kd.png
+newmtl material0007
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0007_map_Kd.png
+newmtl material0008
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+illum 1
+Ns 1.000000
+map_Kd MyProcessing_0_texrecon_material0008_map_Kd.png
