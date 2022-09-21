@@ -63,7 +63,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
     from photogrammetry_importer.types.camera import Camera
 
     min_radius = 0.01 # Minnimum radius of a circle annotation if error
-    image_size = (6000,4000)
+    image_size = (6000,4000) # Default image size
 
     output_path = os.path.dirname(annotation_path)
 
