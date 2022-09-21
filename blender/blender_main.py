@@ -63,6 +63,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
     from photogrammetry_importer.types.camera import Camera
 
     min_radius = 0.01 # Minnimum radius of a circle annotation if error
+    image_size = (6000,4000)
 
     output_path = os.path.dirname(annotation_path)
 
@@ -125,8 +126,8 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                                      dtype='f')
     dist_coeff = np.array([distortion[0], distortion[1], 0, 0, distortion[2]], dtype='f')
 
-    resize_fact_w = intrinsics['width'] / 6000
-    resize_fact_h = intrinsics['height'] / 4000
+    resize_fact_w = intrinsics['width'] / image_size[0]
+    resize_fact_h = intrinsics['height'] / image_size[1]
 
     # maps from undistorted to distorted image pixels
     # mapx, mapy = cv2.initUndistortRectifyMap(optical_camera_matrix, dist_coeff, np.array([]), optical_camera_matrix,
@@ -230,12 +231,12 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
             indexY = 0
         return values
 
-    edge1 = [(x, 0) for x in range(5999)]
-    edge2 = [(5999, x) for x in range(3999)]
-    edge3 = [(x, 3999) for x in range(5999, 0, -1)]
-    edge4 = [(0, x) for x in range(3999, -1, -1)]
+    edge1 = [(x, 0) for x in range(image_size[0]-1)]
+    edge2 = [(image_size[0]-1, x) for x in range(image_size[1]-1)]
+    edge3 = [(x, image_size[1]-1) for x in range(image_size[0]-1, 0, -1)]
+    edge4 = [(0, x) for x in range(image_size[1]-1, -1, -1)]
     points_bound = edge1 + edge2 + edge3 + edge4
-    points_bound = list(itertools.chain(*points_bound))
+    points_bound = list(itertools.chain(*points_bound)) # List of points corresponding to the image bound
 
     point = []
     polygon = []
@@ -267,7 +268,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     'label_hierarchy': ['bound'],
                     'annotation_id': [999],
                 })
-                ann_img = pd.concat([ann_img, image_bound])
+                ann_img = pd.concat([ann_img, image_bound]) # Add an annotation corresponding to the image imprint
 
             for index, ann in ann_img.iterrows():  # for each annotation
                 if ann['shape_name'] in ['Circle', 'Point']: #if the annotation is a point or a circle
