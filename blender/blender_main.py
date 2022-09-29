@@ -10,8 +10,12 @@ import pandas as pd
 from PyQt5 import QtCore
 from fiona.crs import from_epsg
 import fiona
+import cv2
 
 from shapely.geometry import Point, Polygon, LineString, mapping
+
+import blender.camera_config as cc
+import blender.utils as utils
 
 
 class annotationsTo3DThread(QtCore.QThread):
@@ -53,7 +57,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
 
     # Imports here because of thread safe issues with the photogrametric module
     import bpy
-    from mathutils import Vector
+    from mathutils import Vector, Euler
 
     from photogrammetry_importer.blender_utility.object_utility import add_collection
     from photogrammetry_importer.file_handlers.openmvg_json_file_handler import (
@@ -62,8 +66,8 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
     from photogrammetry_importer.importers.camera_utility import add_camera_object
     from photogrammetry_importer.types.camera import Camera
 
-    min_radius = 0.01 # Minnimum radius of a circle annotation if error
-    image_size = (6000,4000) # Default image size
+    min_radius = 0.01  # Minnimum radius of a circle annotation if error
+    camera_model = 'otus2'
 
     output_path = os.path.dirname(annotation_path)
 
@@ -122,16 +126,29 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
     principal_point = intrinsics['principal_point']
     distortion = intrinsics['disto_k3']
 
-    optical_camera_matrix = np.array([[focal[0], 0, principal_point[0]], [0, focal[0], principal_point[1]], [0, 0, 1]],
-                                     dtype='f')
-    dist_coeff = np.array([distortion[0], distortion[1], 0, 0, distortion[2]], dtype='f')
+    optical_camera_matrix = cc.config_camera[camera_model]["optical_camera_matrix"]
+    # -> Distortion coefficients
+    dist_coeff = cc.config_camera[camera_model]["dist_coeff"]
+    # -> Original resolution (width, height)
+    (w, h) = cc.config_camera[camera_model]["resolution"]
 
-    resize_fact_w = intrinsics['width'] / image_size[0]
-    resize_fact_h = intrinsics['height'] / image_size[1]
+    newcameramtx, roi = cv2.getOptimalNewCameraMatrix(optical_camera_matrix, dist_coeff, (w, h), 1, (w, h))
+    # create undistortion maps
+    mapx, mapy = cv2.initUndistortRectifyMap(optical_camera_matrix, dist_coeff, None, newcameramtx, (w, h), 5)
 
-    # maps from undistorted to distorted image pixels
-    # mapx, mapy = cv2.initUndistortRectifyMap(optical_camera_matrix, dist_coeff, np.array([]), optical_camera_matrix,
-    #                                         np.array([resolution[1], resolution[0]]), cv2.CV_32FC1)
+    min_x = roi[0]
+    max_x = roi[0] + roi[2]
+    min_y = roi[1]
+    max_y = roi[1] + roi[3]
+
+    scale_x_sfm = intrinsics['width'] / w
+    scale_y_sfm = intrinsics['height'] / h
+
+    x_original_center = w / 2
+    y_original_center = h / 2
+
+    x_sfm_center = intrinsics['width'] / 2
+    y_sfm_center = intrinsics['height'] / 2
 
     # initialize blender
     scene = bpy.data.scenes["Scene"]
@@ -231,12 +248,13 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
             indexY = 0
         return values
 
-    edge1 = [(x, 0) for x in range(image_size[0]-1)]
-    edge2 = [(image_size[0]-1, x) for x in range(image_size[1]-1)]
-    edge3 = [(x, image_size[1]-1) for x in range(image_size[0]-1, 0, -1)]
-    edge4 = [(0, x) for x in range(image_size[1]-1, -1, -1)]
+    # List of points corresponding to the image bound
+    edge1 = [(x, min_y+1) for x in range(min_x+1, max_x - 1)]
+    edge2 = [(max_x - 1, y) for y in range(min_y+1, max_y - 1)]
+    edge3 = [(x, max_y - 1) for x in range(max_x - 1, min_x+1, -1)]
+    edge4 = [(min_x+1, y) for y in range(max_y - 1, min_y+1, -1)]
     points_bound = edge1 + edge2 + edge3 + edge4
-    points_bound = list(itertools.chain(*points_bound)) # List of points corresponding to the image bound
+    points_bound = list(itertools.chain(*points_bound))
 
     point = []
     polygon = []
@@ -252,7 +270,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
         print(s, end="\r")
 
         if image in cam_list:
-            values = get_hit_points(image)
+            hit_points = get_hit_points(image)
             ann_img = annotations.loc[annotations['filename'] == image]
 
             if label:
@@ -268,25 +286,20 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     'label_hierarchy': ['bound'],
                     'annotation_id': [999],
                 })
-                ann_img = pd.concat([ann_img, image_bound]) # Add an annotation corresponding to the image imprint
+                ann_img = pd.concat([ann_img, image_bound])  # Add an annotation corresponding to the image imprint
 
             for index, ann in ann_img.iterrows():  # for each annotation
-                if ann['shape_name'] in ['Circle', 'Point']: #if the annotation is a point or a circle
+                if ann['shape_name'] in ['Circle', 'Point']:  # if the annotation is a point or a circle
                     x, y = ast.literal_eval(ann['points'])[:2]
 
-                    # resize from original image size to openMVG image size (from sfm_data.bin)
-                    x_ = int(resize_fact_w * x)
-                    y_ = int(resize_fact_h * y)
+                    if min_x < x < max_x and min_y < y < max_y:
 
-                    if x_ >= 0 and y_ >= 0 and x_ < resolution[1] and y_ < resolution[0]:  # if in frame
+                        # get the location of the intersection between ray and target
+                        coord = utils.annotation2hitpoint((x, y), hit_points, mapx, mapy, x_original_center,
+                                                          scale_x_sfm, x_sfm_center, y_original_center, scale_y_sfm,
+                                                          y_sfm_center)
 
-                        # take distortion into account
-                        # x = round(mapx[y_, x_] + 30)
-                        # y = round(mapy[y_, x_] + 30)
-
-                        coord = values[x_][y_]  # get the location of the intersection between ray and target
-
-                        if coord is not None: # If we have a hit point
+                        if coord is not None:  # If we have a hit point
 
                             if ann['shape_name'] == 'Circle':
                                 # If the annotation is a circle, we try to get an approximate radius by looking
@@ -296,13 +309,17 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                                 r = ast.literal_eval(ann['points'])[2]
                                 list_coord_r = [(x + r, y), (x - r, y), (x, y + r), (x, y - r)]
                                 for i in list_coord_r:
-                                    x_ = int(resize_fact_w * i[0])
-                                    y_ = int(resize_fact_h * i[1])
-                                    if x_ >= 0 and y_ >= 0 and x_ < resolution[1] and y_ < resolution[0]:
-                                        coord_r = values[x_][y_]
-                                        if coord_r is not None:
+                                    if min_x < i[0] < max_x and min_y < i[1] < max_y:
+                                        # get the location of the intersection between ray and target
+                                        coord_radius = utils.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
+                                                                                 x_original_center, scale_x_sfm,
+                                                                                 x_sfm_center,
+                                                                                 y_original_center, scale_y_sfm,
+                                                                                 y_sfm_center)
+
+                                        if coord_radius is not None:
                                             ct = [coord[0], coord[1]]
-                                            off = [coord_r[0], coord_r[1]]
+                                            off = [coord_radius[0], coord_radius[1]]
                                             radius.append(dist(ct, off))
                                 if len(radius) != 0:
                                     # If no other point is found, set the radius to an arbitrary small value
@@ -321,14 +338,13 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     list_coord = list(zip(*[iter(ast.literal_eval(ann['points']))] * 2))
                     points_out = []
                     for i in list_coord:
-                        x_ = int(resize_fact_w * i[0])
-                        y_ = int(resize_fact_h * i[1])
-
-                        if x_ >= 0 and y_ >= 0 and x_ < resolution[1] and y_ < resolution[0]:
-                            # x = round(mapx[y_, x_]+ 30)
-                            # y = round(mapy[y_, x_]+ 30)
-
-                            coord = values[x_][y_]
+                        if min_x < i[0] < max_x and min_y < i[1] < max_y:
+                            # get the location of the intersection between ray and target
+                            coord = utils.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
+                                                                     x_original_center, scale_x_sfm,
+                                                                     x_sfm_center,
+                                                                     y_original_center, scale_y_sfm,
+                                                                     y_sfm_center)
 
                             if coord is not None:
                                 points_out.append([coord[0], coord[1], coord[2]])
@@ -343,19 +359,18 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     list_coord = list(zip(*[iter(ast.literal_eval(ann['points']))] * 2))
                     points_out = []
 
-                    for i in list_coord: # For all the points of the polygone
-                        x_ = int(resize_fact_w * i[0])
-                        y_ = int(resize_fact_h * i[1])
-
-                        if x_ >= 0 and y_ >= 0 and x_ < resolution[1] and y_ < resolution[0]:
-                            # x = round(mapx[y_, x_]+ 30)
-                            # y = round(mapy[y_, x_]+ 30)
-
-                            coord = values[x_][y_]
+                    for i in list_coord:  # For all the points of the polygone
+                        if min_x < i[0] < max_x and min_y < i[1] < max_y:
+                            # get the location of the intersection between ray and target
+                            coord = utils.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
+                                                                     x_original_center, scale_x_sfm,
+                                                                     x_sfm_center,
+                                                                     y_original_center, scale_y_sfm,
+                                                                     y_sfm_center)
 
                             if coord is not None:
                                 points_out.append([coord[0], coord[1], coord[2]])
-                    if len(points_out) != 0: # If more than one point exist
+                    if len(points_out) != 0:  # If more than one point exist
                         polygon.append(
                             [points_out, ann['label_name'], ann['label_hierarchy'], ann['filename'],
                              ann['annotation_id']])

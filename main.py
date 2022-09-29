@@ -23,7 +23,7 @@ import preprocessing.Nav_file_manager as Nav_file_manager
 import preprocessing.blur_detection as blur
 import preprocessing.dim2_nav_filter as dim2_nav_filter
 import post_reprojection.annotations_filter_homogenize as post_reproj
-import annotation_conversion.annotations_to_shp as shp
+import annotation_geolocalisation.annotations_to_shp as shp
 from Biigle.choose_label import SelectWindow
 from main_window_ui import Ui_MainWindow
 from DL import detect_yoloV5
