@@ -52,7 +52,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connectActions()
 
         self.BiRe_LabAnn.addItems(["Annotations", "Labels"])
-        self.BiRe_soft.addItems(["Matisse2D"])
         self.BiRe_ExportType.addItems(["shp", "3Dmetrics"])
         self.reclass_cat.addItems(['Largo', 'Label'])
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
@@ -85,6 +84,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.PrePro_Input_S.clicked.connect(lambda: self.selectDir(self.PrePro_Input))
         self.PrePro_OutputPath_S.clicked.connect(lambda: self.selectDir(self.PrePro_OutputPath))
         self.TextRefPath_S.clicked.connect(lambda: self.selectFile(self.TextRefPath, "*.txt"))
+        self.PrePro_sfm_data_B.clicked.connect(lambda: self.selectFile(self.PrePro_sfm_data, "sfm file (*.json *.bin)"))
+        self.PrePro_mod_ori_B.clicked.connect(lambda: self.selectFile(self.PrePro_mod_ori, "*.txt"))
         self.PrePro_run.clicked.connect(self.preprocessing)
 
         # Remove blur
@@ -107,6 +108,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.BiRe_Model_B.clicked.connect(lambda: self.selectFile(self.BiRe_Model, "*.ply"))
         self.BiRe_sfm_B.clicked.connect(lambda: self.selectFile(self.BiRe_sfm, "sfm file (*.json *.bin)"))
+        self.BiRe_mod_ori_B.clicked.connect(lambda: self.selectFile(self.BiRe_mod_ori, "*.txt"))
         self.BiRe_3DRun.clicked.connect(self.blender2shp)
 
         # Reclassifier
@@ -218,6 +220,7 @@ class Window(QMainWindow, Ui_MainWindow):
             sfm_path = self.BiRe_sfm.text()
             annotations_path = self.BiRe_Csv.text()
             export_type = self.BiRe_ExportType.currentText()
+            model_origin_path = self.BiRe_mod_ori.text()
             label = (self.BiRe_LabAnn.currentText() == "Labels")
             self.progress_bar.show()
             self.AnnThread = blender.annotationsTo3DThread(annotations_path, sfm_path, model_path, exp=export_type,
@@ -359,8 +362,12 @@ class Window(QMainWindow, Ui_MainWindow):
             ref_nav_path = self.TextRefPath.text()
             output_path = self.PrePro_OutputPath.text()
             output_name = self.NavName.text()
+            nav_correction = self.RawNav.checkState()
+            optical = self.PrePro_optical.checkState()
+            sfm_data_path = self.PrePro_sfm_data.text()
+            model_origin_path = self.PrePro_mod_ori.text()
             copy = self.CopyImage.checkState()
-            self.NavThread = Nav_file_manager.NavThread(data_path, output_path, output_name, ref_nav_path, copy)
+            self.NavThread = Nav_file_manager.NavThread(data_path, output_path, output_name, nav_correction, optical, ref_nav_path, sfm_data_path, model_origin_path, copy)
             self.NavThread.finished.connect(self.end_prepro)
             self.NavThread.start()
 

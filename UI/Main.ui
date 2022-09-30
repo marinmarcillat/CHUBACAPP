@@ -10,8 +10,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>841</width>
-    <height>546</height>
+    <width>795</width>
+    <height>556</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,7 +57,11 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_34">
           <item>
-           <widget class="QLineEdit" name="PrePro_Input"/>
+           <widget class="QLineEdit" name="PrePro_Input">
+            <property name="toolTip">
+             <string>Input directory. Can be a single or multiple acquisition files</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="PrePro_Input_S">
@@ -78,15 +82,21 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QCheckBox" name="RawNav">
+            <property name="toolTip">
+             <string>Correct navigation with position from a .txt reference file</string>
+            </property>
             <property name="text">
-             <string>Raw navigation ?</string>
+             <string>Navigation correction</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="horizontalSpacer_18">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -99,7 +109,7 @@
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>Txt ref :</string>
+             <string>Reference positions:</string>
             </property>
            </widget>
           </item>
@@ -109,6 +119,9 @@
              <widget class="QLineEdit" name="TextRefPath">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>.txt reference position file</string>
               </property>
              </widget>
             </item>
@@ -130,19 +143,153 @@
             </item>
            </layout>
           </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </item>
         <item>
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Output directory :</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <item>
+           <widget class="QCheckBox" name="PrePro_optical">
+            <property name="toolTip">
+             <string>Use camera positions from photogrametry to correct the dim2 navigation</string>
+            </property>
+            <property name="text">
+             <string>Optical navigation correction</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_13">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>sfm_data:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_55">
+            <item>
+             <widget class="QLineEdit" name="PrePro_sfm_data">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Camera positions in sfm_data.bin or .json</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PrePro_sfm_data_B">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_32">
+            <property name="text">
+             <string>Model_origin:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_56">
+            <item>
+             <widget class="QLineEdit" name="PrePro_mod_ori">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>3D model origin (model_origin.txt)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PrePro_mod_ori_B">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>30</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_15">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_37">
           <item>
-           <widget class="QLineEdit" name="PrePro_OutputPath"/>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Output directory :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="PrePro_OutputPath">
+            <property name="toolTip">
+             <string>Location of the output directory</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="PrePro_OutputPath_S">
@@ -156,6 +303,19 @@
              <string>...</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_14">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -175,12 +335,25 @@
             </item>
             <item>
              <widget class="QLineEdit" name="NavName">
+              <property name="toolTip">
+               <string>Name of the .dim2 output file</string>
+              </property>
               <property name="text">
                <string>output_nav</string>
               </property>
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="CopyImage">
+            <property name="toolTip">
+             <string>Copy all the images in the output directory ?</string>
+            </property>
+            <property name="text">
+             <string>Copy images ?</string>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer">
@@ -195,21 +368,31 @@
             </property>
            </spacer>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_24">
           <item>
-           <widget class="QCheckBox" name="CopyImage">
+           <spacer name="horizontalSpacer_17">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="PrePro_run">
             <property name="text">
-             <string>Copy images ?</string>
+             <string>Launch</string>
             </property>
            </widget>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QPushButton" name="PrePro_run">
-          <property name="text">
-           <string>Launch</string>
-          </property>
-         </widget>
         </item>
         <item>
          <widget class="QTextBrowser" name="PrePro_Debug">
@@ -235,15 +418,22 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLabel" name="label_6">
+            <property name="toolTip">
+             <string>Input directory containing the image selection to process</string>
+            </property>
             <property name="text">
-             <string>Directory : </string>
+             <string>Input directory : </string>
             </property>
            </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_32">
             <item>
-             <widget class="QLineEdit" name="RemBlu_Input"/>
+             <widget class="QLineEdit" name="RemBlu_Input">
+              <property name="toolTip">
+               <string>Input directory containing the image selection to process</string>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="RemBlu_Input_S">
@@ -267,14 +457,18 @@
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Image blur (fac):</string>
+             <string>Image blur (opt.):</string>
             </property>
            </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_33">
             <item>
-             <widget class="QLineEdit" name="RemBlu_Csv"/>
+             <widget class="QLineEdit" name="RemBlu_Csv">
+              <property name="toolTip">
+               <string>If the blur index have already been calculated, you can skip this step by providing the csv file</string>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="RemBlu_Csv_S">
@@ -352,7 +546,7 @@
           <item row="1" column="1">
            <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>Percentage removed :</string>
+             <string>Percentage image removed :</string>
             </property>
            </widget>
           </item>
@@ -1237,7 +1431,11 @@ p, li { white-space: pre-wrap; }
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_38">
               <item>
-               <widget class="QLineEdit" name="BiRe_Csv"/>
+               <widget class="QLineEdit" name="BiRe_Csv">
+                <property name="toolTip">
+                 <string>csv Biigle report</string>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="BiRe_Csv_S">
@@ -1271,6 +1469,9 @@ p, li { white-space: pre-wrap; }
              <widget class="QComboBox" name="BiRe_LabAnn">
               <property name="acceptDrops">
                <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Annotation or image labels ?</string>
               </property>
               <property name="editable">
                <bool>false</bool>
@@ -1308,7 +1509,7 @@ p, li { white-space: pre-wrap; }
            </font>
           </property>
           <property name="text">
-           <string>Annotations -&gt; 2D</string>
+           <string>Annotations to 2D -&gt; Geolocalisation</string>
           </property>
          </widget>
         </item>
@@ -1338,34 +1539,6 @@ p, li { white-space: pre-wrap; }
                 </property>
                 <property name="text">
                  <string>...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_24">
-            <item>
-             <widget class="QLabel" name="label_42">
-              <property name="text">
-               <string>Software:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_50">
-              <item>
-               <widget class="QComboBox" name="BiRe_soft">
-                <property name="acceptDrops">
-                 <bool>false</bool>
-                </property>
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-                <property name="currentText">
-                 <string/>
                 </property>
                </widget>
               </item>
@@ -1432,7 +1605,7 @@ p, li { white-space: pre-wrap; }
            </font>
           </property>
           <property name="text">
-           <string>Annotations -&gt; 3D</string>
+           <string>Annotations to 3D -&gt; Reprojection</string>
           </property>
          </widget>
         </item>
@@ -1443,14 +1616,18 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QLabel" name="label_39">
               <property name="text">
-               <string>Model path : </string>
+               <string>3D Model : </string>
               </property>
              </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_42">
               <item>
-               <widget class="QLineEdit" name="BiRe_Model"/>
+               <widget class="QLineEdit" name="BiRe_Model">
+                <property name="toolTip">
+                 <string>.ply 3D model</string>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="BiRe_Model_B">
@@ -1474,14 +1651,18 @@ p, li { white-space: pre-wrap; }
             <item>
              <widget class="QLabel" name="label_40">
               <property name="text">
-               <string>sfm_data path : </string>
+               <string>sfm_data : </string>
               </property>
              </widget>
             </item>
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_43">
               <item>
-               <widget class="QLineEdit" name="BiRe_sfm"/>
+               <widget class="QLineEdit" name="BiRe_sfm">
+                <property name="toolTip">
+                 <string>Corresponding sfm_data.bin or .json. .json is faster</string>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="BiRe_sfm_B">
@@ -1516,11 +1697,49 @@ p, li { white-space: pre-wrap; }
                 <property name="acceptDrops">
                  <bool>false</bool>
                 </property>
+                <property name="toolTip">
+                 <string>Export type: shapefile or 3D metrics</string>
+                </property>
                 <property name="editable">
                  <bool>false</bool>
                 </property>
                 <property name="currentText">
                  <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_25">
+            <item>
+             <widget class="QLabel" name="label_43">
+              <property name="text">
+               <string>model_origin (opt.) : </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_52">
+              <item>
+               <widget class="QLineEdit" name="BiRe_mod_ori">
+                <property name="toolTip">
+                 <string>Geographical origin of the 3D model (model_origin.txt). If provided, shapefile will be geolocalise</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="BiRe_mod_ori_B">
+                <property name="maximumSize">
+                 <size>
+                  <width>30</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>...</string>
                 </property>
                </widget>
               </item>
@@ -1568,7 +1787,7 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
-        <string>Post - Reprojection</string>
+        <string>Post - reprojection</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_10">
         <item>
@@ -1790,6 +2009,9 @@ p, li { white-space: pre-wrap; }
           </item>
           <item>
            <widget class="QPushButton" name="set_api_run">
+            <property name="toolTip">
+             <string>Set the new volume and label tree id</string>
+            </property>
             <property name="text">
              <string>Set</string>
             </property>
@@ -1999,7 +2221,7 @@ p, li { white-space: pre-wrap; }
            </font>
           </property>
           <property name="text">
-           <string>ChubacApp V1.0.0</string>
+           <string>ChubacApp V1.2.0</string>
           </property>
          </widget>
         </item>
@@ -2020,7 +2242,7 @@ p, li { white-space: pre-wrap; }
         <item>
          <widget class="QLabel" name="label_18">
           <property name="text">
-           <string>Github (before Gitlab migration): https://github.com/marinmarcillat/CHUBACAPP</string>
+           <string>Github: https://github.com/marinmarcillat/CHUBACAPP</string>
           </property>
          </widget>
         </item>
@@ -2054,12 +2276,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>34</x>
-     <y>103</y>
+     <x>37</x>
+     <y>102</y>
     </hint>
     <hint type="destinationlabel">
-     <x>825</x>
-     <y>106</y>
+     <x>540</x>
+     <y>105</y>
     </hint>
    </hints>
   </connection>
@@ -2070,12 +2292,12 @@ p, li { white-space: pre-wrap; }
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>81</x>
-     <y>103</y>
+     <x>84</x>
+     <y>102</y>
     </hint>
     <hint type="destinationlabel">
-     <x>789</x>
-     <y>104</y>
+     <x>474</x>
+     <y>103</y>
     </hint>
    </hints>
   </connection>
@@ -2106,8 +2328,104 @@ p, li { white-space: pre-wrap; }
      <y>74</y>
     </hint>
     <hint type="destinationlabel">
-     <x>817</x>
-     <y>77</y>
+     <x>793</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PrePro_optical</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PrePro_sfm_data</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>131</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PrePro_optical</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PrePro_sfm_data_B</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>438</x>
+     <y>122</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PrePro_optical</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PrePro_mod_ori</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>56</x>
+     <y>128</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>554</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PrePro_optical</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PrePro_mod_ori_B</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>37</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>685</x>
+     <y>120</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>RawNav</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PrePro_optical</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>13</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PrePro_optical</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>RawNav</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>54</x>
+     <y>93</y>
     </hint>
    </hints>
   </connection>

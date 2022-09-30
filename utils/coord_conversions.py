@@ -7,6 +7,7 @@ def dist_ref(x, y, x_ref, y_ref):
     # Euclidean distance to a reference position
     return euclidean((x, y), (x_ref, y_ref))
 
+
 def annotation2hitpoint(ann_coords, hit_points, mapx, mapy, x_original_center, scale_x_sfm, x_sfm_center, y_original_center, scale_y_sfm, y_sfm_center):
     (x,y) = ann_coords
     # Undistort coordinates

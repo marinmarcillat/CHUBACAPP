@@ -15,7 +15,8 @@ import cv2
 from shapely.geometry import Point, Polygon, LineString, mapping
 
 import blender.camera_config as cc
-import blender.utils as utils
+import utils.coord_conversions as coord_tools
+import utils.sfm as sfm_tools
 
 
 class annotationsTo3DThread(QtCore.QThread):
@@ -67,7 +68,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
     from photogrammetry_importer.types.camera import Camera
 
     min_radius = 0.01  # Minnimum radius of a circle annotation if error
-    camera_model = 'otus2'
+    camera_model = 'otus2' # camera model, see camera_config
 
     output_path = os.path.dirname(annotation_path)
 
@@ -78,49 +79,9 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
     list_img = list(annotations['filename'])
 
     # Conversion from sfm_data.bin to sfm_data.json if not created. Long
-    if os.path.basename(sfm_data_path)[:4] != "temp":
-        if os.path.splitext(sfm_data_path)[1] == ".bin":
-            print("Converting the sfm_data.bin to json...")
-            if thread is not None:
-                thread.prog_val.emit(10)
-            # convert sfm_data.bin to json
-            FNULL = open(os.devnull, 'w')  # use this if you want to suppress output to stdout from the subprocess
-            sfm_dir = os.path.dirname(sfm_data_path)
-            args = "blender/openMVG_main_ConvertSfM_DataFormat.exe -i " + os.path.join(sfm_dir,
-                                                                                       "sfm_data.bin") + " -o " + os.path.join(
-                sfm_dir, "sfm_data.json")
-            subprocess.call(args, stdout=FNULL, stderr=FNULL, shell=False)
-            sfm_data_path = os.path.join(os.path.dirname(sfm_data_path), "sfm_data.json")
+    sfm_data, temp_sfm_path = sfm_tools.sfm_data_handler(sfm_data_path, list_img)
 
-        print("opening json...")
-        with open(sfm_data_path, 'r') as f:
-            data = json.load(f)
-        print("Done")
-
-        temp_views = []
-        temp_poses = []
-        for view in data['views']:
-            if view['value']['ptr_wrapper']['data']['filename'] in list_img:
-                temp_views.append(view)
-                for pose in data['extrinsics']:
-                    if pose['key'] == view['value']['ptr_wrapper']['data']['id_pose']:
-                        temp_poses.append(pose)
-
-        data['views'] = temp_views
-        data['extrinsics'] = temp_poses
-        data['structure'] = []
-
-        temp_sfm_path = os.path.join(os.path.dirname(sfm_data_path), 'temp_sfm_data.json')
-        out_file = open(temp_sfm_path, "w")
-        json.dump(data, out_file, indent=4)
-        out_file.close()
-
-    else:
-        with open(sfm_data_path, 'r') as f:
-            data = json.load(f)
-        temp_sfm_path = sfm_data_path
-
-    intrinsics = data['intrinsics'][0]['value']['ptr_wrapper']['data']
+    intrinsics = sfm_data['intrinsics'][0]['value']['ptr_wrapper']['data']
     resolution = [intrinsics['height'], intrinsics['width']]
     focal = [intrinsics['focal_length'], intrinsics['focal_length']]
     principal_point = intrinsics['principal_point']
@@ -295,7 +256,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     if min_x < x < max_x and min_y < y < max_y:
 
                         # get the location of the intersection between ray and target
-                        coord = utils.annotation2hitpoint((x, y), hit_points, mapx, mapy, x_original_center,
+                        coord = coord_tools.annotation2hitpoint((x, y), hit_points, mapx, mapy, x_original_center,
                                                           scale_x_sfm, x_sfm_center, y_original_center, scale_y_sfm,
                                                           y_sfm_center)
 
@@ -311,7 +272,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                                 for i in list_coord_r:
                                     if min_x < i[0] < max_x and min_y < i[1] < max_y:
                                         # get the location of the intersection between ray and target
-                                        coord_radius = utils.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
+                                        coord_radius = coord_tools.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
                                                                                  x_original_center, scale_x_sfm,
                                                                                  x_sfm_center,
                                                                                  y_original_center, scale_y_sfm,
@@ -340,7 +301,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     for i in list_coord:
                         if min_x < i[0] < max_x and min_y < i[1] < max_y:
                             # get the location of the intersection between ray and target
-                            coord = utils.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
+                            coord = coord_tools.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
                                                                      x_original_center, scale_x_sfm,
                                                                      x_sfm_center,
                                                                      y_original_center, scale_y_sfm,
@@ -362,7 +323,7 @@ def annotationsTo3D(annotation_path, sfm_data_path, model_path, exp, label, thre
                     for i in list_coord:  # For all the points of the polygone
                         if min_x < i[0] < max_x and min_y < i[1] < max_y:
                             # get the location of the intersection between ray and target
-                            coord = utils.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
+                            coord = coord_tools.annotation2hitpoint((i[0], i[1]), hit_points, mapx, mapy,
                                                                      x_original_center, scale_x_sfm,
                                                                      x_sfm_center,
                                                                      y_original_center, scale_y_sfm,
