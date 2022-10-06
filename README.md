@@ -1,4 +1,28 @@
 # CHUBACAPP
 
-Usefull tools for image mosaics analysis and faunal annotation processing
-marinmarcillat@gmail.com
+Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
+A methodological paper is in preparation, and will be added here after publishing.
+
+# Process pipeline:
+![process_pipeline](https://user-images.githubusercontent.com/58145636/194260886-e69c9d88-fa53-47b7-9247-fef517bfc9bd.png)
+
+A complete documentation on the different steps of the pipeline is also in preparation.
+
+To download Matisse3D (2D and 3D mosaics): [Matisse3D](https://github.com/IfremerUnderwater/Matisse/releases)
+
+To download 3D Metrics (3D models and annotations visualization): [3D Metrics](https://github.com/IfremerUnderwater/3DMetrics/releases)
+
+# Installation
+
+The installation requires anaconda's [latest version.](https://www.anaconda.com/products/distribution)
+
+Launch the installation .bat file. It will install the required conda environment.
+
+# Using the chubacapp interface
+
+Launch with launch.bat
+
+Please refer to the documentation pdf for more information.
+
+
+Contact: [marinmarcillat@gmail.com](mailto:marinmarcillat@gmail.com)
