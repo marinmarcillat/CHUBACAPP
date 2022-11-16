@@ -41,7 +41,8 @@ def optical_correction(nav, camera_points):
     nav_updated = nav
     nav_updated[6] = combined['lat']
     nav_updated[7] = combined['long']
-    return nav_updated
+    img_in_model = list(combined['filename'])
+    return nav_updated, img_in_model
 
 
 def concat_navigation(data_path):
@@ -124,7 +125,19 @@ class NavThread(QtCore.QThread):
                 geographic_coords = coord_conversions.local_2_position2d(camera_points, model_origin)
                 geo_camera_points = pd.concat([camera_points, geographic_coords], axis=1)
 
-                nav_updated = optical_correction(nav, geo_camera_points)
+                nav_updated, img_in_model = optical_correction(nav, geo_camera_points)
+                trash_path = os.path.join(self.data_path, "trash")
+                isExist = os.path.exists(trash_path)
+                if not isExist:
+                    os.makedirs(trash_path)
+                for file in sorted(os.listdir(self.data_path)):
+                    jpg_path = os.path.join(self.data_path, file)
+                    if os.path.isfile(jpg_path) and imghdr.what(jpg_path) == "jpeg" and file not in img_in_model:  # Check if is in dim2
+                        copy(jpg_path, trash_path)
+                        os.remove(jpg_path)
+
+
+
         else:
             nav_updated = nav
         save_dim2(nav_updated, os.path.join(self.output_path, self.output_name + '.dim2'))
