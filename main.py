@@ -18,13 +18,15 @@ from PyQt5.QtWidgets import (
 from scipy import stats
 
 import Biigle.utils as utils
-import blender.blender_main as blender
+import blender.blender_reprojection as blender
 import preprocessing.Nav_file_manager as Nav_file_manager
 import preprocessing.blur_detection as blur
 import preprocessing.dim2_nav_filter as dim2_nav_filter
 import post_reprojection.annotations_filter_homogenize as post_reproj
 import annotation_geolocalisation.annotations_to_shp as shp
 from Biigle.choose_label import SelectWindow
+from blender.add_camera import AddCameraWindow
+import blender.camera_config as cc
 from main_window_ui import Ui_MainWindow
 from DL import detect_yoloV5
 
@@ -44,6 +46,10 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
 
+        with open(r'UI/DarkOrange.qss', 'r', encoding='utf-8') as file:
+            qss = file.read()
+        self.setStyleSheet(qss)
+
         self.setWindowIcon(QtGui.QIcon('Logo-Ifremer.png'))
 
         # setting  the geometry of window
@@ -54,6 +60,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.BiRe_LabAnn.addItems(["Annotations", "Labels"])
         self.BiRe_ExportType.addItems(["shp", "3Dmetrics"])
         self.reclass_cat.addItems(['Largo', 'Label'])
+        cameras = cc.load_cameras()
+        self.BiRe_cam_select.addItems(list(cameras.keys()))
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
 
         self.progress_bar = QProgressBar()
@@ -109,6 +117,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.BiRe_Model_B.clicked.connect(lambda: self.selectFile(self.BiRe_Model, "*.ply"))
         self.BiRe_sfm_B.clicked.connect(lambda: self.selectFile(self.BiRe_sfm, "sfm file (*.json *.bin)"))
         self.BiRe_mod_ori_B.clicked.connect(lambda: self.selectFile(self.BiRe_mod_ori, "*.txt"))
+        self.BiRe_video_path_B.clicked.connect(lambda: self.selectFile(self.BiRe_video_path, "video file (*.mp4 *.avi)"))
+        self.BiRe_img_dir_B.clicked.connect(lambda: self.selectDir(self.BiRe_img_dir))
+        self.BiRe_add_camera.clicked.connect(self.add_camera)
+
         self.BiRe_3DRun.clicked.connect(self.blender2shp)
 
         # Reclassifier
@@ -172,6 +184,16 @@ class Window(QMainWindow, Ui_MainWindow):
             id, value = sel.get_value()
             txt.setText(str(id + "_" + str(value)))
 
+    def add_camera(self):
+        ac = AddCameraWindow()
+        res = ac.exec_()
+        if res == QDialog.Accepted:
+            name, ocm, dist_coeff, res = ac.get_value()
+            cameras = cc.load_cameras()
+            cameras = cc.add_camera(cameras, name, ocm, dist_coeff, res)
+            if cc.save_cameras(cameras):
+                print("Successfully added camera !")
+
     def blur_slider(self):
         alpha = self.alpha_val[self.AlphaSlider.value()]
         self.blur_data["outlier"] = self.blur_data["delta"] > stats.t(df=self.window).ppf(1 - alpha) / np.sqrt(
@@ -222,9 +244,19 @@ class Window(QMainWindow, Ui_MainWindow):
             export_type = self.BiRe_ExportType.currentText()
             model_origin_path = self.BiRe_mod_ori.text()
             label = (self.BiRe_LabAnn.currentText() == "Labels")
+            camera = self.BiRe_cam_select.currentText()
+            video = self.BiRe_video.checkState()
+            video_path = None
+            time_interval = None
+            image_path = None
+            if video:
+                video_path = self.BiRe_video_path.text()
+                time_interval = float(self.BiRe_time_inter.text())
+                image_path = self.BiRe_img_dir.text()
+
             self.progress_bar.show()
-            self.AnnThread = blender.annotationsTo3DThread(annotations_path, sfm_path, model_path, exp=export_type,
-                                                           label=label)
+            self.AnnThread = blender.annotationsTo3DThread(annotations_path, sfm_path, model_path, export_type, label,
+                                                           camera, video, video_path, time_interval, image_path)
             self.AnnThread.prog_val.connect(self.setProgressVal)
             self.AnnThread.finished.connect(self.end_blend_shp)
             self.AnnThread.start()
@@ -234,7 +266,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.BiRe_Model.setText("")
         self.BiRe_Csv.setText("")
         self.BiRe_sfm.setText("")
-        print("Convert to shp done !")
+        self.BiRe_video_path.setText("")
+        self.BiRe_time_inter.setText("")
+        self.BiRe_img_dir.setText("")
+        print("Reprojection done !")
 
     def auto_detect(self):
         if self.AD_model.text() == "" or self.AD_Dir.text() == "":
@@ -242,7 +277,6 @@ class Window(QMainWindow, Ui_MainWindow):
             return 0
         else:
             print("Not ready yet")
-
 
     def blur_detect(self):
         if self.RemBlu_Input.text() == "":
@@ -367,7 +401,8 @@ class Window(QMainWindow, Ui_MainWindow):
             sfm_data_path = self.PrePro_sfm_data.text()
             model_origin_path = self.PrePro_mod_ori.text()
             copy = self.CopyImage.checkState()
-            self.NavThread = Nav_file_manager.NavThread(data_path, output_path, output_name, nav_correction, optical, ref_nav_path, sfm_data_path, model_origin_path, copy)
+            self.NavThread = Nav_file_manager.NavThread(data_path, output_path, output_name, nav_correction, optical,
+                                                        ref_nav_path, sfm_data_path, model_origin_path, copy)
             self.NavThread.finished.connect(self.end_prepro)
             self.NavThread.start()
 

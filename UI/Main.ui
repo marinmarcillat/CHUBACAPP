@@ -10,8 +10,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>795</width>
-    <height>556</height>
+    <width>1122</width>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1569,13 +1569,6 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_31">
           <item>
-           <widget class="QPushButton" name="BiRe_2DRun">
-            <property name="text">
-             <string>Launch</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="horizontalSpacer_21">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -1587,6 +1580,13 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BiRe_2DRun">
+            <property name="text">
+             <string>Launch</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -1747,17 +1747,154 @@ p, li { white-space: pre-wrap; }
             </item>
            </layout>
           </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_26">
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_34">
+                <property name="text">
+                 <string>Camera :</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="BiRe_add_camera">
+                <property name="text">
+                 <string>Add camera</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QComboBox" name="BiRe_cam_select"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_21">
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="BiRe_video">
+            <property name="text">
+             <string>Video</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_19">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_22">
+            <property name="toolTip">
+             <string>Video file path (.mp4, .avi)</string>
+            </property>
+            <property name="text">
+             <string>Video :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="BiRe_video_path">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BiRe_video_path_B">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_35">
+            <property name="text">
+             <string>Image dir. :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="BiRe_img_dir">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BiRe_img_dir_B">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_33">
+            <property name="text">
+             <string>Time interval (s) :</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="BiRe_time_inter">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>2</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_48">
-          <item>
-           <widget class="QPushButton" name="BiRe_3DRun">
-            <property name="text">
-             <string>Launch</string>
-            </property>
-           </widget>
-          </item>
           <item>
            <spacer name="horizontalSpacer_23">
             <property name="orientation">
@@ -1770,6 +1907,13 @@ p, li { white-space: pre-wrap; }
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="BiRe_3DRun">
+            <property name="text">
+             <string>Launch</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -2280,7 +2424,7 @@ p, li { white-space: pre-wrap; }
      <y>102</y>
     </hint>
     <hint type="destinationlabel">
-     <x>540</x>
+     <x>533</x>
      <y>105</y>
     </hint>
    </hints>
@@ -2328,7 +2472,7 @@ p, li { white-space: pre-wrap; }
      <y>74</y>
     </hint>
     <hint type="destinationlabel">
-     <x>793</x>
+     <x>836</x>
      <y>88</y>
     </hint>
    </hints>
@@ -2426,6 +2570,86 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>54</x>
      <y>93</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BiRe_video</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BiRe_video_path</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>60</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>401</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BiRe_video</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BiRe_video_path_B</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>18</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
+     <y>316</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BiRe_video</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BiRe_time_inter</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1058</x>
+     <y>314</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BiRe_video</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BiRe_img_dir</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>573</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>BiRe_video</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>BiRe_img_dir_B</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>954</x>
+     <y>304</y>
     </hint>
    </hints>
   </connection>

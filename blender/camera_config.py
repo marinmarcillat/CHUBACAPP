@@ -1,22 +1,20 @@
-import numpy as np
+import json
 
-# You can add your camera here:
+json_path = r'blender/cameras.json'
 
-config_camera = {
-    'otus2' : {
-        # -> Camera matrix
-        'optical_camera_matrix' : np.array([[6600, 0, 3032], [0, 6600, 1986], [0, 0, 1]], dtype='f'),
-        # -> Distortion coefficients
-        'dist_coeff' : np.array([0.0694682, 0.108887, 0, 0, -0.091225], dtype='f'),
-        # -> Original resolution (width, height)
-        'resolution' : (6000, 4000),
-    },
-    'new_camera': {
-        # -> Camera matrix
-        'optical_camera_matrix': np.array([[0, 0, 0], [0, 0, 0], [0, 0, 1]], dtype='f'),
-        # -> Distortion coefficients
-        'dist_coeff': np.array([0, 0, 0, 0, 0], dtype='f'),
-        # -> Original resolution (width, height)
-        'resolution': (1920, 1080),
+def add_camera(data, name, ocm, dist_coeff, res):
+    data[name] = {
+        'optical_camera_matrix': ocm,
+        'dist_coeff': dist_coeff,
+        'resolution': res,
     }
-}
+    return data
+def save_cameras(data):
+    with open(json_path, 'w') as fp:
+        json.dump(data, fp)
+    return 1
+
+def load_cameras():
+    with open(json_path, 'r') as fp:
+        data = json.load(fp)
+    return data
