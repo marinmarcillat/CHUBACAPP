@@ -2365,7 +2365,7 @@ p, li { white-space: pre-wrap; }
            </font>
           </property>
           <property name="text">
-           <string>ChubacApp V1.2.0</string>
+           <string>ChubacApp V1.3.0</string>
           </property>
          </widget>
         </item>
