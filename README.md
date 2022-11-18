@@ -3,6 +3,12 @@
 Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
 A methodological paper is in preparation, and will be added here after publishing.
 
+### New feature ! From images to video: introducing video annotations reprojection !
+
+Along with: ability to add new cameras, and a more optimized reprojection
+
+Coming soon: updated documentation, video annotation post-processing, multiprocessing and parallelization for faster reprojection, and more !
+
 # Process pipeline:
 ![process_pipeline](https://user-images.githubusercontent.com/58145636/194260886-e69c9d88-fa53-47b7-9247-fef517bfc9bd.png)
 
