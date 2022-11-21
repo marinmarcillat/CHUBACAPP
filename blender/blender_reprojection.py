@@ -22,7 +22,7 @@ class annotationsTo3DThread(QtCore.QThread):
     prog_val = QtCore.pyqtSignal(int)
     finished = QtCore.pyqtSignal()
 
-    def __init__(self, annotation_path, sfm_data_path, model_path, exp, label, camera_model, video_annotations=False,
+    def __init__(self, annotation_path, sfm_data_path, model_path, exp, origin_coords, label, camera_model, video_annotations=False,
                  video_path=None, time_interval=None, image_path=None):
         super(annotationsTo3DThread, self).__init__()
         self.running = True
@@ -30,6 +30,7 @@ class annotationsTo3DThread(QtCore.QThread):
         self.sfm_data_path = sfm_data_path
         self.model_path = model_path
         self.exp = exp
+        self.origin_coords = origin_coords
         self.label = label
         self.camera_model = camera_model
         self.video_annotations = video_annotations
@@ -52,7 +53,7 @@ class annotationsTo3DThread(QtCore.QThread):
         img_list = list(annotations['filename'].unique())
         ann23d = annotationsTo3D(self.sfm_data_path, self.model_path, img_list, self.camera_model, self)
         point, line, polygon = ann23d.batch_reproject(annotations, self.label)
-        exp_tools.export_3d_annotations(self.exp, self.output_path, point, line, polygon, self)
+        exp_tools.export_3d_annotations(self.exp, self.output_path, point, line, polygon, self.origin_coords, self)
 
 
 def annotationsTo3D(sfm_data_path, model_path, list_ann_img, camera_model, thread=None):

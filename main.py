@@ -28,6 +28,7 @@ from Biigle.choose_label import SelectWindow
 from blender.add_camera import AddCameraWindow
 import blender.camera_config as cc
 from main_window_ui import Ui_MainWindow
+from utils.coord_conversions import read_origin
 from DL import detect_yoloV5
 
 
@@ -192,6 +193,7 @@ class Window(QMainWindow, Ui_MainWindow):
             cameras = cc.load_cameras()
             cameras = cc.add_camera(cameras, name, ocm, dist_coeff, res)
             if cc.save_cameras(cameras):
+                self.BiRe_cam_select.addItems(list(cameras.keys()))
                 print("Successfully added camera !")
 
     def blur_slider(self):
@@ -243,6 +245,10 @@ class Window(QMainWindow, Ui_MainWindow):
             annotations_path = self.BiRe_Csv.text()
             export_type = self.BiRe_ExportType.currentText()
             model_origin_path = self.BiRe_mod_ori.text()
+            origin_coords = None
+            if os.path.exists(model_origin_path):
+                print("ok")
+                origin_coords = read_origin(model_origin_path)
             label = (self.BiRe_LabAnn.currentText() == "Labels")
             camera = self.BiRe_cam_select.currentText()
             video = self.BiRe_video.checkState()
@@ -255,7 +261,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 image_path = self.BiRe_img_dir.text()
 
             self.progress_bar.show()
-            self.AnnThread = blender.annotationsTo3DThread(annotations_path, sfm_path, model_path, export_type, label,
+            self.AnnThread = blender.annotationsTo3DThread(annotations_path, sfm_path, model_path, export_type, origin_coords, label,
                                                            camera, video, video_path, time_interval, image_path)
             self.AnnThread.prog_val.connect(self.setProgressVal)
             self.AnnThread.finished.connect(self.end_blend_shp)

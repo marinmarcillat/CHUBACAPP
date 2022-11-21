@@ -3,9 +3,10 @@ import fiona
 import numpy as np
 from fiona.crs import from_epsg
 from shapely.geometry import Point, Polygon, LineString, mapping
+import utils.coord_conversions as coord_conv
 
 
-def exp_3dmetrics(output_point_path, output_poly_path, point, polygon):
+def exp_3dmetrics(output_point_path, output_poly_path, point, polygon, coords_origin):
     # Export to 3Dmetrics Json measurement file
     export_point = {
         "Data": [],
@@ -71,6 +72,12 @@ def exp_3dmetrics(output_point_path, output_poly_path, point, polygon):
         }
     }
 
+    if coords_origin is not None:
+        for d in [export_point, export_polygon]:
+            d['Reference']['altitude'] = coords_origin[2]
+            d['Reference']['latitude'] = coords_origin[0]
+            d['Reference']['longitude'] = coords_origin[1]
+
     for i in point:
         coord = i[0]
         pts = {
@@ -115,7 +122,7 @@ def exp_3dmetrics(output_point_path, output_poly_path, point, polygon):
     out_file.close()
 
 
-def exp_shp(output_path, point, line, polygon):
+def exp_shp(output_path, point, line, polygon, coords_origin):
     # Export in a shp file for GIS analysis. We lost a part of the z information for polygons
     schema_polygon = {
         'geometry': 'Polygon',
@@ -153,6 +160,9 @@ def exp_shp(output_path, point, line, polygon):
             'annotation_id_biigle': 'int'
         }
     }
+
+    if coords_origin is not None:
+        point, line, polygon = coord_conv.convert_all_to_lat_long(coords_origin, point, line, polygon)
 
     id_img = 0
     id_poly = 1
@@ -219,15 +229,15 @@ def exp_shp(output_path, point, line, polygon):
                 id_line += 1
 
 
-def export_3d_annotations(exp, output_path, point, line, polygon, thread=None):
+def export_3d_annotations(exp, output_path, point, line, polygon, coords_origin=None, thread=None):
     output_point_path = os.path.join(output_path, 'point_output.json')
     output_poly_path = os.path.join(output_path, 'poly_output.json')
 
     print("Exporting...")
     if exp == '3Dmetrics':
-        exp_3dmetrics(output_point_path, output_poly_path, point, polygon)
+        exp_3dmetrics(output_point_path, output_poly_path, point, polygon, coords_origin)
     elif exp == 'shp':
-        exp_shp(output_path, point, line, polygon)
+        exp_shp(output_path, point, line, polygon, coords_origin)
 
     if thread is not None:
         thread.prog_val.emit(0)

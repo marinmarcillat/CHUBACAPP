@@ -1,6 +1,7 @@
 from scipy.spatial.distance import euclidean
 from geopy.distance import distance
 import pandas as pd
+import numpy as np
 
 
 def dist_ref(x, y, x_ref, y_ref):
@@ -62,4 +63,33 @@ def position2d_2_local(position2d, model_origin):
         offsets.append(offset)
     offsets_df = pd.DataFrame(offsets, columns=['x', 'y', 'z_off'])
     return offsets_df
+
+def convert_all_to_lat_long(origin_coords, point, line, polygon):
+    for figure in [polygon, line]:
+        for i in range(len(figure)):
+            p = figure[i]
+            if len(p[0]) >= 3:
+                coords_local = np.array(p[0])[:, 0:3]
+                nested_global = np.copy(coords_local)
+                for j in range(len(coords_local)):
+                    c = coords_local[j]
+                    lat, long, z = local_2_lat_long(origin_coords, c)
+                    nested_global[j] = [lat, long, -z]
+                nested_global_list = nested_global.tolist()
+                figure[i][0] = nested_global_list
+
+    for i in range(len(point)):
+        p = point[i]
+        lat, long, z = local_2_lat_long(origin_coords, p[0][:3])
+        point[i][0] = [lat,long,z]
+
+    return point, line, polygon
+
+def read_origin(origin_path):
+    with open(origin_path) as f:
+        coords_literal = f.readlines()
+    coords = coords_literal[0].split(";")
+    coords = [float(c)for c in coords]
+
+    return coords
 
