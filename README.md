@@ -3,6 +3,8 @@
 Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
 A methodological paper is in preparation, and will be added here after publishing.
 
+Documentation: [Chubacapp](https://chubacapp.readthedocs.io/en/latest/index.html)
+
 ### New feature ! From images to video: introducing video annotations reprojection !
 
 Along with: ability to add new cameras, and a more optimized reprojection

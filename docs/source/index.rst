@@ -11,6 +11,7 @@ Welcome to Chubacapp's documentation!
    :caption: Contents:
 
    installation
+   usage
 
 Indices and tables
 ==================
