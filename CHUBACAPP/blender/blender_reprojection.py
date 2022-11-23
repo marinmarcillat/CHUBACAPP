@@ -2,6 +2,7 @@ import os
 from ast import literal_eval
 from math import dist
 import pyvista as pv
+from multiprocessing import Pool
 
 import itertools
 import numpy as np
@@ -22,7 +23,8 @@ class annotationsTo3DThread(QtCore.QThread):
     prog_val = QtCore.pyqtSignal(int)
     finished = QtCore.pyqtSignal()
 
-    def __init__(self, annotation_path, sfm_data_path, model_path, exp, origin_coords, label, camera_model, video_annotations=False,
+    def __init__(self, annotation_path, sfm_data_path, model_path, exp, origin_coords, label, camera_model,
+                 video_annotations=False,
                  video_path=None, time_interval=None, image_path=None):
         super(annotationsTo3DThread, self).__init__()
         self.running = True
@@ -43,17 +45,45 @@ class annotationsTo3DThread(QtCore.QThread):
 
     def run(self):
         if self.video_annotations:
-            annotations = video.get_annotations_tracks(self.annotation_path, self.image_path, self.video_path,
+            print("Retrieve annotations tracks...")
+            annotations, fn_ts = video.get_annotations_tracks(self.annotation_path, self.image_path, self.video_path,
                                                        self.time_interval)
+
+            fn_ts_path = os.path.join(self.output_path, "filename_timestamp.csv")
+            fn_ts.to_csv(fn_ts_path, index=False)
+
+            print("Done !")
         else:
             annotations = pd.read_csv(self.annotation_path, sep=",")
             for i, row in annotations.iterrows():
                 annotations.at[i, 'points'] = literal_eval(row['points'])
 
         img_list = list(annotations['filename'].unique())
-        ann23d = annotationsTo3D(self.sfm_data_path, self.model_path, img_list, self.camera_model, self)
-        point, line, polygon = ann23d.batch_reproject(annotations, self.label)
+        nb_processes = 4
+        img_list_split = np.array_split(img_list, nb_processes)
+        args = []
+        for img_list_i in img_list_split:
+            annotations_i = annotations.loc[annotations['filename'].isin(img_list_i.tolist())]
+            args.append([self.sfm_data_path, self.model_path, img_list_i, self.camera_model, annotations_i, self.label])
+
+        print("Starting multiprocessing reprojection...")
+        results = list(Pool(nb_processes).map(process_annotationTo3D, args))
+        print("Done !")
+
+        point, line, polygon = [[], [], []]
+        for result in results:
+            point.extend(result[0])
+            line.extend(result[1])
+            polygon.extend(result[2])
+
         exp_tools.export_3d_annotations(self.exp, self.output_path, point, line, polygon, self.origin_coords, self)
+
+
+def process_annotationTo3D(args):
+    sfm_data_path, model_path, img_list, camera_model, annotations, label = args
+    ann23d = annotationsTo3D(sfm_data_path, model_path, img_list, camera_model)
+    point, line, polygon = ann23d.batch_reproject(annotations, label)
+    return point, line, polygon
 
 
 def annotationsTo3D(sfm_data_path, model_path, list_ann_img, camera_model, thread=None):
@@ -72,6 +102,8 @@ def annotationsTo3D(sfm_data_path, model_path, list_ann_img, camera_model, threa
         def __init__(self, sfm_data_path, model_path, list_ann_img, camera_model, thread=None):
             if thread is not None:
                 self.thread = thread
+            else:
+                self.thread = None
             self.model_path = model_path
             self.min_radius = 0.01
 

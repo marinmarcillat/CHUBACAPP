@@ -74,6 +74,4 @@ def get_annotations_tracks(annotation_path, img_path, video_path, time_interval)
             row['shape_name'], row['label_name'], row['label_hierarchy'], row['video_annotation_label_id']]
         ann_tracks = pd.concat([ann_tracks, tracking], ignore_index=True)
 
-
-
-    return ann_tracks
+    return ann_tracks, img_df

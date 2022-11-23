@@ -15,6 +15,8 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import (
     QDialog, QMainWindow, QFileDialog, QProgressBar
 )
+import pyvista as pv
+from pyvistaqt import QtInteractor
 from scipy import stats
 
 import Biigle.utils as utils
@@ -29,6 +31,7 @@ from blender.add_camera import AddCameraWindow
 import blender.camera_config as cc
 from main_window_ui import Ui_MainWindow
 from utils.coord_conversions import read_origin
+from utils.pyvista_utils import plot_obj_with_multiple_textures, add_annotations
 from DL import detect_yoloV5
 
 
@@ -139,6 +142,12 @@ class Window(QMainWindow, Ui_MainWindow):
         self.sel_lab3.clicked.connect(lambda: self.nextimage(self.sel_lab3))
         self.sel_lab4.clicked.connect(lambda: self.nextimage(self.sel_lab4))
 
+        # plot
+        self.plot_model_path_B.clicked.connect(lambda: self.selectFile(self.plot_model_path, "model file (*.ply *.obj)"))
+        self.plot_annotation_path_B.clicked.connect(lambda: self.selectFile(self.plot_annotation_path, "*.json"))
+        self.plot_launch.clicked.connect(self.start_plot)
+        self.plot_update_B.clicked.connect(self.update_plot)
+
         # post reprojection
         self.PR_input_B.clicked.connect(lambda: self.selectDir(self.PR_input))
         self.PR_output_B.clicked.connect(lambda: self.selectDir(self.PR_output))
@@ -247,7 +256,6 @@ class Window(QMainWindow, Ui_MainWindow):
             model_origin_path = self.BiRe_mod_ori.text()
             origin_coords = None
             if os.path.exists(model_origin_path):
-                print("ok")
                 origin_coords = read_origin(model_origin_path)
             label = (self.BiRe_LabAnn.currentText() == "Labels")
             camera = self.BiRe_cam_select.currentText()
@@ -504,6 +512,35 @@ class Window(QMainWindow, Ui_MainWindow):
         self.Lab2_txt.setText("")
         self.Lab3_txt.setText("")
         self.Lab4_txt.setText("")
+
+    def start_plot(self):
+        if self.plot_model_path.text() == "":
+            print("Required inputs missing")
+            return 0
+        else:
+            model_path = self.plot_model_path.text()
+            json_path = self.plot_annotation_path.text()
+            self.plotter = self.pv_plott
+            pre = os.path.splitext(os.path.basename(model_path))[1]
+            if pre == '.obj':
+                plot_obj_with_multiple_textures(self.plotter, model_path)
+            elif pre == '.ply':
+                mesh = pv.read(model_path)
+                self.plotter.add_mesh(mesh)
+            self.ann_pv_obj, labels_name = add_annotations(self.plotter, json_path)
+            self.plot_cb1.addItems(np.unique(np.array(labels_name)).tolist())
+            self.plot_cb1.setEnabled(True)
+            self.plot_update_B.setEnabled(True)
+            self.plotter.reset_camera()
+
+    def update_plot(self):
+        for mesh in self.ann_pv_obj:
+            self.plotter.remove_actor(mesh)
+        json_path = self.plot_annotation_path.text()
+        ann_filter = self.plot_cb1.currentText()
+
+        add_annotations(self.plotter, json_path, ann_filter)
+        self.plotter.reset_camera()
 
     def setProgressVal(self, val):
         self.progress_bar.setValue(val)
