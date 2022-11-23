@@ -1,5 +1,9 @@
 # CHUBACAPP
 
+![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)
+![sphinx](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)
+![docs](https://readthedocs.org/projects/chubacapp/badge/?version=latest&style=flat)
+
 Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
 A methodological paper is in preparation, and will be added here after publishing.
 
