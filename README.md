@@ -1,5 +1,9 @@
 # CHUBACAPP
 
+![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)
+![sphinx](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)
+![docs](https://readthedocs.org/projects/chubacapp/badge/?version=latest&style=flat)
+
 Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
 A methodological paper is in preparation, and will be added here after publishing.
 
@@ -12,7 +16,7 @@ Along with: ability to add new cameras, and a more optimized reprojection
 Coming soon: updated documentation, video annotation post-processing, multiprocessing and parallelization for faster reprojection, and more !
 
 # Process pipeline:
-![process_pipeline](https://user-images.githubusercontent.com/58145636/194260886-e69c9d88-fa53-47b7-9247-fef517bfc9bd.png)
+![pipeline](https://user-images.githubusercontent.com/58145636/203665810-72fbd233-ad3b-4fdb-9394-7ac6c5bee394.png)
 
 A complete documentation on the different steps of the pipeline is also in preparation.
 
