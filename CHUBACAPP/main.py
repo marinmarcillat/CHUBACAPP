@@ -16,7 +16,6 @@ from PyQt5.QtWidgets import (
     QDialog, QMainWindow, QFileDialog, QProgressBar
 )
 import pyvista as pv
-from pyvistaqt import QtInteractor
 from scipy import stats
 
 import Biigle.utils as utils

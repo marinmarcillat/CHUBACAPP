@@ -73,10 +73,18 @@ Get your disjoint images for annotation
 
 1. Correct your navigation file using your 3D model
 
-2. Generate a 2D disjoint mosaic (Temporary)
+2. If necessary, remove blurry images
+
+3. Generate a 2D disjoint mosaic (Temporary)
 
 Annotate your images using Biigle
 =================================
+
+Manual annotations
+******************
+
+Automatic annotations
+*********************
 
 Reproject
 =========

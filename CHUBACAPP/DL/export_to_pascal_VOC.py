@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pascal_voc_writer import Writer
+from utils.pascal_voc_writer import Writer
 import os
 
 def export_annotations_pascal(file, annotations, width, height, data_path):
