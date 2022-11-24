@@ -18,12 +18,12 @@ release = '1.4.0'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode']
+extensions = ['sphinx.ext.viewcode']
 
 templates_path = ['_templates']
 exclude_patterns = []
 
-
+master_doc = 'index'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

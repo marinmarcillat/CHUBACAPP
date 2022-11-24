@@ -1,13 +1,11 @@
-.. Chubacapp documentation master file, created by
-   sphinx-quickstart on Wed Nov 23 14:33:27 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Chubacapp documentation master file
 
 Welcome to Chubacapp's documentation!
 =====================================
 
 Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
 A methodological paper is in preparation, and will be added here after publishing.
+
 
 .. toctree::
    :maxdepth: 2
@@ -17,9 +15,10 @@ A methodological paper is in preparation, and will be added here after publishin
    usage
    pipeline
 
+
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
+
