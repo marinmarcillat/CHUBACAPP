@@ -16,7 +16,8 @@ Along with: ability to add new cameras, and a more optimized reprojection
 Coming soon: updated documentation, video annotation post-processing, multiprocessing and parallelization for faster reprojection, and more !
 
 # Process pipeline:
-![process_pipeline](https://user-images.githubusercontent.com/58145636/194260886-e69c9d88-fa53-47b7-9247-fef517bfc9bd.png)
+
+![pipeline](https://user-images.githubusercontent.com/58145636/203665810-72fbd233-ad3b-4fdb-9394-7ac6c5bee394.png)
 
 A complete documentation on the different steps of the pipeline is also in preparation.
 
