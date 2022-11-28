@@ -105,7 +105,7 @@ Coming soon !
 Reproject
 =========
 
-Reproject using the reprojection tab
+Reproject using the  :ref:`reprojection tab <reprojection target>`:
 
 Enjoy your 3D annotations !
 ===========================
