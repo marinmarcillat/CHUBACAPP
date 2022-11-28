@@ -11,7 +11,7 @@ Documentation: [Chubacapp](https://chubacapp.readthedocs.io/en/latest/index.html
 (The documentation can be buggy, please reload or download pdf if you have any issues)
 
 # Process pipeline:
-![pipeline](https://user-images.githubusercontent.com/58145636/203665810-72fbd233-ad3b-4fdb-9394-7ac6c5bee394.png)
+![process_pipeline](https://user-images.githubusercontent.com/58145636/204399842-2b869741-3c9b-44c2-a2dc-d5ac276bcc91.png)
 
 A complete documentation on the different steps of the pipeline is also in preparation.
 
