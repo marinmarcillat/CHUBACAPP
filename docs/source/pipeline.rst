@@ -5,12 +5,15 @@ The complete pipeline
 
 *From raw image/video to geo-referenced 3D annotations*
 
-Not yet ready
+Draft
 
 Why 3D annotations?
 ===================
 
-Because it's way cooler !
+- Because it's more precise
+- Because you can work with complex topographies
+- Because you have access to topographic information (slope, roughness...)
+- Because it's way cooler !
 
 What you will need :
 ====================
@@ -20,16 +23,16 @@ Your data
 
 You will need:
 
-- Raw images or video
+- **Raw images or video**
 
 Your images should overlap each other at least 50%. Try to avoid black images in your dataset.
 Your video should not be too fast.
 
-- Navigation file
+- **Navigation file**
 
 This is required for the 3D reconstruction. If not provided, your reconstruction won't be dimensionaly accurate. Please refer to the `Matisse 3D manual <https://github.com/IfremerUnderwater/Matisse/blob/master/Config/help/MatisseHelp_EN.pdf>`_ for the structure of your navigation file.
 
-- Your camera intrinsics parameters
+- **Your camera intrinsics parameters**
 
 This is required for the 3D reconstruction. See `Matisse 3D manual <https://github.com/IfremerUnderwater/Matisse/blob/master/Config/help/MatisseHelp_EN.pdf>`_ for more information.
 
@@ -60,25 +63,36 @@ Constructing the 3D model
 
 `Matisse 3D manual <https://github.com/IfremerUnderwater/Matisse/blob/master/Config/help/MatisseHelp_EN.pdf>`_
 
-For images:
-
-For videos:
-
 2. Reconstruct the 3D model using Matisse 3D
 
-
+`Matisse 3D manual <https://github.com/IfremerUnderwater/Matisse/blob/master/Config/help/MatisseHelp_EN.pdf>`_
 
 Get your disjoint images for annotation
 =======================================
 
-1. Correct your navigation file using your 3D model
+Using the same images that you used for 3D reconstruction :
+
+1. If necessary, correct your navigation file using your 3D model
+
+If your navigation isn't precise, you might want to correct it using the camera positions computed during the
+reconstruction phase. You can do this using CHUBACAPP tab ... .
 
 2. If necessary, remove blurry images
 
-3. Generate a 2D disjoint mosaic (Temporary)
+To avoid having to annotate blurry images, you can remove the blurriest images of your dataset using this CHUBACAPP tab:
+
+3. Select disjoint images using your reprojection
+
+This CHUBACAPP algorithm will reproject the outline of your images on the 3D model using ray-casting,
+compute which of these are in contact and select non overlapping images.
+This process can be slow, as the reprojection and the contact detection algorithm are complex.
+
+You will get an selected image dataset ready to annotate.
 
 Annotate your images using Biigle
 =================================
+
+Annotate the dataset using Biigle.
 
 Manual annotations
 ******************
@@ -86,10 +100,15 @@ Manual annotations
 Automatic annotations
 *********************
 
+Coming soon !
+
 Reproject
 =========
 
+Reproject using the reprojection tab
+
 Enjoy your 3D annotations !
 ===========================
+
 
 

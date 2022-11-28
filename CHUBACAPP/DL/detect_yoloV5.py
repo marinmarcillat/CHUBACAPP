@@ -13,10 +13,10 @@ def model_inference(path_model, path_data, export_biigle, export_pascal, api, co
     path_classes = r"classes.txt"
 
     if export_biigle:
-        from DL.export_to_biigle import export_annotations_image
+        from CHUBACAPP.DL.export_to_biigle import export_annotations_image
 
     if export_pascal:
-        from DL.export_to_pascal_VOC import export_annotations_pascal
+        from CHUBACAPP.DL.export_to_pascal_VOC import export_annotations_pascal
 
     model = torch.hub.load('yolov5', 'custom', source='local', path = path_model, device = 'cpu')
 

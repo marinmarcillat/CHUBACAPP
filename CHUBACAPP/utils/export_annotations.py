@@ -3,7 +3,7 @@ import fiona
 import numpy as np
 from fiona.crs import from_epsg
 from shapely.geometry import Point, Polygon, LineString, mapping
-import utils.coord_conversions as coord_conv
+import CHUBACAPP.utils.coord_conversions as coord_conv
 
 
 def exp_3dmetrics(output_point_path, output_poly_path, point, polygon, coords_origin):
@@ -243,3 +243,64 @@ def export_3d_annotations(exp, output_path, point, line, polygon, coords_origin=
         thread.prog_val.emit(0)
         thread.finished.emit()
         thread.running = False
+
+def save_bounds_polygons(output_path, polygon):
+    export_polygon = {
+        "Data": [],
+        "Fields": [
+            {
+                "Name": "LabelName",
+                "Type": "Text"
+            },
+            {
+                "Name": "LabelHierarchy",
+                "Type": "Text"
+            },
+            {
+                "Name": "Filename",
+                "Type": "Text"
+            },
+            {
+                "Name": "AnnotationId",
+                "Type": "Text"
+            },
+            {
+                "Name": "Area",
+                "Type": "Area"
+            }
+        ],
+        "Measurement pattern": "3DMetrics",
+        "Reference": {
+            "altitude": 0,
+            "latitude": 0,
+            "longitude": 0,
+        }
+    }
+    output_poly_path = os.path.join(output_path, 'all_bounds_polygons_output.json')
+
+    for i in polygon:
+        coords = i[0]
+        pts = []
+        for coord in coords:
+            pts.append({
+                "x": coord[0],
+                "y": coord[1],
+                "z": coord[2],
+            })
+        Area = {
+            "area": 0,
+            "Length": 0,
+            "pts": pts,
+        }
+        pts_ann = [{"LabelName": str(i[1])},
+                   {"LabelHierarchy": str(i[2])},
+                   {"Filename": str(i[3])},
+                   {"AnnotationId": str(i[4])},
+                   {"Area": Area, }]
+        export_polygon["Data"].append(pts_ann)
+
+    out_file = open(output_poly_path, "w")
+    json.dump(export_polygon, out_file, indent=4)
+    out_file.close()
+
+    return output_poly_path

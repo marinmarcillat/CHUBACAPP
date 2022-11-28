@@ -3,7 +3,7 @@ import requests
 import os
 from PIL import Image
 import io
-from Biigle.biigle import Api
+from CHUBACAPP.Biigle.biigle import Api
 
 
 def list_images(dir):

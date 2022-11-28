@@ -35,6 +35,11 @@ The newly created file is stored in the output directory, along with (eventual) 
 
 If the input directory consists in multiple acquisition directories, all navigation files from each of them are concatenated.
 
+Input
+^^^^^
+
+Output
+^^^^^^
 
 
 Removing blur

@@ -9,7 +9,7 @@ from PyQt5 import QtCore
 import imghdr
 from shutil import copy
 
-from utils import sfm, coord_conversions
+from CHUBACAPP.utils import sfm, coord_conversions
 
 
 def recalibration(nav_ori, nav_ref):

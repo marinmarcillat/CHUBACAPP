@@ -1,6 +1,7 @@
 import json
+import os
 
-json_path = r'blender/cameras.json'
+json_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'cameras.json')
 
 def add_camera(data, name, ocm, dist_coeff, res):
     data[name] = {

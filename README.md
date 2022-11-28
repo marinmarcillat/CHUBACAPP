@@ -8,6 +8,7 @@ Usefull tools for image mosaics analysis and faunal annotation processing, as pa
 A methodological paper is in preparation, and will be added here after publishing.
 
 Documentation: [Chubacapp](https://chubacapp.readthedocs.io/en/latest/index.html)
+(The documentation can be buggy, please reload or download pdf if you have any issues)
 
 # Process pipeline:
 ![pipeline](https://user-images.githubusercontent.com/58145636/203665810-72fbd233-ad3b-4fdb-9394-7ac6c5bee394.png)

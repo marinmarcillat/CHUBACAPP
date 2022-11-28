@@ -18,20 +18,21 @@ from PyQt5.QtWidgets import (
 import pyvista as pv
 from scipy import stats
 
-import Biigle.utils as utils
-import blender.blender_reprojection as blender
-import preprocessing.Nav_file_manager as Nav_file_manager
-import preprocessing.blur_detection as blur
-import preprocessing.dim2_nav_filter as dim2_nav_filter
-import post_reprojection.annotations_filter_homogenize as post_reproj
-import annotation_geolocalisation.annotations_to_shp as shp
-from Biigle.choose_label import SelectWindow
-from blender.add_camera import AddCameraWindow
-import blender.camera_config as cc
-from main_window_ui import Ui_MainWindow
-from utils.coord_conversions import read_origin
-from utils.pyvista_utils import plot_obj_with_multiple_textures, add_annotations
-from DL import detect_yoloV5
+import CHUBACAPP.Biigle.utils as utils
+import CHUBACAPP.blender.blender_reprojection as blender
+import CHUBACAPP.preprocessing.Nav_file_manager as Nav_file_manager
+import CHUBACAPP.preprocessing.blur_detection as blur
+import CHUBACAPP.preprocessing.dim2_nav_filter as dim2_nav_filter
+import CHUBACAPP.post_reprojection.annotations_filter_homogenize as post_reproj
+import CHUBACAPP.annotation_geolocalisation.annotations_to_shp as shp
+from CHUBACAPP.Biigle.choose_label import SelectWindow
+from CHUBACAPP.blender.add_camera import AddCameraWindow
+import CHUBACAPP.blender.camera_config as cc
+from CHUBACAPP.main_window_ui import Ui_MainWindow
+from CHUBACAPP.utils.coord_conversions import read_origin
+from CHUBACAPP.utils.pyvista_utils import plot_obj_with_multiple_textures, add_annotations
+import CHUBACAPP.post_reprojection.no_overlap as NO
+from CHUBACAPP.DL import detect_yoloV5
 
 
 class EmittingStream(QtCore.QObject):
@@ -65,6 +66,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.reclass_cat.addItems(['Largo', 'Label'])
         cameras = cc.load_cameras()
         self.BiRe_cam_select.addItems(list(cameras.keys()))
+        self.DIS_cam_select.addItems(list(cameras.keys()))
         sys.stdout = EmittingStream(textWritten=self.normalOutputWritten)
 
         self.progress_bar = QProgressBar()
@@ -82,7 +84,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def normalOutputWritten(self, text):
         """Append text to the QTextEdit."""
-        debug_wins = [self.BiRe_Debug, self.RemBlu_Debug, self.PrePro_Debug, self.tools_debug, self.PR_debug]
+        debug_wins = [self.BiRe_Debug, self.RemBlu_Debug, self.PrePro_Debug, self.tools_debug, self.PR_debug, self.DIS_debug]
         for output_win in debug_wins:
             cursor = output_win.textCursor()
             cursor.movePosition(QtGui.QTextCursor.End)
@@ -111,6 +113,14 @@ class Window(QMainWindow, Ui_MainWindow):
         self.AD_model_B.clicked.connect(lambda: self.selectDir(self.AD_model))
         self.AD_Dir_B.clicked.connect(lambda: self.selectDir(self.AD_Dir))
         self.AD_run.clicked.connect(self.auto_detect)
+
+        # Disjoint image selection
+        self.DIS_sfm_path_B.clicked.connect(lambda: self.selectFile(self.DIS_sfm_path, "sfm file (*.json *.bin)"))
+        self.DIS_model_B.clicked.connect(lambda: self.selectFile(self.DIS_model, "*.ply"))
+        self.DIS_img_dir_B.clicked.connect(lambda: self.selectDir(self.DIS_img_dir))
+        self.DIS_add_camera.clicked.connect(self.add_camera)
+        self.DIS_run.clicked.connect(self.launch_dis)
+
 
         # Annotations2shp
         self.BiRe_2DInput_S.clicked.connect(lambda: self.selectDir(self.BiRe_2DInput))
@@ -215,6 +225,29 @@ class Window(QMainWindow, Ui_MainWindow):
     def confidence_slider(self):
         self.confidence = self.conf_val[self.ConfidenceSlider.value()]
         self.Confidence_txt.setText("{:.2f}".format(self.confidence) + " %")
+
+    def launch_dis(self):
+        if self.DIS_sfm_path.text() == "" or self.DIS_model.text() == "" or self.DIS_img_dir.text() == "" or self.DIS_method.currentText() == "":
+            print("Required inputs missing")
+            return 0
+        else:
+            self.progress_bar.show()
+            sfm_path = self.DIS_sfm_path.text()
+            model_path = self.DIS_model.text()
+            camera_model = self.DIS_cam_select.currentText()
+            img_path = self.DIS_img_dir.text()
+            method = self.DIS_method.currentText()
+
+            self.dis_thread = NO.DISThread(sfm_path, model_path, camera_model, img_path, method)
+            self.dis_thread .prog_val.connect(self.setProgressVal)
+            self.dis_thread .finished.connect(self.end_dis)
+            self.dis_thread .start()
+    def end_dis(self):
+        self.progress_bar.hide()
+        self.DIS_sfm_path.setText("")
+        self.DIS_model.setText("")
+        self.DIS_img_dir.setText("")
+        print("Disjoint image selection done !")
 
     def ann2shp(self):
         if self.BiRe_Csv.text() == "" or self.BiRe_2DInput.text() == "" or self.BiRe_ExpName.text() == "":

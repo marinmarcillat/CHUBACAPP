@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QDialog
-from blender.add_camera_ui import Ui_Dialog
+from CHUBACAPP.blender.add_camera_ui import Ui_Dialog
 
 
 class AddCameraWindow(QDialog, Ui_Dialog):

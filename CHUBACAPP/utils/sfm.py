@@ -4,7 +4,7 @@ import json
 import pandas as pd
 
 
-def sfm_data_handler(sfm_data_path, list_img):
+def sfm_data_handler(sfm_data_path, list_img = None, no_filter = False):
     # Conversion from sfm_data.bin to sfm_data.json if not created. Long
     if os.path.basename(sfm_data_path)[:4] != "temp":
         if os.path.splitext(sfm_data_path)[1] == ".bin":
@@ -23,6 +23,11 @@ def sfm_data_handler(sfm_data_path, list_img):
             data = json.load(f)
         print("Done")
 
+        data['structure'] = []
+
+        if no_filter:
+            return data
+
         temp_views = []
         temp_poses = []
         for view in data['views']:
@@ -34,7 +39,7 @@ def sfm_data_handler(sfm_data_path, list_img):
 
         data['views'] = temp_views
         data['extrinsics'] = temp_poses
-        data['structure'] = []
+
 
         temp_sfm_path = os.path.join(os.path.dirname(sfm_data_path), 'temp_sfm_data.json')
         out_file = open(temp_sfm_path, "w")

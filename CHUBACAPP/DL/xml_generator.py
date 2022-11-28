@@ -1,4 +1,4 @@
-from pascal_voc_writer import Writer
+from CHUBACAPP.utils.pascalVOC_writer import Writer
 import pandas as pd
 import ast
 from tqdm import tqdm

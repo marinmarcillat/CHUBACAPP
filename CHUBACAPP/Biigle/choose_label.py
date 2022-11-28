@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtGui
-from Biigle.choose_label_ui import Ui_Select_label
+from CHUBACAPP.Biigle.choose_label_ui import Ui_Select_label
 from collections import deque
 
 

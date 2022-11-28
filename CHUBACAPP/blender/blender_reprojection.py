@@ -10,10 +10,10 @@ import pandas as pd
 from PyQt5 import QtCore
 import cv2
 
-import blender.camera_config as cc
-import utils.export_annotations as exp_tools
-import utils.sfm as sfm_tools
-import utils.video as video
+import CHUBACAPP.blender.camera_config as cc
+import CHUBACAPP.utils.export_annotations as exp_tools
+import CHUBACAPP.utils.sfm as sfm_tools
+import CHUBACAPP.utils.video as video
 
 
 class annotationsTo3DThread(QtCore.QThread):
@@ -90,12 +90,12 @@ def annotationsTo3D(sfm_data_path, model_path, list_ann_img, camera_model, threa
     import bpy
     from mathutils import Vector
 
-    from photogrammetry_importer.blender_utility.object_utility import add_collection
-    from photogrammetry_importer.file_handlers.openmvg_json_file_handler import (
+    from CHUBACAPP.photogrammetry_importer.blender_utility.object_utility import add_collection
+    from CHUBACAPP.photogrammetry_importer.file_handlers.openmvg_json_file_handler import (
         OpenMVGJSONFileHandler,
     )
-    from photogrammetry_importer.importers.camera_utility import add_camera_object
-    from photogrammetry_importer.types.camera import Camera
+    from CHUBACAPP.photogrammetry_importer.importers.camera_utility import add_camera_object
+    from CHUBACAPP.photogrammetry_importer.types.camera import Camera
 
     class reproject:
 

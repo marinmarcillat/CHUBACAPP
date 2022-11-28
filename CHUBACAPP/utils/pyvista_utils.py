@@ -3,7 +3,7 @@ import os
 import numpy as np
 import json
 import random
-
+from statistics import mean
 
 def plot_obj_with_multiple_textures(plotter, obj_path):
     obj_mesh = pv.read(obj_path)
@@ -42,12 +42,27 @@ def points_to_mesh(points):
     :param points: polygons points
     :return: pyvista 3D mesh
     """
-
     polygons_pts = pv.PolyData(points)  # Convert to pyvista format
-    mesh = polygons_pts.delaunay_2d(offset=0.5,
-                                    edge_source=pv.lines_from_points(points, close=True))  # Delaunay triangulation
+    mesh = polygons_pts.delaunay_2d(offset=0.5)  # Delaunay triangulation
     return mesh
 
+def get_volume(mesh):
+    mesh.compute_normals(inplace=True)
+    mesh.compute_normals(cell_normals=True, point_normals=False, inplace=True)
+    normals = np.asarray(mesh['Normals'])
+    vect = np.asarray([mean(normals[:, 0]), mean(normals[:, 1]), mean(normals[:, 2])])
+    mesh_bottom = mesh.translate(-vect, inplace=True)
+    volume = mesh_bottom.extrude(2 * vect, capping=True)
+    return volume
+
+def save_volumes(volumes, keep, output_path):
+    mesh = pv.PolyData()
+    for i in range(len(keep)):
+        if keep[i]:
+            mesh = mesh.merge([volumes[i][1]])
+
+    ply_path = os.path.join(output_path,'volumes_bounds.ply')
+    mesh.save(ply_path)
 
 def parse_annotation(json_path):
     """
@@ -73,9 +88,11 @@ def parse_annotation(json_path):
                 np_plg_pts = np.array(plg_pts_list)
                 try:
                     name = plg[0]['LabelName']
+                    filename = plg[2]['Filename']
                 except:
                     name = sub_key
-                annotations.append([name, np_plg_pts])
+                    filename = None
+                annotations.append([name, np_plg_pts, filename])
             except:
                 try:  # if is a point
                     pt = sub[sub_key]
@@ -84,9 +101,11 @@ def parse_annotation(json_path):
                     z = pt['z']
                     try:
                         name = plg[0]['LabelName']
+                        filename = plg[2]['Filename']
                     except:
                         name = sub_key
-                    annotations.append([name, np.array([[x, y, z]])])
+                        filename = None
+                    annotations.append([name, np.array([[x, y, z]]), filename])
                 except:
                     pass
 
