@@ -75,11 +75,11 @@ Using the same images that you used for 3D reconstruction :
 1. If necessary, correct your navigation file using your 3D model
 
 If your navigation isn't precise, you might want to correct it using the camera positions computed during the
-reconstruction phase. You can do this using CHUBACAPP tab ... .
+reconstruction phase. You can do this using CHUBACAPP :ref:`preprocessing tab <preprocessing>`.
 
 2. If necessary, remove blurry images
 
-To avoid having to annotate blurry images, you can remove the blurriest images of your dataset using this CHUBACAPP tab:
+To avoid having to annotate blurry images, you can remove the blurriest images of your dataset using the CHUBACAPP :ref:`remove blur tab <remove blur>`.
 
 3. Select disjoint images using your reprojection
 
@@ -105,10 +105,8 @@ Coming soon !
 Reproject
 =========
 
-Reproject using the  :ref:`reprojection tab <reprojection target>`:
+Reproject using the :ref:`reprojection tab <reprojection>`.
 
 Enjoy your 3D annotations !
 ===========================
-
-
 
