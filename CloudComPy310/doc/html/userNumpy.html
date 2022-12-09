@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. operations on coordinates, scalar fields, colors, meshes with Numpy &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6. Some use cases" href="userUseCases.html" />
+    <link rel="prev" title="4. Clouds, meshes, scalar fields: introspection, manipulation" href="userEntities.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#read-modify-or-create-cloud-coordinates-with-numpy">5.1. Read, modify or create cloud coordinates with Numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#read-modify-or-create-a-scalar-field-with-numpy">5.2. Read, modify or create a scalar field with Numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#an-example-of-point-cloud-with-scalar-field-created-from-numpy-arrays">5.3. An example of point cloud with scalar field created from Numpy arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#access-to-the-indexes-of-triangles-nodes-in-a-mesh">5.4. Access to the indexes of triangles nodes in a mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#access-to-the-array-of-colors-in-cloud">5.5. Access to the array of colors in cloud</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>operations on coordinates, scalar fields, colors, meshes with Numpy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/userNumpy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="operations-on-coordinates-scalar-fields-colors-meshes-with-numpy">
+<h1><span class="section-number">5. </span>operations on coordinates, scalar fields, colors, meshes with Numpy<a class="headerlink" href="#operations-on-coordinates-scalar-fields-colors-meshes-with-numpy" title="Permalink to this heading"></a></h1>
+<section id="read-modify-or-create-cloud-coordinates-with-numpy">
+<span id="coordinates-numpy"></span><h2><span class="section-number">5.1. </span>Read, modify or create cloud coordinates with Numpy<a class="headerlink" href="#read-modify-or-create-cloud-coordinates-with-numpy" title="Permalink to this heading"></a></h2>
+<p>There are two ways to access the cloud coordinates from Numpy.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If you want to modify the data in place, without copy, use <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.toNpArray" title="cloudComPy.ccPointCloud.toNpArray"><code class="xref py py-meth docutils literal notranslate"><span class="pre">toNpArray()</span></code></a></p></li>
+<li><p>if you prefer to copy the scalar field data, use <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.toNpArrayCopy" title="cloudComPy.ccPointCloud.toNpArrayCopy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">toNpArrayCopy()</span></code></a></p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud</span><span class="p">(</span><span class="mf">5.0</span><span class="p">))</span>
+
+<span class="n">coords</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">toNpArrayCopy</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">coords</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/6800c0d1cab96a55dfe8167dafb1c20a/test004.py"><code class="xref download docutils literal notranslate"><span class="pre">test004.py</span></code></a>.</p>
+</div></blockquote>
+</div></blockquote>
+<p>You can fill the cloud coordinates with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.coordsFromNPArray_copy" title="cloudComPy.ccPointCloud.coordsFromNPArray_copy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">coordsFromNPArray_copy()</span></code></a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The array should have a shape (numberOfPoints,3).</p></li>
+<li><p><strong>WARNING</strong> Be sure to have an array data in C-style contiguous order.
+For instance, a transpose operation do not reorder the data in memory.
+Check the boolean array.flags <code class="docutils literal notranslate"><span class="pre">array.flags['C_CONTIGUOUS']</span></code> and, if <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+reorder with <code class="docutils literal notranslate"><span class="pre">array.copy(order='C')</span></code>.</p></li>
+<li><p>The cloud memory is reserved /resized automatically.</p></li>
+</ul>
+</div></blockquote>
+<p>See below <a class="reference internal" href="#cloudcreatefromnumpy"><span class="std std-ref">An example of point cloud with scalar field created from Numpy arrays</span></a>.</p>
+</section>
+<section id="read-modify-or-create-a-scalar-field-with-numpy">
+<span id="scalarfield-numpy"></span><h2><span class="section-number">5.2. </span>Read, modify or create a scalar field with Numpy<a class="headerlink" href="#read-modify-or-create-a-scalar-field-with-numpy" title="Permalink to this heading"></a></h2>
+<p>There are two ways to access to the scalar field data from Numpy.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If you want to modify the data in place, without copy, use <a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.toNpArray" title="cloudComPy.ScalarField.toNpArray"><code class="xref py py-meth docutils literal notranslate"><span class="pre">toNpArray()</span></code></a></p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">dic</span> <span class="o">=</span> <span class="n">cloud1</span><span class="o">.</span><span class="n">getScalarFieldDic</span><span class="p">()</span>
+<span class="n">sf1</span> <span class="o">=</span> <span class="n">cloud1</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;Coord. Z&#39;</span><span class="p">])</span>
+<span class="n">max1</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">getMax</span><span class="p">()</span>
+<span class="n">asf1</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">toNpArray</span><span class="p">()</span>   <span class="c1"># access to Numpy array, without copy</span>
+<span class="n">asf1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">max1</span>         <span class="c1"># modification in place</span>
+<span class="n">sf1</span><span class="o">.</span><span class="n">computeMinAndMax</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/14b31ab6cf52c8144b8d705d443e1ee7/test002.py"><code class="xref download docutils literal notranslate"><span class="pre">test002.py</span></code></a>.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>if you prefer to copy the scalar field data, use <a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.toNpArrayCopy" title="cloudComPy.ScalarField.toNpArrayCopy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">toNpArrayCopy()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>You can fill a cloud scalar field with <a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.fromNpArrayCopy" title="cloudComPy.ScalarField.fromNpArrayCopy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fromNpArrayCopy()</span></code></a>.
+The method checks if the scalar field and the array have the same size, before copy.</p>
+<p>See below <a class="reference internal" href="#cloudcreatefromnumpy"><span class="std std-ref">An example of point cloud with scalar field created from Numpy arrays</span></a>.</p>
+</section>
+<section id="an-example-of-point-cloud-with-scalar-field-created-from-numpy-arrays">
+<span id="cloudcreatefromnumpy"></span><h2><span class="section-number">5.3. </span>An example of point cloud with scalar field created from Numpy arrays<a class="headerlink" href="#an-example-of-point-cloud-with-scalar-field-created-from-numpy-arrays" title="Permalink to this heading"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- generate a set of coords and a scalar field</span>
+
+<span class="n">npts</span> <span class="o">=</span> <span class="mi">10000000</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">npts</span><span class="p">))</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">npts</span><span class="p">))</span>
+<span class="n">r</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">phi</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">))</span>
+<span class="n">dr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="o">*</span><span class="n">z</span><span class="p">)</span> <span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># --- create the pointCloud, add the scalar field</span>
+
+<span class="n">cl</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="s2">&quot;boule&quot;</span><span class="p">)</span>
+<span class="n">cl</span><span class="o">.</span><span class="n">coordsFromNPArray_copy</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+<span class="n">cl</span><span class="o">.</span><span class="n">addScalarField</span><span class="p">(</span><span class="s2">&quot;delta&quot;</span><span class="p">)</span>
+<span class="n">sf</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sf</span><span class="o">.</span><span class="n">fromNpArrayCopy</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span>
+
+<span class="c1"># --- save the point cloud</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">SavePointCloud</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span> <span class="s2">&quot;boule.bin&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/af130132715a9038371b2974cbb24b3b/test017.py"><code class="xref download docutils literal notranslate"><span class="pre">test017.py</span></code></a>.</p>
+</section>
+<section id="access-to-the-indexes-of-triangles-nodes-in-a-mesh">
+<h2><span class="section-number">5.4. </span>Access to the indexes of triangles nodes in a mesh<a class="headerlink" href="#access-to-the-indexes-of-triangles-nodes-in-a-mesh" title="Permalink to this heading"></a></h2>
+<p>In a mesh, the array of triangles indexes has a shape(number of triangles, 3),
+with indexes corresponding to the indexes of nodes in the associated cloud.</p>
+<p>The method <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.IndexesToNpArray" title="cloudComPy.ccMesh.IndexesToNpArray"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IndexesToNpArray()</span></code></a> gives access to the array without copy.
+the corresponding nodes coordinates are given by the method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.toNpArray" title="cloudComPy.ccPointCloud.toNpArray"><code class="xref py py-meth docutils literal notranslate"><span class="pre">toNpArray()</span></code></a>
+from the associated cloud (<a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.getAssociatedCloud" title="cloudComPy.ccMesh.getAssociatedCloud"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getAssociatedCloud()</span></code></a>.
+The method <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.IndexesToNpArray_copy" title="cloudComPy.ccMesh.IndexesToNpArray_copy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">IndexesToNpArray_copy()</span></code></a> creates a copy of the array of indexes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- access to the numpy array of node indexes (one row per triangle)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">mesh1</span><span class="o">.</span><span class="n">IndexesToNpArray</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">19602</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint32&#39;</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="n">mesh1</span><span class="o">.</span><span class="n">IndexesToNpArray_copy</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">d2</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">19602</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">d2</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint32&#39;</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/0accd3e5963f0da959e6810677fc905f/test011.py"><code class="xref download docutils literal notranslate"><span class="pre">test011.py</span></code></a>.</p>
+</section>
+<section id="access-to-the-array-of-colors-in-cloud">
+<h2><span class="section-number">5.5. </span>Access to the array of colors in cloud<a class="headerlink" href="#access-to-the-array-of-colors-in-cloud" title="Permalink to this heading"></a></h2>
+<p>The colors are stored in an array of shape(number of nodes, 4), the four components are R, G, B and alpha,
+each stored in a 8bits integer.</p>
+<p>The method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.colorsToNpArray" title="cloudComPy.ccPointCloud.colorsToNpArray"><code class="xref py py-meth docutils literal notranslate"><span class="pre">colorsToNpArray()</span></code></a> gives access to the array of colors without copy,
+the method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.colorsToNpArrayCopy" title="cloudComPy.ccPointCloud.colorsToNpArrayCopy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">colorsToNpArrayCopy()</span></code></a> creates a copy of the array.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cola</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">colorsToNpArray</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cola</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cola</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;uint8&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">colaCopy</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">colorsToNpArrayCopy</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">colaCopy</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1000000</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">colaCopy</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;uint8&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/dcd76c574118dea079cde3f8f8fd82e6/test029.py"><code class="xref download docutils literal notranslate"><span class="pre">test029.py</span></code></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="userEntities.html" class="btn btn-neutral float-left" title="4. Clouds, meshes, scalar fields: introspection, manipulation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="userUseCases.html" class="btn btn-neutral float-right" title="6. Some use cases" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

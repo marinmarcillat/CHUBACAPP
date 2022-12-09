@@ -2,7 +2,7 @@ import os
 from ast import literal_eval
 from math import dist
 import pyvista as pv
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 
 import itertools
 import numpy as np
@@ -59,7 +59,7 @@ class annotationsTo3DThread(QtCore.QThread):
                 annotations.at[i, 'points'] = literal_eval(row['points'])
 
         img_list = list(annotations['filename'].unique())
-        nb_processes = 4
+        nb_processes = cpu_count()
         img_list_split = np.array_split(img_list, nb_processes)
         args = []
         for img_list_i in img_list_split:

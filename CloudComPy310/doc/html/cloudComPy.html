@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. cloudComPy module, functions &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Points Clouds" href="ccPointCloud.html" />
+    <link rel="prev" title="6. Some use cases" href="userUseCases.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>cloudComPy module, functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/cloudComPy.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-cloudComPy">
+<span id="cloudcompy-module-functions"></span><h1><span class="section-number">1. </span>cloudComPy module, functions<a class="headerlink" href="#module-cloudComPy" title="Permalink to this heading"></a></h1>
+<p>cloudComPy is the Python module interfacing cloudCompare library.
+Python3 access to cloudCompare objects is done like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cloudComPy</span> <span class="k">as</span> <span class="nn">cc</span> 
+<span class="n">cc</span><span class="o">.</span><span class="n">initCC</span><span class="p">()</span>  <span class="c1"># to do once before using plugins</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="s2">&quot;/home/paul/CloudComPy/Data/boule.bin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeApproxLocalDensity">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeApproxLocalDensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="GeometricalAnalysisTools.html#cloudComPy.Density" title="_cloudComPy.Density"><span class="pre">_cloudComPy.Density</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeApproxLocalDensity" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the local density (approximate) on a list of points clouds (create a scalarField).</p>
+<p>Old method (based only on the distance to the nearest neighbor).</p>
+<p><strong>Warning</strong> As only one neighbor is extracted, the DENSITY_KNN type corresponds in fact to the (inverse) distance to the nearest neighbor.</p>
+<p>The density output can be:</p>
+<ul class="simple">
+<li><p>the number of neighbors N (only available in ‘Precise’ mode)</p></li>
+<li><p>a surface density: number of neighbors divided by the neighborhood surface = N / (Pi.R2)</p></li>
+<li><p>a volume density: number of neighbors divided by the neighborhood volume = N / (4/3.Pi.R3)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>density</strong> (<a class="reference internal" href="GeometricalAnalysisTools.html#cloudComPy.Density" title="cloudComPy.Density"><em>Density</em></a>) – from Density enum</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – try value obtained by <a class="reference internal" href="#cloudComPy.GetPointCloudRadius" title="cloudComPy.GetPointCloudRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPointCloudRadius()</span></code></a>.</p></li>
+<li><p><strong>clouds</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of clouds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if OK, else False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeCurvature">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeCurvature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.CurvatureType" title="_cloudComPy.CurvatureType"><span class="pre">_cloudComPy.CurvatureType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeCurvature" title="Permalink to this definition"></a></dt>
+<dd><p>Compute the curvature on a list of point clouds (create a scalarField).</p>
+<p>The curvature at each point is estimated by best fitting a quadric around it.
+If there’s not enough neighbors to compute a quadric (i.e. less than 6) an invalid scalar value (NaN) is set for this point.
+This point will appear in grey (or not at all if you uncheck the ‘display NaN values in grey’ option of the scalar field parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cvt</strong> (<a class="reference internal" href="#cloudComPy.CurvatureType" title="cloudComPy.CurvatureType"><em>CurvatureType</em></a>) – from CurvatureType.GAUSSIAN_CURV, CurvatureType.MEAN_CURV, CurvatureType.NORMAL_CHANGE_RATE.</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – try value obtained by <a class="reference internal" href="#cloudComPy.GetPointCloudRadius" title="cloudComPy.GetPointCloudRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPointCloudRadius()</span></code></a>.</p></li>
+<li><p><strong>clouds</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of clouds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if OK, else False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeFeature">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeFeature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Neighbourhood.html#cloudComPy.GeomFeature" title="_cloudComPy.GeomFeature"><span class="pre">_cloudComPy.GeomFeature</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeFeature" title="Permalink to this definition"></a></dt>
+<dd><p>Compute a geometric characteristic on a list of points clouds (create a scalarField).</p>
+<p>Geometric feature computed from eigen values/vectors.
+Most of them are defined in “Contour detection in unstructured 3D point clouds”, Hackel et al, 2016.
+PCA1 and PCA2 are defined in “3D terrestrial lidar data classification of complex natural scenes
+using a multi-scale dimensionality criterion: Applications in geomorphology”, Brodu and Lague, 2012.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature</strong> (<a class="reference internal" href="Neighbourhood.html#cloudComPy.GeomFeature" title="cloudComPy.GeomFeature"><em>GeomFeature</em></a>) – from GeomFeature enum</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – try value obtained by <a class="reference internal" href="#cloudComPy.GetPointCloudRadius" title="cloudComPy.GetPointCloudRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPointCloudRadius()</span></code></a>.</p></li>
+<li><p><strong>clouds</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of clouds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if OK, else False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeLocalDensity">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeLocalDensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="GeometricalAnalysisTools.html#cloudComPy.Density" title="_cloudComPy.Density"><span class="pre">_cloudComPy.Density</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeLocalDensity" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the local density on a list of points clouds (create a scalarField).</p>
+<p>The density output can be:</p>
+<ul class="simple">
+<li><p>the number of neighbors N (only available in ‘Precise’ mode)</p></li>
+<li><p>a surface density: number of neighbors divided by the neighborhood surface = N / (Pi.R2)</p></li>
+<li><p>a volume density: number of neighbors divided by the neighborhood volume = N / (4/3.Pi.R3)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>density</strong> (<a class="reference internal" href="GeometricalAnalysisTools.html#cloudComPy.Density" title="cloudComPy.Density"><em>Density</em></a>) – from Density enum</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – try value obtained by <a class="reference internal" href="#cloudComPy.GetPointCloudRadius" title="cloudComPy.GetPointCloudRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPointCloudRadius()</span></code></a>.</p></li>
+<li><p><strong>clouds</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of clouds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if OK, else False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeMomentOrder1">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeMomentOrder1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeMomentOrder1" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the first order moment on a list of points clouds (create a scalarField).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>float</em>) – try value obtained by <a class="reference internal" href="#cloudComPy.GetPointCloudRadius" title="cloudComPy.GetPointCloudRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPointCloudRadius()</span></code></a>.</p></li>
+<li><p><strong>clouds</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of clouds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if OK, else False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeNormals">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">selectedEntities:</span> <span class="pre">List[_cloudComPy.ccHObject],</span> <span class="pre">model:</span> <span class="pre">_cloudComPy.LOCAL_MODEL_TYPES</span> <span class="pre">=</span> <span class="pre">&lt;LOCAL_MODEL_TYPES.LS:</span> <span class="pre">1&gt;,</span> <span class="pre">useScanGridsForComputation:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">defaultRadius:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.0,</span> <span class="pre">minGridAngle_deg:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0,</span> <span class="pre">orientNormals:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">useScanGridsForOrientation:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">useSensorsForOrientation:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">preferredOrientation:</span> <span class="pre">_cloudComPy.Orientation</span> <span class="pre">=</span> <span class="pre">&lt;Orientation.UNDEFINED:</span> <span class="pre">255&gt;,</span> <span class="pre">orientNormalsMST:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">mstNeighbors:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">6,</span> <span class="pre">computePerVertexNormals:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeNormals" title="Permalink to this definition"></a></dt>
+<dd><p>Compute normals on a list of clouds and meshes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selectedEntities</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of entities (clouds, meshes)</p></li>
+<li><p><strong>model</strong> (<a class="reference internal" href="#cloudComPy.LOCAL_MODEL_TYPES" title="cloudComPy.LOCAL_MODEL_TYPES"><em>LOCAL_MODEL_TYPES</em></a><em>,</em><em>optional</em>) – default = LOCAL_MODEL_TYPES.LS (Least Square best fitting plane)</p></li>
+<li><p><strong>useScanGridsForComputation</strong> (<em>bool</em><em>,</em><em>optional</em>) – default <cite>True</cite>, whether to use ScanGrids when available</p></li>
+<li><p><strong>defaultRadius</strong> (<em>float</em><em>,</em><em>optional</em>) – default 0.0</p></li>
+<li><p><strong>minGridAngle_deg</strong> (<em>float</em><em>,</em><em>optional</em>) – default 1.0</p></li>
+<li><p><strong>orientNormals</strong> (<em>bool</em><em>,</em><em>optional</em>) – default <cite>True</cite></p></li>
+<li><p><strong>useScanGridsForOrientation</strong> (<em>bool</em><em>,</em><em>optional</em>) – default <cite>True</cite>, when ScanGrids available</p></li>
+<li><p><strong>useSensorsForOrientation</strong> (<em>bool</em><em>,</em><em>optional</em>) – default <cite>True</cite>, when Sensors available</p></li>
+<li><p><strong>preferredOrientation</strong> (<a class="reference internal" href="#cloudComPy.Orientation" title="cloudComPy.Orientation"><em>Orientation</em></a><em>,</em><em>optional</em>) – default Orientation.UNDEFINED</p></li>
+<li><p><strong>orientNormalsMST</strong> (<em>bool</em><em>,</em><em>optional</em>) – default <cite>True</cite>, use Minimum Spanning Tree</p></li>
+<li><p><strong>mstNeighbors</strong> (<em>int</em><em>,</em><em>optional</em>) – default 6, for Minimum Spanning Tree</p></li>
+<li><p><strong>computePerVertexNormals</strong> (<em>bool</em><em>,</em><em>optional</em>) – default <cite>True</cite>, apply on mesh, if <cite>True</cite>, compute on vertices, if <cite>False</cite>, compute on triangles</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.computeRoughness">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">computeRoughness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.computeRoughness" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the roughness on a list of points clouds (create a scalarField).</p>
+<p>Roughness estimation is very… simple: for each point, the ‘roughness’ value is equal to the distance between this point
+and the best fitting plane computed on its nearest neighbors.
+If there’s not enough neighbors to compute a LS plane (i.e. less than 3) an invalid scalar value (NaN) is set for this point.
+This point will appear in grey (or not at all if you uncheck the ‘display NaN values in grey’ option in the scalar field properties).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>radius</strong> (<em>float</em>) – try value obtained by <a class="reference internal" href="#cloudComPy.GetPointCloudRadius" title="cloudComPy.GetPointCloudRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">GetPointCloudRadius()</span></code></a>.</p></li>
+<li><p><strong>clouds</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of clouds</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if OK, else False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.ComputeVolume25D">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ComputeVolume25D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reportInfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ReportInfoVol" title="_cloudComPy.ReportInfoVol"><span class="pre">_cloudComPy.ReportInfoVol</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ground</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccGenericPointCloud" title="_cloudComPy.ccGenericPointCloud"><span class="pre">_cloudComPy.ccGenericPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ceil</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccGenericPointCloud" title="_cloudComPy.ccGenericPointCloud"><span class="pre">_cloudComPy.ccGenericPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertDim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridStep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groundHeight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ceilHeight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ComputeVolume25D" title="Permalink to this definition"></a></dt>
+<dd><p>Compute a 2.5D volume between a cloud and a ground plane,or two clouds,following a given direction (X, Y or Z).</p>
+<p>If only one cloud is given, the direction (X, Y or Z) defines the normal to the plane used for calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reportInfo</strong> (<a class="reference internal" href="#cloudComPy.ReportInfoVol" title="cloudComPy.ReportInfoVol"><em>ReportInfoVol</em></a>) – the object instance to be completed with results</p></li>
+<li><p><strong>ground</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – either a point cloud or None</p></li>
+<li><p><strong>ceil</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – either a point cloud or None</p></li>
+<li><p><strong>vertDim</strong> (<em>int</em>) – direction from (0,1,2): 0: X, 1: Y, 2: Z</p></li>
+<li><p><strong>gridStep</strong> (<em>float</em>) – size of the grid step</p></li>
+<li><p><strong>groundHeight</strong> (<em>float</em>) – altitude of the ground plane along the direction, if ground is None</p></li>
+<li><p><strong>ceilHeight</strong> (<em>float</em>) – altitude of the ceil plane along the direction, if ceil is None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if success, False if problem detected in parameters</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.deleteEntity">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">deleteEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.deleteEntity" title="Permalink to this definition"></a></dt>
+<dd><p>Delete an entity and its children (mesh, cloud…)</p>
+<p><strong>Warning</strong> No automatic action on the Python side on the variables referencing the C++ object!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cc</span><span class="o">.</span><span class="n">deleteEntity</span><span class="p">(</span><span class="n">anEntity</span><span class="p">)</span>
+<span class="n">anEntity</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>entity</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><em>ccHObject</em></a>) – the entity to remove</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.ExtractConnectedComponents">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ExtractConnectedComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clouds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">octreeLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minComponentSize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxNumberComponents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomColors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#cloudComPy.ExtractConnectedComponents" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts connected components from a set of clouds.</p>
+<p>This tool segments the selected cloud(s) in smaller parts separated by a minimum distance. 
+Each part is a connected component (i.e. a set of ‘connected’ points). 
+CloudCompare uses a 3D grid to extract the connected components.
+This grid is deduced from the octree structure. 
+By selecting on octree level you define how small is the minimum gap between two components.
+If n is the octree level and d the dimension of the clouds (Bounding box side),
+the gap is roughly d/2**n.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>clouds</strong> (<em>list</em><em>[</em><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a><em>]</em>) – the set of clouds</p></li>
+<li><p><strong>octreeLevel</strong> (<em>int</em><em>,</em><em>optional</em>) – the octree level used to define the connection between nodes, default 8.</p></li>
+<li><p><strong>minComponentSize</strong> (<em>int</em><em>,</em><em>optional</em>) – the minimum number of nodes to constitute a component, default 100.</p></li>
+<li><p><strong>maxNumberComponents</strong> (<em>int</em><em>,</em><em>optional</em>) – maximum number of components accepted (default 100):
+The process stops when this number is reached. 
+The return gives the number of clouds already processed.
+Check this number to see if some clouds have not been processed.</p></li>
+<li><p><strong>randomColors</strong> (<em>bool optional</em>) – whether to color randomly the components or not, default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple (number of clouds processed, list of components)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.ExtractSlicesAndContours">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ExtractSlicesAndContours</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">entities:</span> <span class="pre">List[_cloudComPy.ccHObject],</span> <span class="pre">bbox:</span> <span class="pre">_cloudComPy.ccBBox,</span> <span class="pre">bboxTrans:</span> <span class="pre">_cloudComPy.ccGLMatrix</span> <span class="pre">=</span> <span class="pre">&lt;_cloudComPy.ccGLMatrix</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x0000020841F021B0&gt;,</span> <span class="pre">singleSliceMode:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">processRepeatX:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">processRepeatY:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">processRepeatZ:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">extractEnvelopes:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">maxEdgeLength:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">envelopeType:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">extractLevelSet:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">levelSetGridStep:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">levelSetMinVertCount:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">gap:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">multiPass:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">splitEnvelopes:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">projectOnBestFitPlane:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">generateRandomColors:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#cloudComPy.ExtractSlicesAndContours" title="Permalink to this definition"></a></dt>
+<dd><p>Extract slices, envelopes and contours from a set of clouds and meshes (Cross section).</p>
+<p>Slices are the part of cloud or mesh contained in the bounding box used as a tool to cut.
+Slicing can be repeated selectively along the 3 directions X, Y, Z, with optional gaps between slices.
+Optional envelopes are closed polylines defining a concave external boundary of the slices.
+Optional contours are closed polylines defining boundaries (external and internal) of the slices.
+The contours are built via a rasterisation process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entities</strong> (<em>list</em><em>[</em><em>ccHObjects</em><em>]</em>) – the list of point clouds and meshes to slice.</p></li>
+<li><p><strong>bbox</strong> (<a class="reference internal" href="#cloudComPy.ccBBox" title="cloudComPy.ccBBox"><em>ccBBox</em></a>) – the bounding box used as a slice tool.</p></li>
+<li><p><strong>bboxTrans</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a><em>,</em><em>optional</em>) – optional transformation (rotation translation) of the bounding box, default identity.</p></li>
+<li><p><strong>singleSliceMode</strong> (<em>boolean</em><em>,</em><em>optional</em>) – whether to cut just one slice or repeat the process, default True, i.e. only one slice.</p></li>
+<li><p><strong>processRepeatX</strong> (<em>boolean</em><em>,</em><em>optional</em>) – whether to repeat along the X direction (if singleSliceMode False), default False.</p></li>
+<li><p><strong>processRepeatY</strong> (<em>boolean</em><em>,</em><em>optional</em>) – whether to repeat along the Y direction (if singleSliceMode False), default False.</p></li>
+<li><p><strong>processRepeatZ</strong> (<em>boolean</em><em>,</em><em>optional</em>) – whether to repeat along the Z direction (if singleSliceMode False), default True.</p></li>
+<li><p><strong>extractEnvelopes</strong> (<em>boolean</em><em>,</em><em>optional</em>) – whether to extract the envelopes or not, default False.</p></li>
+<li><p><strong>maxEdgeLength</strong> (<em>double</em><em>,</em><em>optional</em>) – maximum edge length for the envelope, default 0=convex envelope.</p></li>
+<li><p><strong>envelopeType</strong> (<em>int</em><em>,</em><em>optional</em>) – type of envelope, default 0.
+0: envelope built on the lower part of the slice, 1: upper part, 2: all the slice.</p></li>
+<li><p><strong>extractLevelSet</strong> (<em>boolean</em><em>,</em><em>optional</em>) – whether to extract contours or not, default False.</p></li>
+<li><p><strong>levelSetGridStep</strong> (<em>double</em><em>,</em><em>optional</em>) – grid step to use for the rasterisation needed to build the contours</p></li>
+<li><p><strong>levelSetMinVertCount</strong> (<em>int</em><em>,</em><em>optional</em>) – number of points required to define a contour, default 0 (change it!).</p></li>
+<li><p><strong>gap</strong> (<em>double</em><em>,</em><em>optional</em>) – gap between slices, default 0.</p></li>
+<li><p><strong>multiPass</strong> (<em>boolean</em><em>,</em><em>optional</em>) – Multi-pass process where longer edges may be temporarily created to obtain a better fit…
+or a worst one! Default False.</p></li>
+<li><p><strong>splitEnvelopes</strong> (<em>boolean</em><em>,</em><em>optional</em>) – split the generated contour(s) in smaller parts to avoid creating edges longer
+than the specified max edge length. Default False.</p></li>
+<li><p><strong>projectOnBestFitPlane</strong> (<em>boolean</em><em>,</em><em>optional</em>) – Before extracting the contour, points can be projected along the repeat dimension
+(if only one is defined) or on the best fit plane. Default False.</p></li>
+<li><p><strong>boolean</strong><strong>,</strong><strong>optionalgenerateRandomColors</strong> – whether to define random colors per slice (will overwrite existing colors!)
+or not. Default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple of 3 lists ([slices], [envelopes], [contours])</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.filterBySFValue">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">filterBySFValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></span><a class="headerlink" href="#cloudComPy.filterBySFValue" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new point cloud by filtering points using the current out ScalarField (see cloud.setCurrentOutScalarField).
+Keep the points whose ScalarField value is between the min and max parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>min</strong> (<em>float</em>) – minimum value to keep</p></li>
+<li><p><strong>max</strong> (<em>float</em>) – maximum value to keep</p></li>
+<li><p><strong>cloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the input cloud</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a ccPointCloud object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud">ccPointCloud</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.GetPointCloudRadius">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">GetPointCloudRadius</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clouds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.GetPointCloudRadius" title="Permalink to this definition"></a></dt>
+<dd><p>Compute an estimate radius to use in computeCurvature.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>clouds</strong> (<em>list</em>) – list of clouds(list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>)</p></li>
+<li><p><strong>nodes</strong> (<em>int</em><em>,</em><em>optional</em>) – number of nodes wanted within the radius, default 12</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>estimated radius</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.getScalarType">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">getScalarType</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#cloudComPy.getScalarType" title="Permalink to this definition"></a></dt>
+<dd><p>Get the scalar type used in cloudCompare under the form defined in Numpy: ‘float32’ or ‘float64’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>scalar type</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.ICP">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ICP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data:</span> <span class="pre">_cloudComPy.ccHObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model:</span> <span class="pre">_cloudComPy.ccHObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minRMSDecrease:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxIterationCount:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomSamplingLimit:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removeFarthestPoints:</span> <span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method:</span> <span class="pre">_cloudComPy.CONVERGENCE_TYPE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjustScale:</span> <span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finalOverlapRatio:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useDataSFAsWeights:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">useModelSFAsWeights:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformationFilters:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_NONE:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxThreadCount:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.ICPres" title="_cloudComPy.ICPres"><span class="pre">_cloudComPy.ICPres</span></a></span></span><a class="headerlink" href="#cloudComPy.ICP" title="Permalink to this definition"></a></dt>
+<dd><p>Applies ICP registration on two entities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><em>ccHObject</em></a>) – cloud to align.</p></li>
+<li><p><strong>model</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><em>ccHObject</em></a>) – reference cloud.</p></li>
+<li><p><strong>minRMSDecrease</strong> (<em>float</em>) – The minimum error (RMS) reduction between two consecutive steps to continue process,
+if CONVERGENCE_TYPE == MAX_ERROR_CONVERGENCE.</p></li>
+<li><p><strong>maxIterationCount</strong> (<em>int</em>) – Stop after this number of iterations,
+if CONVERGENCE_TYPE == MAX_ITER_CONVERGENCE.</p></li>
+<li><p><strong>randomSamplingLimit</strong> (<em>int</em>) – Limit above which clouds should be randomly resampled.</p></li>
+<li><p><strong>removeFarthestPoints</strong> (<em>bool</em>) – If <cite>True</cite>, the algorithm will automatically ignore farthest points from the reference.
+This is a trick to improve registration for slightly different clouds.</p></li>
+<li><p><strong>method</strong> (<a class="reference internal" href="#cloudComPy.CONVERGENCE_TYPE" title="cloudComPy.CONVERGENCE_TYPE"><em>CONVERGENCE_TYPE</em></a>) – Mode of convergence, CONVERGENCE_TYPE.MAX_ITER_CONVERGENCE or CONVERGENCE_TYPE.MAX_ERROR_CONVERGENCE.</p></li>
+<li><p><strong>adjustScale</strong> (<em>bool</em>) – Whether to release the scale parameter during the registration procedure or not.</p></li>
+<li><p><strong>finalOverlapRatio</strong> (<em>float</em><em>,</em><em>optional</em>) – Theoretical overlap ratio (at each iteration, only this percentage (between 0 and 1).
+Will be used for registration (default 1.0).</p></li>
+<li><p><strong>useDataSFAsWeights</strong> (<em>bool</em><em>,</em><em>optional</em>) – Weights for data points (default <cite>False</cite>).</p></li>
+<li><p><strong>useModelSFAsWeights</strong> (<em>bool</em><em>,</em><em>optional</em>) – Weights for model points (default <cite>False</cite>).</p></li>
+<li><p><strong>transformationFilters</strong> (<a class="reference internal" href="#cloudComPy.TRANSFORMATION_FILTERS" title="cloudComPy.TRANSFORMATION_FILTERS"><em>TRANSFORMATION_FILTERS</em></a><em>,</em><em>optional</em>) – <p>Filters to be applied on the resulting transformation at each step (default 0).</p>
+<ul>
+<li><p>SKIP_NONE           = 0</p></li>
+<li><p>SKIP_RXY            = 1</p></li>
+<li><p>SKIP_RYZ            = 2</p></li>
+<li><p>SKIP_RXZ            = 4</p></li>
+<li><p>SKIP_ROTATION       = 7</p></li>
+<li><p>SKIP_TX             = 8</p></li>
+<li><p>SKIP_TY             = 16</p></li>
+<li><p>SKIP_TZ             = 32</p></li>
+<li><p>SKIP_TRANSLATION    = 56</p></li>
+</ul>
+</p></li>
+<li><p><strong>maxThreadCount</strong> (<em>int</em><em>,</em><em>optional</em>) – Maximum number of threads to use (default 0 = max)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ICPres structure <a class="reference internal" href="#cloudComPy.ICPres" title="cloudComPy.ICPres"><code class="xref py py-class docutils literal notranslate"><span class="pre">ICPres</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.importFile">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">importFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">_cloudComPy.CC_SHIFT_MODE</span> <span class="pre">=</span> <span class="pre">&lt;CC_SHIFT_MODE.AUTO:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extraData:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#cloudComPy.importFile" title="Permalink to this definition"></a></dt>
+<dd><p>Load the entities (cloud or mesh) from a file containing several entities,
+and get file structure
+(some files as <code class="docutils literal notranslate"><span class="pre">.E57</span></code> provide structured information on content, 
+given here as a list of strings).</p>
+<p><strong>WARNING</strong> 
+Shift parameters are not always taken into account, depending on the type of file,
+shift values, following the internal rules of CloudCompare: when using the CloudCompare GUI,
+shift dialog at import is not always available. When the shift dialog is not proposed
+in the GUI, shift parameters are likely not taken into account in CloudCompare.</p>
+<p>Optional string extraData can be used in ply file, for instance, to select extra fields
+for import as scalarFields (by default, all extra fields are imported as scalar fields).
+Here, the filter is a regular expression that works on the field name in uppercase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – file Name</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="#cloudComPy.CC_SHIFT_MODE" title="cloudComPy.CC_SHIFT_MODE"><em>CC_SHIFT_MODE</em></a><em>,</em><em>optional</em>) – default AUTO, value from AUTO, XYZ, FIRST_GLOBAL_SHIFT, NO_GLOBAL_SHIFT</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>,</em><em>optional</em>) – default 0</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>,</em><em>optional</em>) – default 0</p></li>
+<li><p><strong>z</strong> (<em>float</em><em>,</em><em>optional</em>) – default 0</p></li>
+<li><p><strong>extraData</strong> (<em>string</em><em>,</em><em>optional</em>) – default empty string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a tuple (list of meshes, list of clouds, file structure)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.initCC">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">initCC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.initCC" title="Permalink to this definition"></a></dt>
+<dd><p>Done at module init, should be done once before using plugins!</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.initCloudCompare">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">initCloudCompare</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.initCloudCompare" title="Permalink to this definition"></a></dt>
+<dd><p>Done at module init, should be done once after initCC before using plugins!</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.interpolateScalarFieldsFrom">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">interpolateScalarFieldsFrom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">destCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">srcCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfIndexes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.interpolatorParameters" title="_cloudComPy.interpolatorParameters"><span class="pre">_cloudComPy.interpolatorParameters</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">octreeLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.interpolateScalarFieldsFrom" title="Permalink to this definition"></a></dt>
+<dd><p>Interpolate scalar fields from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>destCloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the cloud receiving the interpolatated scalar fields.</p></li>
+<li><p><strong>srcCloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the source cloud containing the scalar fields to interpolate.</p></li>
+<li><p><strong>sfIndexes</strong> (<em>list</em>) – the list of indexes of scalar fields in the source cloud, to interpolate.</p></li>
+<li><p><strong>params</strong> (<a class="reference internal" href="#cloudComPy.interpolatorParameters" title="cloudComPy.interpolatorParameters"><em>interpolatorParameters</em></a>) – interpolation parameter structure</p></li>
+<li><p><strong>octreeLevel</strong> (<em>int</em><em>,</em><em>optional</em>) – octree level, default 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.invertNormals">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">invertNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.invertNormals" title="Permalink to this definition"></a></dt>
+<dd><p>Invert normals on a list of clouds and meshes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>success</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginDraco">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginDraco</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginDraco" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the Draco plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the Draco plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginFbx">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginFbx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginFbx" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the Fbx plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the Fbx plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginHPR">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginHPR</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginHPR" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the HPR plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the HPR plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginM3C2">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginM3C2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginM3C2" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the M3C2 plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the M3C2 plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginMeshBoolean">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginMeshBoolean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginMeshBoolean" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the MeshBoolean plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the MeshBoolean plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginPCV">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginPCV</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginPCV" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the PCV plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the PCV plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.isPluginRANSAC_SD">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">isPluginRANSAC_SD</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.isPluginRANSAC_SD" title="Permalink to this definition"></a></dt>
+<dd><p>returns True if CloudComPy is built with the RANSAC_SD plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if CloudComPy is built with the RANSAC_SD plugin, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.loadMesh">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">loadMesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">_cloudComPy.CC_SHIFT_MODE</span> <span class="pre">=</span> <span class="pre">&lt;CC_SHIFT_MODE.AUTO:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extraData:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="_cloudComPy.ccMesh"><span class="pre">_cloudComPy.ccMesh</span></a></span></span><a class="headerlink" href="#cloudComPy.loadMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Load a Mesh from a file.</p>
+<p><strong>WARNING</strong> 
+Shift parameters are not always taken into account, depending on the type of file,
+shift values, following the internal rules of CloudCompare: when using the CloudCompare GUI,
+shift dialog at import is not always available. When the shift dialog is not proposed
+in the GUI, shift parameters are likely not taken into account in CloudCompare.</p>
+<p>Optional string extraData can be used in ply file, for instance, to select extra fields
+for import as scalarFields (by default, all extra fields are imported as scalar fields).
+Here, the filter is a regular expression that works on the field name in uppercase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – file name</p></li>
+<li><p><strong>shiftMode</strong> (<a class="reference internal" href="#cloudComPy.CC_SHIFT_MODE" title="cloudComPy.CC_SHIFT_MODE"><em>CC_SHIFT_MODE</em></a><em>,</em><em>optional</em>) – <p>shift mode from <cite>CC_SHIFT_MODE</cite> enum, default <cite>AUTO</cite>.</p>
+<ul>
+<li><p><cite>CC_SHIFT_MODE.AUTO</cite>: automatic shift of coordinates</p></li>
+<li><p><cite>CC_SHIFT_MODE.XYZ</cite>:  coordinates shift given by x, y, z parameters</p></li>
+<li><p><cite>CC_SHIFT_MODE.FIRST_GLOBAL_SHIFT</cite>: use the first encountered global shift value (if any)</p></li>
+<li><p><cite>CC_SHIFT_MODE.NO_GLOBAL_SHIFT</cite>: no shift at all</p></li>
+</ul>
+</p></li>
+<li><p><strong>skip</strong> (<em>int</em><em>,</em><em>optional</em>) – parameter not used yet! default 0</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>,</em><em>optional</em>) – shift value for coordinates (mode XYZ),  default 0</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>,</em><em>optional</em>) – shift value for coordinates (mode XYZ),  default 0</p></li>
+<li><p><strong>z</strong> (<em>float</em><em>,</em><em>optional</em>) – shift value for coordinates (mode XYZ),  default 0</p></li>
+<li><p><strong>extraData</strong> (<em>string</em><em>,</em><em>optional</em>) – default empty string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <cite>ccMesh</cite> object. Usage: see ccMesh doc.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="cloudComPy.ccMesh">ccMesh</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.loadPointCloud">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">loadPointCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">_cloudComPy.CC_SHIFT_MODE</span> <span class="pre">=</span> <span class="pre">&lt;CC_SHIFT_MODE.AUTO:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extraData:</span> <span class="pre">QString</span> <span class="pre">=</span> <span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></span><a class="headerlink" href="#cloudComPy.loadPointCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Load a 3D cloud from a file.</p>
+<p><strong>WARNING</strong> 
+Shift parameters are not always taken into account, depending on the type of file,
+shift values, following the internal rules of CloudCompare: when using the CloudCompare GUI,
+shift dialog at import is not always available. When the shift dialog is not proposed
+in the GUI, shift parameters are likely not taken into account in CloudCompare.</p>
+<p>Optional string extraData can be used in ply file, for instance, to select extra fields
+for import as scalarFields (by default, all extra fields are imported as scalar fields).
+Here, the filter is a regular expression that works on the field name in uppercase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – file name</p></li>
+<li><p><strong>shiftMode</strong> (<a class="reference internal" href="#cloudComPy.CC_SHIFT_MODE" title="cloudComPy.CC_SHIFT_MODE"><em>CC_SHIFT_MODE</em></a><em>,</em><em>optional</em>) – <p>shift mode from <cite>CC_SHIFT_MODE</cite> enum, default <cite>AUTO</cite>.</p>
+<ul>
+<li><p><cite>CC_SHIFT_MODE.AUTO</cite>: automatic shift of coordinates</p></li>
+<li><p><cite>CC_SHIFT_MODE.XYZ</cite>:  coordinates shift given by x, y, z parameters</p></li>
+<li><p><cite>CC_SHIFT_MODE.FIRST_GLOBAL_SHIFT</cite>: use the first encountered global shift value (if any)</p></li>
+<li><p><cite>CC_SHIFT_MODE.NO_GLOBAL_SHIFT</cite>: no shift at all</p></li>
+</ul>
+</p></li>
+<li><p><strong>skip</strong> (<em>int</em><em>,</em><em>optional</em>) – parameter not used yet! default 0</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>,</em><em>optional</em>) – shift value for coordinates (mode XYZ),  default 0</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>,</em><em>optional</em>) – shift value for coordinates (mode XYZ),  default 0</p></li>
+<li><p><strong>z</strong> (<em>float</em><em>,</em><em>optional</em>) – shift value for coordinates (mode XYZ),  default 0</p></li>
+<li><p><strong>extraData</strong> (<em>string</em><em>,</em><em>optional</em>) – default empty string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <cite>ccPointCloud</cite> object. Usage: see ccPointCloud doc.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud">ccPointCloud</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.loadPolyline">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">loadPolyline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode:</span> <span class="pre">_cloudComPy.CC_SHIFT_MODE</span> <span class="pre">=</span> <span class="pre">&lt;CC_SHIFT_MODE.AUTO:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></span><a class="headerlink" href="#cloudComPy.loadPolyline" title="Permalink to this definition"></a></dt>
+<dd><p>Load a polyline from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – The polyline file.</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="#cloudComPy.CC_SHIFT_MODE" title="cloudComPy.CC_SHIFT_MODE"><em>CC_SHIFT_MODE</em></a><em>,</em><em>optional</em>) – <p>from (AUTO, XYZ),  optional, default AUTO.</p>
+<ul>
+<li><p>AUTO: automatic shift of coordinates</p></li>
+<li><p>XYZ:  coordinates shift given by x, y, z parameters</p></li>
+</ul>
+</p></li>
+<li><p><strong>skip</strong> (<em>int</em><em>,</em><em>optional</em>) – not used yet! default 0.</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>,</em><em>optional</em>) – optional shift value for coordinates (mode XYZ), default 0</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>,</em><em>optional</em>) – optional shift value for coordinates (mode XYZ), default 0</p></li>
+<li><p><strong>z</strong> (<em>float</em><em>,</em><em>optional</em>) – optional shift value for coordinates (mode XYZ), default 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a ccPolyline object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline" title="cloudComPy.ccPolyline">ccPolyline</a></p>
+</dd>
+</dl>
+<p>Usage: see ccPolyline doc.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.RasterizeGeoTiffOnly">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">RasterizeGeoTiffOnly</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud:</span> <span class="pre">_cloudComPy.ccGenericPointCloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridStep:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertDir:</span> <span class="pre">_cloudComPy.CC_DIRECTION</span> <span class="pre">=</span> <span class="pre">&lt;CC_DIRECTION.Z:</span> <span class="pre">2&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterZ:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterSFs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterRGB:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pathToImages:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectionType:</span> <span class="pre">_cloudComPy.ProjectionType</span> <span class="pre">=</span> <span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfProjectionType:</span> <span class="pre">_cloudComPy.ProjectionType</span> <span class="pre">=</span> <span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emptyCellFillStrategy:</span> <span class="pre">_cloudComPy.EmptyCellFillOption</span> <span class="pre">=</span> <span class="pre">&lt;EmptyCellFillOption.LEAVE_EMPTY:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customHeight:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridBBox:</span> <span class="pre">_cloudComPy.ccBBox</span> <span class="pre">=</span> <span class="pre">&lt;_cloudComPy.ccBBox</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x0000020841F02830&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellCount:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellMinHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellMaxHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellAvgHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellHeightStdDev:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellHeightRange:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></span><a class="headerlink" href="#cloudComPy.RasterizeGeoTiffOnly" title="Permalink to this definition"></a></dt>
+<dd><p>Compute a GeoTiff file from a point cloud, given a grid step and a direction.</p>
+<p>GeoTiff files are only available with the GDAL plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> (<em>ccGenericPointCloud*</em>) – the original cloud</p></li>
+<li><p><strong>gridStep</strong> (<em>float</em>) – the raster grid step</p></li>
+<li><p><strong>vertDir</strong> (<a class="reference internal" href="#cloudComPy.CC_DIRECTION" title="cloudComPy.CC_DIRECTION"><em>CC_DIRECTION</em></a><em>,</em><em>optional</em>) – default = CC_DIRECTION.Z, direction of projection</p></li>
+<li><p><strong>outputRasterZ</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, create a GeoTiff file (3D tiff with altitude)</p></li>
+<li><p><strong>outputRasterSFs</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, add scalar fields to the GeoTiff file (requires outputRasterZ)</p></li>
+<li><p><strong>outputRasterRGB</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, create a GeoTiff file with GRB values (choose either Z or RGB, not the two)</p></li>
+<li><p><strong>pathToImages</strong> (<em>string</em><em>,</em><em>optional</em>) – default “.” for current directory, directory for the GeoTiff file, name basesd on Cloud name plus suffix</p></li>
+<li><p><strong>resample</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, resample the point cloud</p></li>
+<li><p><strong>projectionType</strong> (<a class="reference internal" href="#cloudComPy.ProjectionType" title="cloudComPy.ProjectionType"><em>ProjectionType</em></a><em>,</em><em>optional</em>) – default ProjectionType.PROJ_AVERAGE_VALUE,</p></li>
+<li><p><strong>sfProjectionType</strong> (<a class="reference internal" href="#cloudComPy.ProjectionType" title="cloudComPy.ProjectionType"><em>ProjectionType</em></a><em>,</em><em>optional</em>) – default ProjectionType.PROJ_AVERAGE_VALUE,</p></li>
+<li><p><strong>emptyCellFillStrategy</strong> (<a class="reference internal" href="#cloudComPy.EmptyCellFillOption" title="cloudComPy.EmptyCellFillOption"><em>EmptyCellFillOption</em></a><em>,</em><em>optional</em>) – default EmptyCellFillOption.LEAVE_EMPTY</p></li>
+<li><p><strong>customHeight</strong> (<em>float</em><em>,</em><em>optional</em>) – default float(‘nan’)</p></li>
+<li><p><strong>gridBBox</strong> (<a class="reference internal" href="#cloudComPy.ccBBox" title="cloudComPy.ccBBox"><em>ccBBox</em></a><em>,</em><em>optional</em>) – default ccBBox() the bounding box used for the raster is by default the cloud bounding box);</p></li>
+<li><p><strong>export_perCellCount</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellMinHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellMaxHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellAvgHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellHeightStdDev</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellHeightRange</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.RasterizeToCloud">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">RasterizeToCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud:</span> <span class="pre">_cloudComPy.ccGenericPointCloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridStep:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertDir:</span> <span class="pre">_cloudComPy.CC_DIRECTION</span> <span class="pre">=</span> <span class="pre">&lt;CC_DIRECTION.Z:</span> <span class="pre">2&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterZ:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterSFs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterRGB:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pathToImages:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectionType:</span> <span class="pre">_cloudComPy.ProjectionType</span> <span class="pre">=</span> <span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfProjectionType:</span> <span class="pre">_cloudComPy.ProjectionType</span> <span class="pre">=</span> <span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emptyCellFillStrategy:</span> <span class="pre">_cloudComPy.EmptyCellFillOption</span> <span class="pre">=</span> <span class="pre">&lt;EmptyCellFillOption.LEAVE_EMPTY:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customHeight:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridBBox:</span> <span class="pre">_cloudComPy.ccBBox</span> <span class="pre">=</span> <span class="pre">&lt;_cloudComPy.ccBBox</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x0000020841F02230&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellCount:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellMinHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellMaxHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellAvgHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellHeightStdDev:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellHeightRange:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></span><a class="headerlink" href="#cloudComPy.RasterizeToCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Compute a Raster cloud from a point cloud, given a grid step and a direction, plus an optional GeoTiff file.</p>
+<p>GeoTiff files are only available with the GDAL plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> (<em>ccGenericPointCloud*</em>) – the original cloud</p></li>
+<li><p><strong>gridStep</strong> (<em>float</em>) – the raster grid step</p></li>
+<li><p><strong>vertDir</strong> (<a class="reference internal" href="#cloudComPy.CC_DIRECTION" title="cloudComPy.CC_DIRECTION"><em>CC_DIRECTION</em></a><em>,</em><em>optional</em>) – default = CC_DIRECTION.Z, direction of projection</p></li>
+<li><p><strong>outputRasterZ</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, create also a GeoTiff file (3D tiff with altitude)</p></li>
+<li><p><strong>outputRasterSFs</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, add scalar fields to the GeoTiff file (requires outputRasterZ)</p></li>
+<li><p><strong>outputRasterRGB</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, create also a GeoTiff file with GRB values (choose either Z or RGB, not the two)</p></li>
+<li><p><strong>pathToImages</strong> (<em>string</em><em>,</em><em>optional</em>) – default “.” for current directory, directory for the GeoTiff file, name basesd on Cloud name plus suffix</p></li>
+<li><p><strong>resample</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, resample the point cloud</p></li>
+<li><p><strong>projectionType</strong> (<a class="reference internal" href="#cloudComPy.ProjectionType" title="cloudComPy.ProjectionType"><em>ProjectionType</em></a><em>,</em><em>optional</em>) – default ProjectionType.PROJ_AVERAGE_VALUE,</p></li>
+<li><p><strong>sfProjectionType</strong> (<a class="reference internal" href="#cloudComPy.ProjectionType" title="cloudComPy.ProjectionType"><em>ProjectionType</em></a><em>,</em><em>optional</em>) – default ProjectionType.PROJ_AVERAGE_VALUE,</p></li>
+<li><p><strong>emptyCellFillStrategy</strong> (<a class="reference internal" href="#cloudComPy.EmptyCellFillOption" title="cloudComPy.EmptyCellFillOption"><em>EmptyCellFillOption</em></a><em>,</em><em>optional</em>) – default EmptyCellFillOption.LEAVE_EMPTY</p></li>
+<li><p><strong>customHeight</strong> (<em>float</em><em>,</em><em>optional</em>) – default float(‘nan’)</p></li>
+<li><p><strong>gridBBox</strong> (<a class="reference internal" href="#cloudComPy.ccBBox" title="cloudComPy.ccBBox"><em>ccBBox</em></a><em>,</em><em>optional</em>) – default ccBBox() the bounding box used for the raster is by default the cloud bounding box);</p></li>
+<li><p><strong>export_perCellCount</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellMinHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellMaxHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellAvgHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellHeightStdDev</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellHeightRange</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the raster cloud</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud">ccPointCloud</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.RasterizeToMesh">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">RasterizeToMesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud:</span> <span class="pre">_cloudComPy.ccGenericPointCloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridStep:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertDir:</span> <span class="pre">_cloudComPy.CC_DIRECTION</span> <span class="pre">=</span> <span class="pre">&lt;CC_DIRECTION.Z:</span> <span class="pre">2&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterZ:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterSFs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputRasterRGB:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pathToImages:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectionType:</span> <span class="pre">_cloudComPy.ProjectionType</span> <span class="pre">=</span> <span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfProjectionType:</span> <span class="pre">_cloudComPy.ProjectionType</span> <span class="pre">=</span> <span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emptyCellFillStrategy:</span> <span class="pre">_cloudComPy.EmptyCellFillOption</span> <span class="pre">=</span> <span class="pre">&lt;EmptyCellFillOption.LEAVE_EMPTY:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customHeight:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gridBBox:</span> <span class="pre">_cloudComPy.ccBBox</span> <span class="pre">=</span> <span class="pre">&lt;_cloudComPy.ccBBox</span> <span class="pre">object</span> <span class="pre">at</span> <span class="pre">0x0000020841F02470&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellCount:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellMinHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellMaxHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellAvgHeight:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellHeightStdDev:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_perCellHeightRange:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="_cloudComPy.ccMesh"><span class="pre">_cloudComPy.ccMesh</span></a></span></span><a class="headerlink" href="#cloudComPy.RasterizeToMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Compute a Raster mesh from a point cloud, given a grid step and a direction, plus an optional GeoTiff file.</p>
+<p>GeoTiff files are only available with the GDAL plugin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> (<em>ccGenericPointCloud*</em>) – the original cloud</p></li>
+<li><p><strong>gridStep</strong> (<em>float</em>) – the raster grid step</p></li>
+<li><p><strong>vertDir</strong> (<a class="reference internal" href="#cloudComPy.CC_DIRECTION" title="cloudComPy.CC_DIRECTION"><em>CC_DIRECTION</em></a><em>,</em><em>optional</em>) – default = CC_DIRECTION.Z, direction of projection</p></li>
+<li><p><strong>outputRasterZ</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, create also a GeoTiff file (3D tiff with altitude)</p></li>
+<li><p><strong>outputRasterSFs</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, add scalar fields to the GeoTiff file (requires outputRasterZ)</p></li>
+<li><p><strong>outputRasterRGB</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, create also a GeoTiff file with GRB values (choose either Z or RGB, not the two)</p></li>
+<li><p><strong>pathToImages</strong> (<em>string</em><em>,</em><em>optional</em>) – default “.” for current directory, directory for the GeoTiff file, name basesd on Cloud name plus suffix</p></li>
+<li><p><strong>resample</strong> (<em>bool</em><em>,</em><em>optional</em>) – default False, resample the point cloud</p></li>
+<li><p><strong>projectionType</strong> (<a class="reference internal" href="#cloudComPy.ProjectionType" title="cloudComPy.ProjectionType"><em>ProjectionType</em></a><em>,</em><em>optional</em>) – default ProjectionType.PROJ_AVERAGE_VALUE,</p></li>
+<li><p><strong>sfProjectionType</strong> (<a class="reference internal" href="#cloudComPy.ProjectionType" title="cloudComPy.ProjectionType"><em>ProjectionType</em></a><em>,</em><em>optional</em>) – default ProjectionType.PROJ_AVERAGE_VALUE,</p></li>
+<li><p><strong>emptyCellFillStrategy</strong> (<a class="reference internal" href="#cloudComPy.EmptyCellFillOption" title="cloudComPy.EmptyCellFillOption"><em>EmptyCellFillOption</em></a><em>,</em><em>optional</em>) – default EmptyCellFillOption.LEAVE_EMPTY</p></li>
+<li><p><strong>customHeight</strong> (<em>float</em><em>,</em><em>optional</em>) – default float(‘nan’)</p></li>
+<li><p><strong>gridBBox</strong> (<a class="reference internal" href="#cloudComPy.ccBBox" title="cloudComPy.ccBBox"><em>ccBBox</em></a><em>,</em><em>optional</em>) – default ccBBox() the bounding box used for the raster is by default the cloud bounding box);</p></li>
+<li><p><strong>export_perCellCount</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellMinHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellMaxHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellAvgHeight</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellHeightStdDev</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+<li><p><strong>export_perCellHeightRange</strong> (<em>bool</em>) – export scalarField, default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the raster mesh</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="cloudComPy.ccMesh">ccMesh</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.SaveEntities">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">SaveEntities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.CC_FILE_ERROR" title="_cloudComPy.CC_FILE_ERROR"><span class="pre">_cloudComPy.CC_FILE_ERROR</span></a></span></span><a class="headerlink" href="#cloudComPy.SaveEntities" title="Permalink to this definition"></a></dt>
+<dd><p>Save a list of entities (cloud, meshes, primitives…) in a file: use bin format!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entities</strong> (list of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a>) – list of entities</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The entities file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 or I/O error.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.CC_FILE_ERROR" title="cloudComPy.CC_FILE_ERROR">CC_FILE_ERROR</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.SaveMesh">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">SaveMesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="_cloudComPy.ccMesh"><span class="pre">_cloudComPy.ccMesh</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.CC_FILE_ERROR" title="_cloudComPy.CC_FILE_ERROR"><span class="pre">_cloudComPy.CC_FILE_ERROR</span></a></span></span><a class="headerlink" href="#cloudComPy.SaveMesh" title="Permalink to this definition"></a></dt>
+<dd><p>Save a 3D mesh in a file.</p>
+<p>The file name extension determines the format (.ma .dxf .off .stl .vtk .obj .ply .bin .fbx)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mesh</strong> (<a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="cloudComPy.ccMesh"><em>ccMesh</em></a>) – the mesh to save.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The mesh file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 or I/O error.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.CC_FILE_ERROR" title="cloudComPy.CC_FILE_ERROR">CC_FILE_ERROR</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.SavePointCloud">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">SavePointCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.CC_FILE_ERROR" title="_cloudComPy.CC_FILE_ERROR"><span class="pre">_cloudComPy.CC_FILE_ERROR</span></a></span></span><a class="headerlink" href="#cloudComPy.SavePointCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Save a 3D cloud in a file.</p>
+<p>The file name extension determines the format (.asc .las .E57 .sbf .ply .vtk .dxf .pcd .pn .pv .bin)
+An optional string can be used to specify format:
+To use the LAS_FWF IO plugin to save .las or .laz file in format 1.4: version=”1.4”
+(without version, las or laz file are saved in format 1.2)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the cloud to save.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The cloud file.</p></li>
+<li><p><strong>version</strong> (<em>string</em><em>,</em><em>optional</em>) – optional string, default “”, used to specify a particular version.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 or I/O error.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.CC_FILE_ERROR" title="cloudComPy.CC_FILE_ERROR">CC_FILE_ERROR</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cloudComPy.setTraces">
+<span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">setTraces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.setTraces" title="Permalink to this definition"></a></dt>
+<dd><p>Activate or deactivate trace system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>isActive</strong> (<em>bool</em>) – whether to activate or deactivate the trace system.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ccBBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ccBBox</span></span><a class="headerlink" href="#cloudComPy.ccBBox" title="Permalink to this definition"></a></dt>
+<dd><p>BoundingBox object.</p>
+<p>Can be initialized with tuples of coordinates and a boolean (minCorner, maxCorner, True)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccBBox.maxCorner">
+<span class="sig-name descname"><span class="pre">maxCorner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccBBox" title="_cloudComPy.ccBBox"><span class="pre">_cloudComPy.ccBBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.ccBBox.maxCorner" title="Permalink to this definition"></a></dt>
+<dd><p>Get the max corner of the bounding box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>max corner (tuple of coordinates)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccBBox.minCorner">
+<span class="sig-name descname"><span class="pre">minCorner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccBBox" title="_cloudComPy.ccBBox"><span class="pre">_cloudComPy.ccBBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.ccBBox.minCorner" title="Permalink to this definition"></a></dt>
+<dd><p>Get the min corner of the bounding box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>min corner (tuple of coordinates)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CC_DIRECTION">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CC_DIRECTION</span></span><a class="headerlink" href="#cloudComPy.CC_DIRECTION" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>X</p>
+<p>Y</p>
+<p>Z</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_DIRECTION.X">
+<span class="sig-name descname"><span class="pre">X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_DIRECTION.X:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_DIRECTION.X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_DIRECTION.Y">
+<span class="sig-name descname"><span class="pre">Y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_DIRECTION.Y:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_DIRECTION.Y" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_DIRECTION.Z">
+<span class="sig-name descname"><span class="pre">Z</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_DIRECTION.Z:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_DIRECTION.Z" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_DIRECTION.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.CC_DIRECTION.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_DIRECTION.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.CC_DIRECTION.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CC_FILE_ERROR</span></span><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>CC_FERR_NO_ERROR</p>
+<p>CC_FERR_BAD_ARGUMENT</p>
+<p>CC_FERR_UNKNOWN_FILE</p>
+<p>CC_FERR_WRONG_FILE_TYPE</p>
+<p>CC_FERR_WRITING</p>
+<p>CC_FERR_READING</p>
+<p>CC_FERR_NO_SAVE</p>
+<p>CC_FERR_NO_LOAD</p>
+<p>CC_FERR_BAD_ENTITY_TYPE</p>
+<p>CC_FERR_CANCELED_BY_USER</p>
+<p>CC_FERR_NOT_ENOUGH_MEMORY</p>
+<p>CC_FERR_MALFORMED_FILE</p>
+<p>CC_FERR_CONSOLE_ERROR</p>
+<p>CC_FERR_BROKEN_DEPENDENCY_ERROR</p>
+<p>CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN</p>
+<p>CC_FERR_THIRD_PARTY_LIB_FAILURE</p>
+<p>CC_FERR_THIRD_PARTY_LIB_EXCEPTION</p>
+<p>CC_FERR_NOT_IMPLEMENTED</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_BAD_ARGUMENT">
+<span class="sig-name descname"><span class="pre">CC_FERR_BAD_ARGUMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_BAD_ARGUMENT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_BAD_ARGUMENT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_BAD_ENTITY_TYPE">
+<span class="sig-name descname"><span class="pre">CC_FERR_BAD_ENTITY_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_BAD_ENTITY_TYPE:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_BAD_ENTITY_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_BROKEN_DEPENDENCY_ERROR">
+<span class="sig-name descname"><span class="pre">CC_FERR_BROKEN_DEPENDENCY_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_BROKEN_DEPENDENCY_ERROR:</span> <span class="pre">13&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_BROKEN_DEPENDENCY_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_CANCELED_BY_USER">
+<span class="sig-name descname"><span class="pre">CC_FERR_CANCELED_BY_USER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_CANCELED_BY_USER:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_CANCELED_BY_USER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_CONSOLE_ERROR">
+<span class="sig-name descname"><span class="pre">CC_FERR_CONSOLE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_CONSOLE_ERROR:</span> <span class="pre">12&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_CONSOLE_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN">
+<span class="sig-name descname"><span class="pre">CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN:</span> <span class="pre">14&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_FILE_WAS_WRITTEN_BY_UNKNOWN_PLUGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_MALFORMED_FILE">
+<span class="sig-name descname"><span class="pre">CC_FERR_MALFORMED_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_MALFORMED_FILE:</span> <span class="pre">11&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_MALFORMED_FILE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_NOT_ENOUGH_MEMORY">
+<span class="sig-name descname"><span class="pre">CC_FERR_NOT_ENOUGH_MEMORY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_NOT_ENOUGH_MEMORY:</span> <span class="pre">10&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_NOT_ENOUGH_MEMORY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_NOT_IMPLEMENTED">
+<span class="sig-name descname"><span class="pre">CC_FERR_NOT_IMPLEMENTED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_NOT_IMPLEMENTED:</span> <span class="pre">17&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_NOT_IMPLEMENTED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_NO_ERROR">
+<span class="sig-name descname"><span class="pre">CC_FERR_NO_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_NO_ERROR:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_NO_ERROR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_NO_LOAD">
+<span class="sig-name descname"><span class="pre">CC_FERR_NO_LOAD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_NO_LOAD:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_NO_LOAD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_NO_SAVE">
+<span class="sig-name descname"><span class="pre">CC_FERR_NO_SAVE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_NO_SAVE:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_NO_SAVE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_READING">
+<span class="sig-name descname"><span class="pre">CC_FERR_READING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_READING:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_READING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_THIRD_PARTY_LIB_EXCEPTION">
+<span class="sig-name descname"><span class="pre">CC_FERR_THIRD_PARTY_LIB_EXCEPTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_THIRD_PARTY_LIB_EXCEPTION:</span> <span class="pre">16&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_THIRD_PARTY_LIB_EXCEPTION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_THIRD_PARTY_LIB_FAILURE">
+<span class="sig-name descname"><span class="pre">CC_FERR_THIRD_PARTY_LIB_FAILURE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_THIRD_PARTY_LIB_FAILURE:</span> <span class="pre">15&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_THIRD_PARTY_LIB_FAILURE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_UNKNOWN_FILE">
+<span class="sig-name descname"><span class="pre">CC_FERR_UNKNOWN_FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_UNKNOWN_FILE:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_UNKNOWN_FILE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_WRITING">
+<span class="sig-name descname"><span class="pre">CC_FERR_WRITING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_WRITING:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_WRITING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.CC_FERR_WRONG_FILE_TYPE">
+<span class="sig-name descname"><span class="pre">CC_FERR_WRONG_FILE_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_FILE_ERROR.CC_FERR_WRONG_FILE_TYPE:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.CC_FERR_WRONG_FILE_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_FILE_ERROR.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.CC_FILE_ERROR.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CC_SHIFT_MODE</span></span><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>AUTO</p>
+<p>XYZ</p>
+<p>FIRST_GLOBAL_SHIFT</p>
+<p>NO_GLOBAL_SHIFT</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE.AUTO">
+<span class="sig-name descname"><span class="pre">AUTO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_SHIFT_MODE.AUTO:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE.AUTO" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE.FIRST_GLOBAL_SHIFT">
+<span class="sig-name descname"><span class="pre">FIRST_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_SHIFT_MODE.FIRST_GLOBAL_SHIFT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE.FIRST_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE.NO_GLOBAL_SHIFT">
+<span class="sig-name descname"><span class="pre">NO_GLOBAL_SHIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_SHIFT_MODE.NO_GLOBAL_SHIFT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE.NO_GLOBAL_SHIFT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE.XYZ">
+<span class="sig-name descname"><span class="pre">XYZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_SHIFT_MODE.XYZ:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE.XYZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_SHIFT_MODE.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.CC_SHIFT_MODE.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CurvatureType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CurvatureType</span></span><a class="headerlink" href="#cloudComPy.CurvatureType" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>GAUSSIAN_CURV</p>
+<p>MEAN_CURV</p>
+<p>NORMAL_CHANGE_RATE</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CurvatureType.GAUSSIAN_CURV">
+<span class="sig-name descname"><span class="pre">GAUSSIAN_CURV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CurvatureType.GAUSSIAN_CURV:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.CurvatureType.GAUSSIAN_CURV" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CurvatureType.MEAN_CURV">
+<span class="sig-name descname"><span class="pre">MEAN_CURV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CurvatureType.MEAN_CURV:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.CurvatureType.MEAN_CURV" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CurvatureType.NORMAL_CHANGE_RATE">
+<span class="sig-name descname"><span class="pre">NORMAL_CHANGE_RATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CurvatureType.NORMAL_CHANGE_RATE:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.CurvatureType.NORMAL_CHANGE_RATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CurvatureType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.CurvatureType.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CurvatureType.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.CurvatureType.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">EmptyCellFillOption</span></span><a class="headerlink" href="#cloudComPy.EmptyCellFillOption" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>LEAVE_EMPTY</p>
+<p>FILL_MINIMUM_HEIGHT</p>
+<p>FILL_MAXIMUM_HEIGHT</p>
+<p>FILL_CUSTOM_HEIGHT</p>
+<p>FILL_AVERAGE_HEIGHT</p>
+<p>INTERPOLATE</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.FILL_AVERAGE_HEIGHT">
+<span class="sig-name descname"><span class="pre">FILL_AVERAGE_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EmptyCellFillOption.FILL_AVERAGE_HEIGHT:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.FILL_AVERAGE_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.FILL_CUSTOM_HEIGHT">
+<span class="sig-name descname"><span class="pre">FILL_CUSTOM_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EmptyCellFillOption.FILL_CUSTOM_HEIGHT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.FILL_CUSTOM_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.FILL_MAXIMUM_HEIGHT">
+<span class="sig-name descname"><span class="pre">FILL_MAXIMUM_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EmptyCellFillOption.FILL_MAXIMUM_HEIGHT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.FILL_MAXIMUM_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.FILL_MINIMUM_HEIGHT">
+<span class="sig-name descname"><span class="pre">FILL_MINIMUM_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EmptyCellFillOption.FILL_MINIMUM_HEIGHT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.FILL_MINIMUM_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.INTERPOLATE">
+<span class="sig-name descname"><span class="pre">INTERPOLATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EmptyCellFillOption.INTERPOLATE:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.INTERPOLATE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.LEAVE_EMPTY">
+<span class="sig-name descname"><span class="pre">LEAVE_EMPTY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;EmptyCellFillOption.LEAVE_EMPTY:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.LEAVE_EMPTY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.EmptyCellFillOption.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.EmptyCellFillOption.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ExportableFields</span></span><a class="headerlink" href="#cloudComPy.ExportableFields" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>PER_CELL_HEIGHT</p>
+<p>PER_CELL_COUNT</p>
+<p>PER_CELL_MIN_HEIGHT</p>
+<p>PER_CELL_MAX_HEIGHT</p>
+<p>PER_CELL_AVG_HEIGHT</p>
+<p>PER_CELL_HEIGHT_STD_DEV</p>
+<p>PER_CELL_HEIGHT_RANGE</p>
+<p>PER_CELL_INVALID</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_AVG_HEIGHT">
+<span class="sig-name descname"><span class="pre">PER_CELL_AVG_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_AVG_HEIGHT:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_AVG_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_COUNT">
+<span class="sig-name descname"><span class="pre">PER_CELL_COUNT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_COUNT:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_COUNT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_HEIGHT">
+<span class="sig-name descname"><span class="pre">PER_CELL_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_HEIGHT:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_HEIGHT_RANGE">
+<span class="sig-name descname"><span class="pre">PER_CELL_HEIGHT_RANGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_HEIGHT_RANGE:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_HEIGHT_RANGE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_HEIGHT_STD_DEV">
+<span class="sig-name descname"><span class="pre">PER_CELL_HEIGHT_STD_DEV</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_HEIGHT_STD_DEV:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_HEIGHT_STD_DEV" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_INVALID">
+<span class="sig-name descname"><span class="pre">PER_CELL_INVALID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_INVALID:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_INVALID" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_MAX_HEIGHT">
+<span class="sig-name descname"><span class="pre">PER_CELL_MAX_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_MAX_HEIGHT:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_MAX_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.PER_CELL_MIN_HEIGHT">
+<span class="sig-name descname"><span class="pre">PER_CELL_MIN_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ExportableFields.PER_CELL_MIN_HEIGHT:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.ExportableFields.PER_CELL_MIN_HEIGHT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.ExportableFields.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ExportableFields.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.ExportableFields.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ICPres">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ICPres</span></span><a class="headerlink" href="#cloudComPy.ICPres" title="Permalink to this definition"></a></dt>
+<dd><p>Result values on ICP registration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aligned</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the point cloud on which the transformation must be applied</p></li>
+<li><p><strong>transMat</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – the resulting transformation to apply</p></li>
+<li><p><strong>finalScale</strong> (<em>float</em>) – calculated scale if rescale required</p></li>
+<li><p><strong>finalRMS</strong> (<em>float</em>) – final error (RMS)</p></li>
+<li><p><strong>finalPointCount</strong> (<em>int</em>) – number of points used to compute the final RMS</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ICPres.aligned">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aligned</span></span><a class="headerlink" href="#cloudComPy.ICPres.aligned" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ICPres.finalPointCount">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finalPointCount</span></span><a class="headerlink" href="#cloudComPy.ICPres.finalPointCount" title="Permalink to this definition"></a></dt>
+<dd><p>Result values on ICP registration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aligned</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the point cloud on which the transformation must be applied</p></li>
+<li><p><strong>transMat</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – the resulting transformation to apply</p></li>
+<li><p><strong>finalScale</strong> (<em>float</em>) – calculated scale if rescale required</p></li>
+<li><p><strong>finalRMS</strong> (<em>float</em>) – final error (RMS)</p></li>
+<li><p><strong>finalPointCount</strong> (<em>int</em>) – number of points used to compute the final RMS</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ICPres.finalRMS">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finalRMS</span></span><a class="headerlink" href="#cloudComPy.ICPres.finalRMS" title="Permalink to this definition"></a></dt>
+<dd><p>Result values on ICP registration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aligned</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the point cloud on which the transformation must be applied</p></li>
+<li><p><strong>transMat</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – the resulting transformation to apply</p></li>
+<li><p><strong>finalScale</strong> (<em>float</em>) – calculated scale if rescale required</p></li>
+<li><p><strong>finalRMS</strong> (<em>float</em>) – final error (RMS)</p></li>
+<li><p><strong>finalPointCount</strong> (<em>int</em>) – number of points used to compute the final RMS</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ICPres.finalScale">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finalScale</span></span><a class="headerlink" href="#cloudComPy.ICPres.finalScale" title="Permalink to this definition"></a></dt>
+<dd><p>Result values on ICP registration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aligned</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the point cloud on which the transformation must be applied</p></li>
+<li><p><strong>transMat</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – the resulting transformation to apply</p></li>
+<li><p><strong>finalScale</strong> (<em>float</em>) – calculated scale if rescale required</p></li>
+<li><p><strong>finalRMS</strong> (<em>float</em>) – final error (RMS)</p></li>
+<li><p><strong>finalPointCount</strong> (<em>int</em>) – number of points used to compute the final RMS</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ICPres.transMat">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">transMat</span></span><a class="headerlink" href="#cloudComPy.ICPres.transMat" title="Permalink to this definition"></a></dt>
+<dd><p>Result values on ICP registration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>aligned</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a>) – the point cloud on which the transformation must be applied</p></li>
+<li><p><strong>transMat</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – the resulting transformation to apply</p></li>
+<li><p><strong>finalScale</strong> (<em>float</em>) – calculated scale if rescale required</p></li>
+<li><p><strong>finalRMS</strong> (<em>float</em>) – final error (RMS)</p></li>
+<li><p><strong>finalPointCount</strong> (<em>int</em>) – number of points used to compute the final RMS</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.interpolatorParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">interpolatorParameters</span></span><a class="headerlink" href="#cloudComPy.interpolatorParameters" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for scalar fields interpolation from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>int</em>) – from INTERPOL_METHOD: NEAREST_NEIGHBOR, K_NEAREST_NEIGHBORS, RADIUS, default NEAREST_NEIGHBOR</p></li>
+<li><p><strong>algos</strong> (<em>int</em>) – from INTERPOL_ALGO: AVERAGE, MEDIAN, NORMAL_DIST, default AVERAGE</p></li>
+<li><p><strong>knn</strong> (<em>int</em>) – number of neighbors, default 0</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – default 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – default 0</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.interpolatorParameters.algos">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">algos</span></span><a class="headerlink" href="#cloudComPy.interpolatorParameters.algos" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for scalar fields interpolation from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>int</em>) – from INTERPOL_METHOD: NEAREST_NEIGHBOR, K_NEAREST_NEIGHBORS, RADIUS, default NEAREST_NEIGHBOR</p></li>
+<li><p><strong>algos</strong> (<em>int</em>) – from INTERPOL_ALGO: AVERAGE, MEDIAN, NORMAL_DIST, default AVERAGE</p></li>
+<li><p><strong>knn</strong> (<em>int</em>) – number of neighbors, default 0</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – default 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – default 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.interpolatorParameters.knn">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">knn</span></span><a class="headerlink" href="#cloudComPy.interpolatorParameters.knn" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for scalar fields interpolation from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>int</em>) – from INTERPOL_METHOD: NEAREST_NEIGHBOR, K_NEAREST_NEIGHBORS, RADIUS, default NEAREST_NEIGHBOR</p></li>
+<li><p><strong>algos</strong> (<em>int</em>) – from INTERPOL_ALGO: AVERAGE, MEDIAN, NORMAL_DIST, default AVERAGE</p></li>
+<li><p><strong>knn</strong> (<em>int</em>) – number of neighbors, default 0</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – default 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – default 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.interpolatorParameters.method">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">method</span></span><a class="headerlink" href="#cloudComPy.interpolatorParameters.method" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for scalar fields interpolation from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>int</em>) – from INTERPOL_METHOD: NEAREST_NEIGHBOR, K_NEAREST_NEIGHBORS, RADIUS, default NEAREST_NEIGHBOR</p></li>
+<li><p><strong>algos</strong> (<em>int</em>) – from INTERPOL_ALGO: AVERAGE, MEDIAN, NORMAL_DIST, default AVERAGE</p></li>
+<li><p><strong>knn</strong> (<em>int</em>) – number of neighbors, default 0</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – default 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – default 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.interpolatorParameters.radius">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radius</span></span><a class="headerlink" href="#cloudComPy.interpolatorParameters.radius" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for scalar fields interpolation from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>int</em>) – from INTERPOL_METHOD: NEAREST_NEIGHBOR, K_NEAREST_NEIGHBORS, RADIUS, default NEAREST_NEIGHBOR</p></li>
+<li><p><strong>algos</strong> (<em>int</em>) – from INTERPOL_ALGO: AVERAGE, MEDIAN, NORMAL_DIST, default AVERAGE</p></li>
+<li><p><strong>knn</strong> (<em>int</em>) – number of neighbors, default 0</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – default 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – default 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.interpolatorParameters.sigma">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sigma</span></span><a class="headerlink" href="#cloudComPy.interpolatorParameters.sigma" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters for scalar fields interpolation from a source cloud to a destination cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>int</em>) – from INTERPOL_METHOD: NEAREST_NEIGHBOR, K_NEAREST_NEIGHBORS, RADIUS, default NEAREST_NEIGHBOR</p></li>
+<li><p><strong>algos</strong> (<em>int</em>) – from INTERPOL_ALGO: AVERAGE, MEDIAN, NORMAL_DIST, default AVERAGE</p></li>
+<li><p><strong>knn</strong> (<em>int</em>) – number of neighbors, default 0</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – default 0</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – default 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">LOCAL_MODEL_TYPES</span></span><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>NO_MODEL</p>
+<p>LS</p>
+<p>TRI</p>
+<p>QUADRIC</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES.LS">
+<span class="sig-name descname"><span class="pre">LS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LOCAL_MODEL_TYPES.LS:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES.LS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES.NO_MODEL">
+<span class="sig-name descname"><span class="pre">NO_MODEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LOCAL_MODEL_TYPES.NO_MODEL:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES.NO_MODEL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES.QUADRIC">
+<span class="sig-name descname"><span class="pre">QUADRIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LOCAL_MODEL_TYPES.QUADRIC:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES.QUADRIC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES.TRI">
+<span class="sig-name descname"><span class="pre">TRI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;LOCAL_MODEL_TYPES.TRI:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES.TRI" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.LOCAL_MODEL_TYPES.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.LOCAL_MODEL_TYPES.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.Orientation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">Orientation</span></span><a class="headerlink" href="#cloudComPy.Orientation" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>PLUS_X</p>
+<p>MINUS_X</p>
+<p>PLUS_Y</p>
+<p>MINUS_Y</p>
+<p>PLUS_Z</p>
+<p>MINUS_Z</p>
+<p>PLUS_BARYCENTER</p>
+<p>MINUS_BARYCENTER</p>
+<p>PLUS_ORIGIN</p>
+<p>MINUS_ORIGIN</p>
+<p>PREVIOUS</p>
+<p>PLUS_SENSOR_ORIGIN</p>
+<p>MINUS_SENSOR_ORIGIN</p>
+<p>UNDEFINED</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.MINUS_BARYCENTER">
+<span class="sig-name descname"><span class="pre">MINUS_BARYCENTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_BARYCENTER:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.MINUS_BARYCENTER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.MINUS_ORIGIN">
+<span class="sig-name descname"><span class="pre">MINUS_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_ORIGIN:</span> <span class="pre">9&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.MINUS_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.MINUS_SENSOR_ORIGIN">
+<span class="sig-name descname"><span class="pre">MINUS_SENSOR_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_SENSOR_ORIGIN:</span> <span class="pre">12&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.MINUS_SENSOR_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.MINUS_X">
+<span class="sig-name descname"><span class="pre">MINUS_X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_X:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.MINUS_X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.MINUS_Y">
+<span class="sig-name descname"><span class="pre">MINUS_Y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_Y:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.MINUS_Y" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.MINUS_Z">
+<span class="sig-name descname"><span class="pre">MINUS_Z</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.MINUS_Z:</span> <span class="pre">5&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.MINUS_Z" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PLUS_BARYCENTER">
+<span class="sig-name descname"><span class="pre">PLUS_BARYCENTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_BARYCENTER:</span> <span class="pre">6&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PLUS_BARYCENTER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PLUS_ORIGIN">
+<span class="sig-name descname"><span class="pre">PLUS_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_ORIGIN:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PLUS_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PLUS_SENSOR_ORIGIN">
+<span class="sig-name descname"><span class="pre">PLUS_SENSOR_ORIGIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_SENSOR_ORIGIN:</span> <span class="pre">11&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PLUS_SENSOR_ORIGIN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PLUS_X">
+<span class="sig-name descname"><span class="pre">PLUS_X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_X:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PLUS_X" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PLUS_Y">
+<span class="sig-name descname"><span class="pre">PLUS_Y</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_Y:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PLUS_Y" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PLUS_Z">
+<span class="sig-name descname"><span class="pre">PLUS_Z</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PLUS_Z:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PLUS_Z" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.PREVIOUS">
+<span class="sig-name descname"><span class="pre">PREVIOUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.PREVIOUS:</span> <span class="pre">10&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.PREVIOUS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.UNDEFINED">
+<span class="sig-name descname"><span class="pre">UNDEFINED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Orientation.UNDEFINED:</span> <span class="pre">255&gt;</span></em><a class="headerlink" href="#cloudComPy.Orientation.UNDEFINED" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.Orientation.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.Orientation.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.Orientation.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ProjectionType</span></span><a class="headerlink" href="#cloudComPy.ProjectionType" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>PROJ_MINIMUM_VALUE</p>
+<p>PROJ_AVERAGE_VALUE</p>
+<p>PROJ_MAXIMUM_VALUE</p>
+<p>INVALID_PROJECTION_TYPE</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType.INVALID_PROJECTION_TYPE">
+<span class="sig-name descname"><span class="pre">INVALID_PROJECTION_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ProjectionType.INVALID_PROJECTION_TYPE:</span> <span class="pre">255&gt;</span></em><a class="headerlink" href="#cloudComPy.ProjectionType.INVALID_PROJECTION_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType.PROJ_AVERAGE_VALUE">
+<span class="sig-name descname"><span class="pre">PROJ_AVERAGE_VALUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ProjectionType.PROJ_AVERAGE_VALUE:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.ProjectionType.PROJ_AVERAGE_VALUE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType.PROJ_MAXIMUM_VALUE">
+<span class="sig-name descname"><span class="pre">PROJ_MAXIMUM_VALUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ProjectionType.PROJ_MAXIMUM_VALUE:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.ProjectionType.PROJ_MAXIMUM_VALUE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType.PROJ_MINIMUM_VALUE">
+<span class="sig-name descname"><span class="pre">PROJ_MINIMUM_VALUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ProjectionType.PROJ_MINIMUM_VALUE:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.ProjectionType.PROJ_MINIMUM_VALUE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.ProjectionType.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ProjectionType.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.ProjectionType.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ReportInfoVol</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol" title="Permalink to this definition"></a></dt>
+<dd><p>Result values on 2.5D volume calculation. See <a class="reference internal" href="#cloudComPy.ComputeVolume25D" title="cloudComPy.ComputeVolume25D"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComputeVolume25D</span></code></a></p>
+<p>The volume is considered between a point cloud and a ground plane following a given direction (X, Y or Z),
+or between two point clouds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>volume</strong> (<em>float</em>) – the resulting volume</p></li>
+<li><p><strong>addedVolume</strong> (<em>float</em>) – the positive part of the volume (ceil &gt; floor)</p></li>
+<li><p><strong>removedVolume</strong> (<em>float</em>) – the negative part of the volume (ceil &lt; floor)</p></li>
+<li><p><strong>surface</strong> (<em>float</em>) – the section of the point cloud along in the given direction</p></li>
+<li><p><strong>matchingPercent</strong> (<em>float</em>) – percentage of the section matching ceil and floor</p></li>
+<li><p><strong>ceilNonMatchingPercent</strong> (<em>float</em>) – percentage of the ceil section non matching floor</p></li>
+<li><p><strong>groundNonMatchingPercent</strong> (<em>float</em>) – percentage of the floor section non matching ceil</p></li>
+<li><p><strong>averageNeighborsPerCell</strong> (<em>int</em>) – average Neighbor number per cell (see ‘gridStep’ in :py:meth`ComputeVolume25D`)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.addedVolume">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">addedVolume</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.addedVolume" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.averageNeighborsPerCell">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">averageNeighborsPerCell</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.averageNeighborsPerCell" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.ceilNonMatchingPercent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ceilNonMatchingPercent</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.ceilNonMatchingPercent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.groundNonMatchingPercent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">groundNonMatchingPercent</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.groundNonMatchingPercent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.matchingPercent">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">matchingPercent</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.matchingPercent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.removedVolume">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">removedVolume</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.removedVolume" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.surface">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">surface</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.surface" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ReportInfoVol.volume">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#cloudComPy.ReportInfoVol.volume" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">TRANSFORMATION_FILTERS</span></span><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>SKIP_NONE</p>
+<p>SKIP_RXY</p>
+<p>SKIP_RYZ</p>
+<p>SKIP_RXZ</p>
+<p>SKIP_ROTATION</p>
+<p>SKIP_TX</p>
+<p>SKIP_TY</p>
+<p>SKIP_TZ</p>
+<p>SKIP_TRANSLATION</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_NONE">
+<span class="sig-name descname"><span class="pre">SKIP_NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_NONE:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_NONE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_ROTATION">
+<span class="sig-name descname"><span class="pre">SKIP_ROTATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_ROTATION:</span> <span class="pre">7&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_ROTATION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_RXY">
+<span class="sig-name descname"><span class="pre">SKIP_RXY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_RXY:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_RXY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_RXZ">
+<span class="sig-name descname"><span class="pre">SKIP_RXZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_RXZ:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_RXZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_RYZ">
+<span class="sig-name descname"><span class="pre">SKIP_RYZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_RYZ:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_RYZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_TRANSLATION">
+<span class="sig-name descname"><span class="pre">SKIP_TRANSLATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_TRANSLATION:</span> <span class="pre">56&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_TRANSLATION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_TX">
+<span class="sig-name descname"><span class="pre">SKIP_TX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_TX:</span> <span class="pre">8&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_TX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_TY">
+<span class="sig-name descname"><span class="pre">SKIP_TY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_TY:</span> <span class="pre">16&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_TY" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.SKIP_TZ">
+<span class="sig-name descname"><span class="pre">SKIP_TZ</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;TRANSFORMATION_FILTERS.SKIP_TZ:</span> <span class="pre">32&gt;</span></em><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.SKIP_TZ" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.TRANSFORMATION_FILTERS.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.TRANSFORMATION_FILTERS.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CONVERGENCE_TYPE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CONVERGENCE_TYPE</span></span><a class="headerlink" href="#cloudComPy.CONVERGENCE_TYPE" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>MAX_ERROR_CONVERGENCE</p>
+<p>MAX_ITER_CONVERGENCE</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CONVERGENCE_TYPE.MAX_ERROR_CONVERGENCE">
+<span class="sig-name descname"><span class="pre">MAX_ERROR_CONVERGENCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CONVERGENCE_TYPE.MAX_ERROR_CONVERGENCE:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.CONVERGENCE_TYPE.MAX_ERROR_CONVERGENCE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CONVERGENCE_TYPE.MAX_ITER_CONVERGENCE">
+<span class="sig-name descname"><span class="pre">MAX_ITER_CONVERGENCE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CONVERGENCE_TYPE.MAX_ITER_CONVERGENCE:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.CONVERGENCE_TYPE.MAX_ITER_CONVERGENCE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CONVERGENCE_TYPE.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.CONVERGENCE_TYPE.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CONVERGENCE_TYPE.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.CONVERGENCE_TYPE.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="userUseCases.html" class="btn btn-neutral float-left" title="6. Some use cases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ccPointCloud.html" class="btn btn-neutral float-right" title="2. Points Clouds" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

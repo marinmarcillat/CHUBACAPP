@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. Octrees, descriptors and neighbourhood &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. Meshes" href="ccMesh.html" />
+    <link rel="prev" title="3. Polylines" href="ccPolyline.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Octrees, descriptors and neighbourhood</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#octrees">4.1. Octrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#descriptors-structures">4.2. Descriptors structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#neighbourhood-structures">4.3. Neighbourhood structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>Octrees, descriptors and neighbourhood</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ccOctree.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="octrees-descriptors-and-neighbourhood">
+<h1><span class="section-number">4. </span>Octrees, descriptors and neighbourhood<a class="headerlink" href="#octrees-descriptors-and-neighbourhood" title="Permalink to this heading"></a></h1>
+<section id="octrees">
+<h2><span class="section-number">4.1. </span>Octrees<a class="headerlink" href="#octrees" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">DgmOctree</span></span><a class="headerlink" href="#cloudComPy.DgmOctree" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.GenerateTruncatedCellCode">
+<span class="sig-name descname"><span class="pre">GenerateTruncatedCellCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">_cloudComPy.DgmOctree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0:</span> <span class="pre">Tuple3Tpl&lt;T&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1:</span> <span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.GenerateTruncatedCellCode" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the truncated cell code of a cell given its position at a given level of subdivision.</p>
+<p>For a given level of subdivision (lets call it N), the cell position
+can be expressed as 3 integer coordinates between 0 and 2^N-1 (the
+number of cells along each dimension). This method computes the
+corresponding cell code, truncated at the level N (meaning that it
+is only valid for the Nth level, not for other levels).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cellPos</strong> (<em>tuple</em>) – the cell position (3 int indices)</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the truncated cell code</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.computeCellCenter">
+<span class="sig-name descname"><span class="pre">computeCellCenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cloudComPy.DgmOctree.computeCellCenter" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>computeCellCenter(self: _cloudComPy.DgmOctree, code: int, level: int, isCodeTruncated: bool = False) -&gt; Vector3Tpl&lt;T&gt;</p></li>
+</ol>
+<p>Returns the cell center for a given level of subdivision of a cell designated by its code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<em>int</em>) – the cell code</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+<li><p><strong>isCodeTruncated</strong> (<em>bool</em><em>,</em><em>optional</em>) – (default <cite>False</cite>) indicates if the given code is truncated or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>computed center coordinates</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<ol class="arabic simple" start="2">
+<li><p>computeCellCenter(self: _cloudComPy.DgmOctree, arg0: Tuple3Tpl&lt;T&gt;, arg1: int) -&gt; Vector3Tpl&lt;T&gt;</p></li>
+</ol>
+<p>Returns the cell center for a given level of subdivision of a cell designated by its position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cellPos</strong> (<em>tuple</em>) – the cell position (3 int indices)</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>computed center coordinates</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findBestLevelForAGivenCellNumber">
+<span class="sig-name descname"><span class="pre">findBestLevelForAGivenCellNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findBestLevelForAGivenCellNumber" title="Permalink to this definition"></a></dt>
+<dd><p>Determines the best subdivision level of the octree to match a given number of cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>indicativeNumberOfCells</strong> (<em>int</em>) – ‘desired’ number of cells</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the ‘best’ level</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction">
+<span class="sig-name descname"><span class="pre">findBestLevelForAGivenNeighbourhoodSizeExtraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction" title="Permalink to this definition"></a></dt>
+<dd><p>Determines the best level of subdivision of the octree at which to apply the nearest neighbours search algorithm
+(inside a sphere) depending on the sphere radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>radius</strong> (<em>float</em>) – the sphere radius</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the ‘best’ level</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findBestLevelForAGivenPopulationPerCell">
+<span class="sig-name descname"><span class="pre">findBestLevelForAGivenPopulationPerCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findBestLevelForAGivenPopulationPerCell" title="Permalink to this definition"></a></dt>
+<dd><p>Determines the best subdivision level of the octree that gives the average population per cell closest to the input value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>indicativeNumberOfPointsPerCell</strong> (<em>int</em>) – ‘desired’ average number of points per cell</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the ‘best’ level</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findNearestNeighborsStartingFromCell">
+<span class="sig-name descname"><span class="pre">findNearestNeighborsStartingFromCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="_cloudComPy.NearestNeighboursSearchStruct"><span class="pre">_cloudComPy.NearestNeighboursSearchStruct</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findNearestNeighborsStartingFromCell" title="Permalink to this definition"></a></dt>
+<dd><p>Advanced form of the nearest neighbours search algorithm (multiple neighbours).</p>
+<p>This version is optimized for a multiple nearest neighbours search
+that is applied around several query points included in the same octree
+cell. See <a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="cloudComPy.NearestNeighboursSearchStruct"><code class="xref py py-class docutils literal notranslate"><span class="pre">NearestNeighboursSearchStruct</span></code></a> for more details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nNSS</strong> (<a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="cloudComPy.NearestNeighboursSearchStruct"><em>NearestNeighboursSearchStruct</em></a>) – search parameters</p></li>
+<li><p><strong>getOnlyPointsWithValidScalar</strong> (<em>bool</em>) – whether to ignore points having an invalid associated scalar value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the number of neighbours found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findNeighborsInASphereStartingFromCell">
+<span class="sig-name descname"><span class="pre">findNeighborsInASphereStartingFromCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="_cloudComPy.NearestNeighboursSearchStruct"><span class="pre">_cloudComPy.NearestNeighboursSearchStruct</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findNeighborsInASphereStartingFromCell" title="Permalink to this definition"></a></dt>
+<dd><p>Advanced form of the nearest neighbours search algorithm (in a sphere).</p>
+<p>This version is optimized for a spatially bounded search instead of
+a search bounded by a number of neighbours.
+<strong>WARNING</strong> the number of points in the output buffer (nNSS.pointsInNeighbourhood) may be greater
+than the actual count of closest points inside the sphere! (which is returned by the method).
+Only the ‘k’ first points are actually inside the sphere (the others are not removed for the sake
+of performance).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nNSS</strong> (<a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="cloudComPy.NearestNeighboursSearchStruct"><em>NearestNeighboursSearchStruct</em></a>) – a pack of parameters</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – the sphere radius</p></li>
+<li><p><strong>sortValues</strong> (<em>bool</em>) – specifies if the neighbours needs to be sorted by their distance to the query point or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the number of neighbours found</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findPointNeighbourhood">
+<span class="sig-name descname"><span class="pre">findPointNeighbourhood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">_cloudComPy.DgmOctree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_queryPoint:</span> <span class="pre">Vector3Tpl&lt;T&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Yk:</span> <span class="pre">_cloudComPy.ReferenceCloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxNumberOfNeighbors:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxSearchDist:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findPointNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the nearest neighbours around a query point.</p>
+<p>This is the simplest form of the nearest neighbour search algorithm.
+It should only be used for unique/few requests as it is not optimized
+for repetitive search around points lying in the same octree cell (see
+<a class="reference internal" href="#cloudComPy.DgmOctree.findNearestNeighborsStartingFromCell" title="cloudComPy.DgmOctree.findNearestNeighborsStartingFromCell"><code class="xref py py-meth docutils literal notranslate"><span class="pre">findNearestNeighborsStartingFromCell()</span></code></a> for example). Moreover,
+distances between each neighbour and the query aren’t stored in this
+version of the algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_queryPoint</strong> (<em>tuple</em>) – the query point (coordinates)</p></li>
+<li><p><strong>Yk</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="cloudComPy.ReferenceCloud"><em>ReferenceCloud</em></a>) – RefefenceCloud for the nearest neighbours</p></li>
+<li><p><strong>maxNumberOfNeighbors</strong> (<em>int</em>) – the maximal number of points to find</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the subdivision level of the octree at which to perform the search</p></li>
+<li><p><strong>maxSearchDist</strong> (<em>float</em><em>,</em><em>optional</em>) – (default 0) the maximum search distance (ignored if &lt;= 0)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>tuple</p>
+<ul class="simple">
+<li><p>number of neighbours found,</p></li>
+<li><p>final neighborhood (half)size,</p></li>
+<li><p>square distance between the farthest “nearest neighbour” and the query point</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.findTheNearestNeighborStartingFromCell">
+<span class="sig-name descname"><span class="pre">findTheNearestNeighborStartingFromCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="_cloudComPy.NearestNeighboursSearchStruct"><span class="pre">_cloudComPy.NearestNeighboursSearchStruct</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.findTheNearestNeighborStartingFromCell" title="Permalink to this definition"></a></dt>
+<dd><p>Advanced form of the nearest neighbour search algorithm (unique neighbour).</p>
+<p>This version is optimized for a unique nearest-neighbour search.
+See <a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="cloudComPy.NearestNeighboursSearchStruct"><code class="xref py py-class docutils literal notranslate"><span class="pre">NearestNeighboursSearchStruct</span></code></a> for more details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nNSS</strong> (<a class="reference internal" href="#cloudComPy.NearestNeighboursSearchStruct" title="cloudComPy.NearestNeighboursSearchStruct"><em>NearestNeighboursSearchStruct</em></a>) – search parameters</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the square distance between the query point and its nearest neighbour
+(or -1 if none was found - i.e. maxSearchDist was reached)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getBoundingBox">
+<span class="sig-name descname"><span class="pre">getBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List[Vector3Tpl&lt;T&gt;]</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getBoundingBox" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the octree bounding box.</p>
+<p>Method to request the octree bounding box limits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>((Xmin,Ymin,Zmin), (Xmax,Ymax,Zmax))</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellCode">
+<span class="sig-name descname"><span class="pre">getCellCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellCode" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the ith cell code.</p>
+<p><strong>WARNING:</strong> i is NOT the point index in cloud! Very specific use!
+(the table giving index in cloud and CellCode is sorted by CellCodes)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>CellCode</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellCodes">
+<span class="sig-name descname"><span class="pre">getCellCodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncatedCodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellCodes" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the list of codes corresponding to the octree cells for a given level of subdivision.</p>
+<p>Only the non empty cells are represented in the octree structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+<li><p><strong>truncatedCodes</strong> (<em>bool</em><em>,</em><em>optional</em>) – (default <cite>False</cite>) indicates if the resulting codes should be truncated or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the list of codes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellCodesAndIndexes">
+<span class="sig-name descname"><span class="pre">getCellCodesAndIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncatedCodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cloudComPy.IndexAndCode" title="_cloudComPy.IndexAndCode"><span class="pre">_cloudComPy.IndexAndCode</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellCodesAndIndexes" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the list of indexes and codes corresponding to the octree cells for a given level of subdivision.</p>
+<p>Only the non empty cells are represented in the octree structure.
+Cell indexes are expressed relatively to the DgmOctree structure. They correspond
+to the indexes of the first points of each cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+<li><p><strong>truncatedCodes</strong> (<em>bool</em>) – indicates if the resulting codes should be truncated or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the list of <a class="reference internal" href="#cloudComPy.IndexAndCode" title="cloudComPy.IndexAndCode"><code class="xref py py-class docutils literal notranslate"><span class="pre">IndexAndCode</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellDistanceFromBorders">
+<span class="sig-name descname"><span class="pre">getCellDistanceFromBorders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellDistanceFromBorders" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getCellDistanceFromBorders(self: _cloudComPy.DgmOctree, arg0: Tuple3Tpl&lt;T&gt;, arg1: int) -&gt; List[int]</p></li>
+</ol>
+<p>Returns distance from a cell to the filled octree borders in all directions (3 int).</p>
+<p><strong>WARNING:</strong> distance values may be negative! (if cell is outside)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cellPos</strong> (<em>tuple</em>) – cell position</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – level at which octree grid is considered</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cellDists output (3 int)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<ol class="arabic simple" start="2">
+<li><p>getCellDistanceFromBorders(self: _cloudComPy.DgmOctree, arg0: Tuple3Tpl&lt;T&gt;, arg1: int, arg2: int) -&gt; List[int]</p></li>
+</ol>
+<p>Returns distance from cell center to cell neighbourhood INSIDE filled octree (3 int).</p>
+<p><strong>WARNING:</strong> if cell neighbourhood is totally outside filled octree,
+the method returns invalid cellDists (empty list).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cellPos</strong> (<em>tuple</em>) – center cell position</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – level at which octree grid is considered</p></li>
+<li><p><strong>neighbourhoodLength</strong> (<em>float</em>) – cell neighbourhood “radius”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cellDists output (3 int)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellIndexes">
+<span class="sig-name descname"><span class="pre">getCellIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellIndexes" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the list of indexes corresponding to the octree cells for a given level of subdivision.</p>
+<p>Only the non empty cells are represented in the octree structure.
+Cell indexes are expressed relatively to the DgmOctree structure. They correspond
+to the indexes of the first points of each cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the list of indexes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellNumber">
+<span class="sig-name descname"><span class="pre">getCellNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellNumber" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of cells for a given level of subdivision.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the number of cells at this level</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellPos">
+<span class="sig-name descname"><span class="pre">getCellPos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellPos" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the cell position for a given level of subdivision of a cell designated by its code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<em>int</em>) – the cell code</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+<li><p><strong>isCodeTruncated</strong> (<em>bool</em>) – indicates if the given code is truncated or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the computed cell position</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getCellSize">
+<span class="sig-name descname"><span class="pre">getCellSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getCellSize" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the octree cells length for a given level of subdivision.</p>
+<p>As the octree is cubical, cells are cubical.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – the level of subdivision (up to MAX_OCTREE_LEVEL+1 for convenience)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the cell size</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getMaxFillIndexes">
+<span class="sig-name descname"><span class="pre">getMaxFillIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getMaxFillIndexes" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the highest cell positions in the octree along all dimensions and for a given level of subdivision.</p>
+<p>For example, at a level n, the octree length is 2^n cells along each
+dimension. The highest cell position along each dimension will be expressed
+between 0 and 2^n-1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the highest cell position along X,Y and Z for a given level of subdivision</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getMinFillIndexes">
+<span class="sig-name descname"><span class="pre">getMinFillIndexes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getMinFillIndexes" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the lowest cell positions in the octree along all dimensions and for a given level of subdivision.</p>
+<p>For example, at a level n, the octree length is 2^n cells along each
+dimension. The lowest cell position along each dimension will be expressed
+between 0 and 2^n-1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the lowest cell position along X,Y and Z for a given level of subdivision</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getNumberOfProjectedPoints">
+<span class="sig-name descname"><span class="pre">getNumberOfProjectedPoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getNumberOfProjectedPoints" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of points projected into the octree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of projected points</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getOctreeMaxs">
+<span class="sig-name descname"><span class="pre">getOctreeMaxs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getOctreeMaxs" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the higher boundaries of the octree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the higher coordinates along X,Y and Z</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getOctreeMins">
+<span class="sig-name descname"><span class="pre">getOctreeMins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getOctreeMins" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the lower boundaries of the octree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the lower coordinates along X,Y and Z</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInBoxNeighbourhood">
+<span class="sig-name descname"><span class="pre">getPointsInBoxNeighbourhood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.BoxNeighbourhood" title="_cloudComPy.BoxNeighbourhood"><span class="pre">_cloudComPy.BoxNeighbourhood</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cloudComPy.PointDescriptor" title="_cloudComPy.PointDescriptor"><span class="pre">_cloudComPy.PointDescriptor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInBoxNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the points falling inside a box.</p>
+<p>Use <a class="reference internal" href="#cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction" title="cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">findBestLevelForAGivenNeighbourhoodSizeExtraction()</span></code></a> to get the right
+value for ‘level’ (only once as it only depends on the radius or max dimension value).</p>
+<p><strong>WARNING</strong> the ‘squareDistd’ field of each neighbour returned is not used/set</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>neighbourhood</strong> (<a class="reference internal" href="#cloudComPy.BoxNeighbourhood" title="cloudComPy.BoxNeighbourhood"><em>BoxNeighbourhood</em></a>) – the box in which to search points</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of <a class="reference internal" href="#cloudComPy.PointDescriptor" title="cloudComPy.PointDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDescriptor</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInCell">
+<span class="sig-name descname"><span class="pre">getPointsInCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellCode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">isCodeTruncated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clearOutputCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInCell" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the points lying in a specific cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cellCode</strong> (<em>int</em>) – the unique cell code</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+<li><p><strong>subset</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="cloudComPy.ReferenceCloud"><em>ReferenceCloud</em></a><em>,</em><em>[</em><em>in</em><em>,</em><em>out</em><em>]</em>) – set of points lying in the cell (references, no duplication)</p></li>
+<li><p><strong>isCodeTruncated</strong> (<em>bool</em><em>,</em><em>optional</em>) – (default <cite>False</cite>) specifies if the code is given in a truncated form or not</p></li>
+<li><p><strong>clearOutputCloud</strong> (<em>bool</em><em>,</em><em>optional</em>) – (default <cite>True</cite>) whether to clear or not the output cloud (subest)
+if no points lie in the specified cell</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInCellByCellIndex">
+<span class="sig-name descname"><span class="pre">getPointsInCellByCellIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellIndex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clearOutputCloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInCellByCellIndex" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the points lying in a specific cell.</p>
+<p>Each cell at a given level of subdivision can be recognized by the index
+in the DgmOctree structure of the first point that lies inside it. By
+construction, we are assured that every point lying in the same cell for
+a given level of subdivision are next to each others in the octree
+structure (which is the vector “m_thePointsAndTheirCellCodes” in practical).
+This is the quickest way to access the points inside a given cell (but its
+kind of hard to know directly what is the index of a given cell)
+See <a class="reference internal" href="#cloudComPy.DgmOctree.getCellIndexes" title="cloudComPy.DgmOctree.getCellIndexes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCellIndexes()</span></code></a>, <a class="reference internal" href="#cloudComPy.DgmOctree.getCellCodesAndIndexes" title="cloudComPy.DgmOctree.getCellCodesAndIndexes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCellCodesAndIndexes()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="cloudComPy.ReferenceCloud"><em>ReferenceCloud</em></a><em>,</em><em>[</em><em>in</em><em>,</em><em>out</em><em>]</em>) – ReferenceCloud to store the points lying inside the cell</p></li>
+<li><p><strong>cellIndex</strong> (<em>int</em>) – the cell index</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+<li><p><strong>clearOutputCloud</strong> (<em>bool</em><em>,</em><em>optional</em>) – (default <cite>True</cite>) whether to clear the input cloud
+prior to inserting the points or not</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInCellsWithSortedCellCodes">
+<span class="sig-name descname"><span class="pre">getPointsInCellsWithSortedCellCodes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cellCodes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">areCodesTruncated</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInCellsWithSortedCellCodes" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the points lying in multiple cells.</p>
+<p>Cells are recognized here by their unique “code”. They should be sorted
+along by codes, with an ascendant order. See <a class="reference internal" href="#cloudComPy.DgmOctree.getPointsInCellByCellIndex" title="cloudComPy.DgmOctree.getPointsInCellByCellIndex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getPointsInCellByCellIndex()</span></code></a>
+for more information.</p>
+<p>param list cellCodes: the cells codes
+param int level: the level of subdivision
+param ReferenceCloud,[in,out] subset: set of points lying in the cell (references, no duplication)
+param bool,optional areCodesTruncated: (default <cite>False</cite>) specifies if the codes are given in a truncated form or not
+return the set of points lying in the cell (references, no duplication)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the set of points lying in the cell</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="cloudComPy.ReferenceCloud">ReferenceCloud</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInCylindricalNeighbourhood">
+<span class="sig-name descname"><span class="pre">getPointsInCylindricalNeighbourhood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.CylindricalNeighbourhood" title="_cloudComPy.CylindricalNeighbourhood"><span class="pre">_cloudComPy.CylindricalNeighbourhood</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cloudComPy.PointDescriptor" title="_cloudComPy.PointDescriptor"><span class="pre">_cloudComPy.PointDescriptor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInCylindricalNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the points falling inside a cylinder.</p>
+<p>Use <a class="reference internal" href="#cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction" title="cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">findBestLevelForAGivenNeighbourhoodSizeExtraction()</span></code></a> to get the right
+value for ‘level’ (only once as it only depends on the radius value).</p>
+<p><strong>WARNING</strong> the ‘squareDistd’ field of each neighbour in the NeighboursSet
+structure is in fact the signed distance (not squared) of the point
+relatively to the cylinder’s center and projected along its axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>neighbourhood</strong> (<a class="reference internal" href="#cloudComPy.CylindricalNeighbourhood" title="cloudComPy.CylindricalNeighbourhood"><em>CylindricalNeighbourhood</em></a>) – parameters structure</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the extracted points: list of <a class="reference internal" href="#cloudComPy.PointDescriptor" title="cloudComPy.PointDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDescriptor</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInCylindricalNeighbourhoodProgressive">
+<span class="sig-name descname"><span class="pre">getPointsInCylindricalNeighbourhoodProgressive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.DgmOctree" title="_cloudComPy.DgmOctree"><span class="pre">_cloudComPy.DgmOctree</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ProgressiveCylindricalNeighbourhood" title="_cloudComPy.ProgressiveCylindricalNeighbourhood"><span class="pre">_cloudComPy.ProgressiveCylindricalNeighbourhood</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cloudComPy.PointDescriptor" title="_cloudComPy.PointDescriptor"><span class="pre">_cloudComPy.PointDescriptor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInCylindricalNeighbourhoodProgressive" title="Permalink to this definition"></a></dt>
+<dd><p>Same as getPointsInCylindricalNeighbourhood with progressive approach.</p>
+<p>Can be called multiple times (the ‘currentHalfLength’ parameter will increase
+each time until ‘maxHalfLength’ is reached).</p>
+<p><strong>WARNING</strong> the ‘squareDistd’ field of each neighbour in the NeighboursSet
+structure is in fact the signed distance (not squared) of the point
+relatively to the cylinder’s center and projected along its axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>neighbourhood</strong> (<a class="reference internal" href="#cloudComPy.CylindricalNeighbourhood" title="cloudComPy.CylindricalNeighbourhood"><em>CylindricalNeighbourhood</em></a>) – parameters structure</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the extracted points (list of <a class="reference internal" href="#cloudComPy.PointDescriptor" title="cloudComPy.PointDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDescriptor</span></code></a>)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getPointsInSphericalNeighbourhood">
+<span class="sig-name descname"><span class="pre">getPointsInSphericalNeighbourhood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">_cloudComPy.DgmOctree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0:</span> <span class="pre">Vector3Tpl&lt;T&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1:</span> <span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2:</span> <span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cloudComPy.PointDescriptor" title="_cloudComPy.PointDescriptor"><span class="pre">_cloudComPy.PointDescriptor</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getPointsInSphericalNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the points falling inside a sphere.</p>
+<p>Use <a class="reference internal" href="#cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction" title="cloudComPy.DgmOctree.findBestLevelForAGivenNeighbourhoodSizeExtraction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">findBestLevelForAGivenNeighbourhoodSizeExtraction()</span></code></a> to get the right
+value for ‘level’ (only once as it only depends on the radius value).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sphereCenter</strong> (<em>tuple</em>) – center coordinates</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – radius</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – subdivision level at which to apply the extraction process</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>neighbours points falling inside the sphere (list of <a class="reference internal" href="#cloudComPy.PointDescriptor" title="cloudComPy.PointDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDescriptor</span></code></a>)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getTheCellPosWhichIncludesThePoint">
+<span class="sig-name descname"><span class="pre">getTheCellPosWhichIncludesThePoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cloudComPy.DgmOctree.getTheCellPosWhichIncludesThePoint" title="Permalink to this definition"></a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>getTheCellPosWhichIncludesThePoint(self: _cloudComPy.DgmOctree, arg0: Vector3Tpl&lt;T&gt;) -&gt; Tuple3Tpl&lt;T&gt;</p></li>
+</ol>
+<p>Returns the position <strong>FOR THE DEEPEST LEVEL OF SUBDIVISION</strong> of the cell that includes a given point.</p>
+<p>The cell coordinates can be negative or greater than 2^MAX_OCTREE_LEVEL-1
+as the point can lie outside the octree bounding-box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>thePoint</strong> (<em>tuple</em>) – the query point coordinates</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cellPos the computed position (3 int indices)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+<ol class="arabic simple" start="2">
+<li><p>getTheCellPosWhichIncludesThePoint(self: _cloudComPy.DgmOctree, arg0: Vector3Tpl&lt;T&gt;, arg1: int) -&gt; Tuple3Tpl&lt;T&gt;</p></li>
+</ol>
+<p>Returns the position <strong>for a given level of subdivision</strong> of the cell that includes a given point.</p>
+<p>The cell coordinates can be negative or greater than 2^N-1  (where N
+is the level of subdivision) as the point can lie outside the octree
+bounding-box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thePoint</strong> (<em>tuple</em>) – the query point coordinates</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cellPos the computed position (3 int indices)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.DgmOctree.getTheCellPosWhichIncludesThePointInbBounds">
+<span class="sig-name descname"><span class="pre">getTheCellPosWhichIncludesThePointInbBounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">_cloudComPy.DgmOctree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0:</span> <span class="pre">Vector3Tpl&lt;T&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1:</span> <span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#cloudComPy.DgmOctree.getTheCellPosWhichIncludesThePointInbBounds" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the position for a <strong>given level of subdivision</strong> of the cell that includes a given point.</p>
+<p>The cell coordinates can be negative or greater than 2^N-1  (where N
+is the level of subdivision) as the point can lie outside the octree
+bounding-box. In this version, method indicates if the query point
+is inside (“inbounds”) or outside the octree bounding-box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thePoint</strong> (<em>tuple</em>) – the query point coordinates</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – the level of subdivision</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tuple (cellPos the computed position, 
+inBounds indicates if the query point is inside or outside the octree bounding-box)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="descriptors-structures">
+<h2><span class="section-number">4.2. </span>Descriptors structures<a class="headerlink" href="#descriptors-structures" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.PointDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">PointDescriptor</span></span><a class="headerlink" href="#cloudComPy.PointDescriptor" title="Permalink to this definition"></a></dt>
+<dd><p>Structure used during nearest neighbour search.</p>
+<p>Association between a point, its index and its square distance to the query point.
+The structure is made persistent, by copying the coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>tuple</em>) – point coordinates</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – point index</p></li>
+<li><p><strong>squareDistd</strong> (<em>float</em>) – point associated distance value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CellDescriptor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CellDescriptor</span></span><a class="headerlink" href="#cloudComPy.CellDescriptor" title="Permalink to this definition"></a></dt>
+<dd><p>Structure used during nearest neighbour search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<em>tuple</em>) – Cell center coordinates</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – First point index in associated NeighboursSet</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.IndexAndCode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">IndexAndCode</span></span><a class="headerlink" href="#cloudComPy.IndexAndCode" title="Permalink to this definition"></a></dt>
+<dd><p>Association between an index and the code of an octree cell
+Index could be the index of a point, in which case the code
+would correspond to the octree cell where the point lies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – the index</p></li>
+<li><p><strong>code</strong> (<em>int</em>) – theCode</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.IndexAndCode.codeComp">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">codeComp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.IndexAndCode" title="_cloudComPy.IndexAndCode"><span class="pre">_cloudComPy.IndexAndCode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.IndexAndCode" title="_cloudComPy.IndexAndCode"><span class="pre">_cloudComPy.IndexAndCode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.IndexAndCode.codeComp" title="Permalink to this definition"></a></dt>
+<dd><p>Compares two IndexAndCode instances based on their code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference internal" href="#cloudComPy.IndexAndCode" title="cloudComPy.IndexAndCode"><em>IndexAndCode</em></a>) – first IndexAndCode structure</p></li>
+<li><p><strong>b</strong> (<a class="reference internal" href="#cloudComPy.IndexAndCode" title="cloudComPy.IndexAndCode"><em>IndexAndCode</em></a>) – second IndexAndCode structure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether the code of ‘a’ is smaller than the code of ‘b’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.IndexAndCode.indexComp">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">indexComp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.IndexAndCode" title="_cloudComPy.IndexAndCode"><span class="pre">_cloudComPy.IndexAndCode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.IndexAndCode" title="_cloudComPy.IndexAndCode"><span class="pre">_cloudComPy.IndexAndCode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.IndexAndCode.indexComp" title="Permalink to this definition"></a></dt>
+<dd><p>Compares two IndexAndCode instances based on their index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference internal" href="#cloudComPy.IndexAndCode" title="cloudComPy.IndexAndCode"><em>IndexAndCode</em></a>) – first structure</p></li>
+<li><p><strong>b</strong> (<a class="reference internal" href="#cloudComPy.IndexAndCode" title="cloudComPy.IndexAndCode"><em>IndexAndCode</em></a>) – second structure</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>whether the index of ‘a’ is smaller than the index of ‘b’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="neighbourhood-structures">
+<h2><span class="section-number">4.3. </span>Neighbourhood structures<a class="headerlink" href="#neighbourhood-structures" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CylindricalNeighbourhood">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CylindricalNeighbourhood</span></span><a class="headerlink" href="#cloudComPy.CylindricalNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Parameters structure for getPointsInCylindricalNeighbourhood.</p>
+<p>Use <cite>findBestLevelForAGivenNeighbourhoodSizeExtraction</cite> to get the right
+value for ‘level’ (only once as it only depends on the radius value).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<em>tuple</em>) – Cylinder center, default (0,0,0)</p></li>
+<li><p><strong>dir</strong> (<em>tuple</em>) – Cylinder axis (direction), default (0,0,1)</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – Cylinder radius, default 0</p></li>
+<li><p><strong>maxHalfLength</strong> (<em>float</em>) – Cylinder (half) length, default 0</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – subdivision level at which to apply the extraction process, default 0</p></li>
+<li><p><strong>onlyPositiveDir</strong> (<em>bool</em>) – Whether to look in both directions
+or only along the positive direction (i.e. half cylinder), default  <cite>False</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ProgressiveCylindricalNeighbourhood">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ProgressiveCylindricalNeighbourhood</span></span><a class="headerlink" href="#cloudComPy.ProgressiveCylindricalNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cloudComPy.CylindricalNeighbourhood" title="_cloudComPy.CylindricalNeighbourhood"><code class="xref py py-class docutils literal notranslate"><span class="pre">CylindricalNeighbourhood</span></code></a></p>
+<p>Input/output parameters structure for getPointsInCylindricalNeighbourhoodProgressive.</p>
+<p>Derived from CylindricalNeighbourhood.
+See CylindricalNeighbourhood for generic data members.</p>
+<p><strong>Specific data members</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>currentHalfLength</strong> (<em>float</em>) – Current search depth</p></li>
+<li><p><strong>potentialCandidates</strong> (<em>list</em>) – list of <a class="reference internal" href="#cloudComPy.PointDescriptor" title="cloudComPy.PointDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDescriptor</span></code></a> to store
+potential candidates for the next pass.
+Candidates are points close enough to the cylinder’s axis but too far
+from its actual center.</p></li>
+<li><p><strong>prevMinCornerPos</strong> (<em>tuple</em>) – Previous search box (min corner)</p></li>
+<li><p><strong>prevMaxCornerPos</strong> (<em>tuple</em>) – Previous search box (max corner)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.BoxNeighbourhood">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">BoxNeighbourhood</span></span><a class="headerlink" href="#cloudComPy.BoxNeighbourhood" title="Permalink to this definition"></a></dt>
+<dd><p>Input/output parameters structure for getPointsInBoxNeighbourhood.</p>
+<p>Use findBestLevelForAGivenNeighbourhoodSizeExtraction to get the right
+value for ‘level’ (only once as it only depends on the radius value ;).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<em>tuple</em>) – Box center (3 coordinates), default initialization (0, 0, 0)</p></li>
+<li><p><strong>axes</strong> (<em>list</em>) – 3 axes, optional, default initialization None</p></li>
+<li><p><strong>dimensions</strong> (<em>tuple</em>) – dimensions of the box, default initialization (0, 0, 0)</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – subdivision level at which to apply the extraction process</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.NearestNeighboursSearchStruct">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">NearestNeighboursSearchStruct</span></span><a class="headerlink" href="#cloudComPy.NearestNeighboursSearchStruct" title="Permalink to this definition"></a></dt>
+<dd><p>Container of in/out parameters for nearest neighbour(s) search.</p>
+<p>This structure is generic and can be used in multiple cases.
+It is particularly useful when searching nearest neighbours around points
+that lie in the same octree cell. In this case, several informations about
+this cell should be given to the search algorithm through this structure, but only
+once,before the first search. Then the search algorithm can be called multiple times,
+and only few informations need to be updated (the query point, etc.).</p>
+<p><strong>Information to set before search</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>queryPoint</strong> (<em>tuple</em>) – Query point coordinates. Should be updated each time.</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – Level of subdivision of the octree at which to start the search,
+Should be set once and for all.</p></li>
+<li><p><strong>minNumberOfNeighbors</strong> (<em>int</em>) – Minimal number of neighbours to find
+used only during multiple neighbours search (see findNearestNeighborsStartingFromCell).
+This is only indicative and not guaranteed.</p></li>
+<li><p><strong>cellPos</strong> (<em>tuple</em>) – Cell position in the octree of the cell including the query point.
+The position is expressed for the level of subdivision at which the search will
+be processed. Use see <code class="xref py py-meth docutils literal notranslate"><span class="pre">getCellPos()</span></code> to determine this position.
+This information should only be updated if the cell changes.</p></li>
+<li><p><strong>cellCenter</strong> (<em>tuple</em>) – Coordinates of the center of the cell including the query point.
+Use DgmOctree::computeCellCenter to determine these coordinates.
+This information should only be updated if the cell changes.</p></li>
+<li><p><strong>maxSearchSquareDistd</strong> (<em>float</em>) – Maximum neihgbours distance.
+The NN search process will stop if it reaches this radius even if it
+hasn’t find any neighbour (acceleration). To disable this behavior,
+set the maxSearchSquareDistd to something &lt;= 0).</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Information to set to 0 before search</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>minimalCellsSetToVisit</strong> (<em>list</em>) – List of indexes of the cells that
+have been already visited by the algorithm.
+This field is updated by the search algorithm. It should only be emptied
+if the cell that includes the query points change. Only used by the
+“unique nearest point” search algorithm.</p></li>
+<li><p><strong>pointsInNeighbourhood</strong> (<em>list</em>) – List of <a class="reference internal" href="#cloudComPy.PointDescriptor" title="cloudComPy.PointDescriptor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointDescriptor</span></code></a>.
+All the points that belong to the cubical neighbourhood of the current cell.
+This structure is only used by the “multiple nearest neighbours” search algorithms.
+The nearest points (relatively to the query point) are stored at the beginning of
+the vector. They are associated to their square distance to the query point.</p></li>
+<li><p><strong>alreadyVisitedNeighbourhoodSize</strong> (<em>int</em>) – Size of the cell neighbourhood
+that has been already visited by the algorithm.
+This field is updated by the search algorithm. It should only be reset to 0
+when the cell that includes the query point changes. A value of 0 means that
+no cell has been visited yet, 1 means that only the cell that includes the
+query point has been visited, 2 means that this cell and its 27 neighbourhing
+cells have been visited, etc.</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Result</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><p><strong>theNearestPointIndex</strong> (<em>int</em>) – The nearest point.
+This field is only used by the “unique nearest neighbour” search algorithm
+(see <code class="xref py py-meth docutils literal notranslate"><span class="pre">findTheNearestNeighborStartingFromCell()</span></code>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ccPolyline.html" class="btn btn-neutral float-left" title="3. Polylines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ccMesh.html" class="btn btn-neutral float-right" title="5. Meshes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

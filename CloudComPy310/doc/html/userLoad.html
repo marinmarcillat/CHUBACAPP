@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. Loading clouds and other entities from files &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Saving Clouds and other entities to files" href="userSave.html" />
+    <link rel="prev" title="1. Introduction" href="userIntro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Loading clouds and other entities from files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#known-formats">2.1. Known formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#load-without-explicit-shift-parameters">2.2. Load without explicit shift parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-point-cloud">2.2.1. Loading a point cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-mesh">2.2.2. Loading a mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-polyline">2.2.3. Loading a polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-file-containing-several-entities">2.2.4. Loading a file containing several entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-the-file-structure">2.2.5. Loading the file structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-shift-value">2.3. Getting the shift value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#load-with-explicit-shift-parameters">2.4. Load with explicit shift parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>Loading clouds and other entities from files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/userLoad.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="loading-clouds-and-other-entities-from-files">
+<h1><span class="section-number">2. </span>Loading clouds and other entities from files<a class="headerlink" href="#loading-clouds-and-other-entities-from-files" title="Permalink to this heading"></a></h1>
+<section id="known-formats">
+<span id="load-formats"></span><h2><span class="section-number">2.1. </span>Known formats<a class="headerlink" href="#known-formats" title="Permalink to this heading"></a></h2>
+<p>Entities known by CloudComPy are mainly PointClouds, triangular meshes, polylines…</p>
+<p>CloudComPy can read a lot of formats of point clouds and meshes.
+The <code class="docutils literal notranslate"><span class="pre">.bin</span></code> binary format is the native format of CloudCompare and can store several entities of all types.
+Take a look at the details of the formats supported by CloudCompare
+on <a class="reference external" href="https://www.cloudcompare.org/doc/wiki/index.php/FILE_I/O">wiki</a>.</p>
+<p>For clouds, the extensions known by CloudComPy are:
+<code class="docutils literal notranslate"><span class="pre">.asc</span></code> <code class="docutils literal notranslate"><span class="pre">.bin</span></code> <code class="docutils literal notranslate"><span class="pre">.drc</span></code> <code class="docutils literal notranslate"><span class="pre">.dxf</span></code> <code class="docutils literal notranslate"><span class="pre">.E57</span></code> <code class="docutils literal notranslate"><span class="pre">.las</span></code> <code class="docutils literal notranslate"><span class="pre">.laz</span></code> <code class="docutils literal notranslate"><span class="pre">.pcd</span></code> <code class="docutils literal notranslate"><span class="pre">.ply</span></code> <code class="docutils literal notranslate"><span class="pre">.pv</span></code> <code class="docutils literal notranslate"><span class="pre">.sbf</span></code> <code class="docutils literal notranslate"><span class="pre">.shp</span></code> <code class="docutils literal notranslate"><span class="pre">.vtk</span></code> <code class="docutils literal notranslate"><span class="pre">.xyz</span></code></p>
+<p>For meshes:
+<code class="docutils literal notranslate"><span class="pre">.dxf</span></code> <code class="docutils literal notranslate"><span class="pre">.bin</span></code> <code class="docutils literal notranslate"><span class="pre">.fbx</span></code>  <code class="docutils literal notranslate"><span class="pre">.obj</span></code> <code class="docutils literal notranslate"><span class="pre">.off</span></code> <code class="docutils literal notranslate"><span class="pre">.ply</span></code> <code class="docutils literal notranslate"><span class="pre">.stl</span></code> <code class="docutils literal notranslate"><span class="pre">.vtk</span></code></p>
+<p>For polylines:
+<code class="docutils literal notranslate"><span class="pre">.dxf</span></code> <code class="docutils literal notranslate"><span class="pre">.poly</span></code> <code class="docutils literal notranslate"><span class="pre">.sx</span></code> <code class="docutils literal notranslate"><span class="pre">.shp</span></code></p>
+<p>See <a class="reference download internal" download="" href="_downloads/c844bc7c6d431f15e9308e6aea982299/test020.py"><code class="xref download docutils literal notranslate"><span class="pre">test020.py</span></code></a> for an example.</p>
+</section>
+<section id="load-without-explicit-shift-parameters">
+<h2><span class="section-number">2.2. </span>Load without explicit shift parameters<a class="headerlink" href="#load-without-explicit-shift-parameters" title="Permalink to this heading"></a></h2>
+<p>By default, CloudCompare applies an automatic coordinates shift to recenter the objects and avoid a loss of precision.
+This is transparent for the user, and is the best option unless you need to load several entities while keeping the same shift.
+In that case, see <a class="reference internal" href="#loadparameters-label"><span class="std std-ref">Load with explicit shift parameters</span></a> below.</p>
+<p>If you want to know if a coordinate shift has been applied when loading an object, and the value of the shift, see <a class="reference internal" href="#shiftvalue-label"><span class="std std-ref">Getting the shift value</span></a> below.</p>
+<p>For all the examples below, we can use the files generated by autotests
+(see <a class="reference external" href="https://github.com/CloudCompare/CloudComPy/blob/master/doc/UseLinuxCondaBinary.md#execute-all-the-python-tests">here</a> for Linux
+or <a class="reference external" href="https://github.com/CloudCompare/CloudComPy/blob/master/doc/UseWindowsCondaBinary.md#execute-all-the-python-tests">there</a> for Windows.
+These files are, by default, in the subdirectory <cite>CloudComPy/Data</cite> of your Home.
+Let’s start by changing the working directory for your HOME.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<section id="loading-a-point-cloud">
+<h3><span class="section-number">2.2.1. </span>Loading a point cloud<a class="headerlink" href="#loading-a-point-cloud" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="cloudComPy.html#cloudComPy.loadPointCloud" title="cloudComPy.loadPointCloud"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloudComPy.loadPointCloud()</span></code></a> returns only the first point cloud found in the file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="s2">&quot;CloudComPy/Data/dataSample_1.0.xyz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-a-mesh">
+<h3><span class="section-number">2.2.2. </span>Loading a mesh<a class="headerlink" href="#loading-a-mesh" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="cloudComPy.html#cloudComPy.loadMesh" title="cloudComPy.loadMesh"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloudComPy.loadMesh()</span></code></a> returns only the first mesh found in the file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadMesh</span><span class="p">(</span><span class="s2">&quot;CloudComPy/Data/mesh.stl&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-a-polyline">
+<h3><span class="section-number">2.2.3. </span>Loading a polyline<a class="headerlink" href="#loading-a-polyline" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="cloudComPy.html#cloudComPy.loadPolyline" title="cloudComPy.loadPolyline"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloudComPy.loadPolyline()</span></code></a> returns the first polyline found in the file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">poly</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPolyline</span><span class="p">(</span><span class="s2">&quot;CloudComPy/Data/poly1.poly&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">poly</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-a-file-containing-several-entities">
+<h3><span class="section-number">2.2.4. </span>Loading a file containing several entities<a class="headerlink" href="#loading-a-file-containing-several-entities" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="cloudComPy.html#cloudComPy.importFile" title="cloudComPy.importFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloudComPy.importFile()</span></code></a> returns a tuple (list(mesh), list(cloud), file structure).
+The lists can be empty, depending on the content of the file.
+See see <a class="reference internal" href="#loadstructure-label"><span class="std std-ref">Loading the file structure</span></a> below for file structure.
+For now, CloudComPy detects only meshes and clouds in a <code class="docutils literal notranslate"><span class="pre">.bin</span></code> file.
+For instance, polylines and facets are imported as clouds, primitives are imported as meshes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">importFile</span><span class="p">(</span><span class="s2">&quot;CloudComPy/Data/meshCloud.bin&quot;</span><span class="p">)</span>
+<span class="n">meshes</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">clouds</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">cloud</span> <span class="ow">in</span> <span class="n">clouds</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cloud</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-the-file-structure">
+<span id="loadstructure-label"></span><h3><span class="section-number">2.2.5. </span>Loading the file structure<a class="headerlink" href="#loading-the-file-structure" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="cloudComPy.html#cloudComPy.importFile" title="cloudComPy.importFile"><code class="xref py py-func docutils literal notranslate"><span class="pre">cloudComPy.importFile()</span></code></a> returns the file structure as last item of the return tuple.
+For instance, <code class="docutils literal notranslate"><span class="pre">.E57</span></code> files contains a rich structured set of information.
+The file structure is given here as an array of strings, the first item of the string is the depth level.</p>
+<p>For the test, we need a data file
+<a class="reference external" href="http://sourceforge.net/projects/e57-3d-imgfmt/files/E57Example-data/manitouNoInvalidPoints.e57/download">available here</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># example data available here: http://sourceforge.net/projects/e57-3d-imgfmt/files/E57Example-data/manitouNoInvalidPoints.e57/download</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">,</span><span class="s2">&quot;manitouNoInvalidPoints.e57&quot;</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.simulation.openfields.fr/index.php/download-binaries/send/3-cloudcompy-data-samples/30-manitounoinvalidpoints-e57&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">,</span><span class="s2">&quot;manitouNoInvalidPoints.e57&quot;</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        
+<span class="n">entities</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">importFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">,</span><span class="s2">&quot;manitouNoInvalidPoints.e57&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In this example, there are several point clouds in the example, with one sensor per cloud.
+To get the structure as a list of strings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+    <span class="n">structure</span> <span class="o">=</span> <span class="n">entities</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/e63cdacbceb4552304d5bd81a3881c13/test041.py"><code class="xref download docutils literal notranslate"><span class="pre">test041.py</span></code></a>.</p>
+</section>
+</section>
+<section id="getting-the-shift-value">
+<span id="shiftvalue-label"></span><h2><span class="section-number">2.3. </span>Getting the shift value<a class="headerlink" href="#getting-the-shift-value" title="Permalink to this heading"></a></h2>
+<p>By default, CloudCompare applies an automatic coordinates shift to recenter the objects and avoid a loss of precision.</p>
+<p>To know if a shift has been applied on an object, use the method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject.isShifted" title="cloudComPy.ccShiftedObject.isShifted"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isShifted()</span></code></a>.</p>
+<p>The three components of the shift are given with the method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject.getGlobalShift" title="cloudComPy.ccShiftedObject.getGlobalShift"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getGlobalShift()</span></code></a>.</p>
+</section>
+<section id="load-with-explicit-shift-parameters">
+<span id="loadparameters-label"></span><h2><span class="section-number">2.4. </span>Load with explicit shift parameters<a class="headerlink" href="#load-with-explicit-shift-parameters" title="Permalink to this heading"></a></h2>
+<p>when you need to load several entities and apply the same shift,
+the best solution is to use the option <code class="docutils literal notranslate"><span class="pre">mode=cc.CC_SHIFT_MODE.XYZ</span></code>
+followed by the x,y and/or z non null shifts.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cloud1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;CloudComPy/Data/dataSample_5.0.xyz&quot;</span><span class="p">,</span>
+                           <span class="n">mode</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">CC_SHIFT_MODE</span><span class="o">.</span><span class="n">XYZ</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">importFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;CloudComPy/Data/dataSample_1.0.xyz&quot;</span><span class="p">,</span>
+                    <span class="n">mode</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">CC_SHIFT_MODE</span><span class="o">.</span><span class="n">XYZ</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">cloud2</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadMesh</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;CloudComPy/Data/mesh.stl&quot;</span><span class="p">,</span>
+                   <span class="n">mode</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">CC_SHIFT_MODE</span><span class="o">.</span><span class="n">XYZ</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>NOTE</strong> If you don’t know the value of the shift to apply, load the first entity without shift parameters, and use the methods
+<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject.isShifted" title="cloudComPy.ccShiftedObject.isShifted"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isShifted()</span></code></a> and <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject.getGlobalShift" title="cloudComPy.ccShiftedObject.getGlobalShift"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getGlobalShift()</span></code></a> to get a valid shift
+value.</p>
+<p><strong>WARNING</strong> Shift parameters are not always taken into account, depending on the type of file,
+shift values, following the internal rules of CloudCompare: when using the CloudCompare GUI,
+shift dialog at import is not always available.
+When the shift dialog is not proposed in the GUI, shift parameters are likely not taken into account in CloudCompare.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="userIntro.html" class="btn btn-neutral float-left" title="1. Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="userSave.html" class="btn btn-neutral float-right" title="3. Saving Clouds and other entities to files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cloudComPy: a Python interface for CloudCompare &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. cloudComPy: a first example" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">cloudComPy: a Python interface for CloudCompare</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cloudcompy-a-python-interface-for-cloudcompare">
+<h1>cloudComPy: a Python interface for CloudCompare<a class="headerlink" href="#cloudcompy-a-python-interface-for-cloudcompare" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userIntro.html#set-the-cloudcompy-environment">1.1. Set the CloudComPy environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userIntro.html#windows">1.1.1. Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userIntro.html#linux">1.1.2. Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userIntro.html#python3-cloudcompy-import">1.2. Python3: CloudComPy import</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userLoad.html#known-formats">2.1. Known formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userLoad.html#load-without-explicit-shift-parameters">2.2. Load without explicit shift parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userLoad.html#loading-a-point-cloud">2.2.1. Loading a point cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userLoad.html#loading-a-mesh">2.2.2. Loading a mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userLoad.html#loading-a-polyline">2.2.3. Loading a polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userLoad.html#loading-a-file-containing-several-entities">2.2.4. Loading a file containing several entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userLoad.html#loading-the-file-structure">2.2.5. Loading the file structure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userLoad.html#getting-the-shift-value">2.3. Getting the shift value</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userLoad.html#load-with-explicit-shift-parameters">2.4. Load with explicit shift parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userSave.html#known-formats">3.1. Known formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userSave.html#saving-a-point-cloud">3.2. Saving a Point Cloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userSave.html#saving-a-mesh">3.3. Saving a mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userSave.html#saving-several-entities-in-one-file">3.4. Saving several entities in one file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userEntities.html#clouds-and-scalar-fields">4.1. Clouds and scalar fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cloud-introspection">4.1.1. cloud introspection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cloud-transformations">4.1.2. cloud transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cloud-copy-destruction">4.1.3. cloud copy, destruction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cloud-normals">4.1.4. cloud normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cloud-colors">4.1.5. cloud colors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#scalar-fields">4.1.6. scalar fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#sensors">4.1.7. sensors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userEntities.html#meshes">4.2. meshes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#create-a-mesh-from-a-cloud">4.2.1. create a mesh from a cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#meshes-introspection">4.2.2. meshes introspection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#meshes-modifications">4.2.3. meshes modifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#generate-a-cloud-from-a-mesh">4.2.4. Generate a cloud from a mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#mesh-copy-destruction">4.2.5. mesh copy, destruction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userEntities.html#primitives">4.3. primitives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#box">4.3.1. Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cone">4.3.2. Cone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#cylinder">4.3.3. Cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#plane">4.3.4. Plane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#quadric">4.3.5. Quadric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#sphere">4.3.6. Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#torus">4.3.7. Torus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userEntities.html#dish">4.3.8. Dish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userEntities.html#polylines">4.4. polylines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userEntities.html#d-polygons-facets">4.5. 2D polygons (facets)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userEntities.html#octrees">4.6. octrees</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userNumpy.html#read-modify-or-create-cloud-coordinates-with-numpy">5.1. Read, modify or create cloud coordinates with Numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userNumpy.html#read-modify-or-create-a-scalar-field-with-numpy">5.2. Read, modify or create a scalar field with Numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userNumpy.html#an-example-of-point-cloud-with-scalar-field-created-from-numpy-arrays">5.3. An example of point cloud with scalar field created from Numpy arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userNumpy.html#access-to-the-indexes-of-triangles-nodes-in-a-mesh">5.4. Access to the indexes of triangles nodes in a mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userNumpy.html#access-to-the-array-of-colors-in-cloud">5.5. Access to the array of colors in cloud</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#create-a-point-cloud-with-numpy">6.1. Create a point cloud with numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#cut-a-cloud-or-a-mesh-with-a-polyline">6.2. Cut a cloud or a mesh with a polyline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#cut-a-cloud-with-a-polyline">6.2.1. Cut a cloud with a polyline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#cut-a-mesh-with-a-polyline">6.2.2. Cut a mesh with a polyline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#compute-distances-between-clouds-and-meshes">6.3. Compute distances between clouds and meshes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#compute-distances-between-a-cloud-and-a-mesh-c2m">6.3.1. Compute distances between a cloud and a mesh (C2M)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#compute-distances-between-two-clouds-c2c">6.3.2. Compute distances between two clouds (C2C)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#compute-split-distances-between-two-clouds-c2c">6.3.3. Compute split distances between two clouds (C2C)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#cloud-registration">6.4. Cloud registration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#cloud-registration-with-the-cloudcompare-implementation-of-icp-algorithm">6.4.1. Cloud registration with the CloudCompare implementation of ICP algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#cloud-registration-with-the-pcl-plugin">6.4.2. Cloud registration with the PCL plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#cloud-triangulation-create-a-mesh">6.5. Cloud triangulation: create a mesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#fitting-ccplane">6.6. Fitting ccPlane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#searching-points-in-neighbourhood">6.7. Searching points in neighbourhood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#cloud-sampling-noise-filter-filter-by-scalar-field">6.8. Cloud sampling, noise filter, filter by scalar field</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#noise-filter">6.8.1. Noise filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#resample-cloud-spatially">6.8.2. Resample cloud spatially</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#subsample-cloud-randomly">6.8.3. Subsample cloud randomly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#resample-cloud-with-octree-at-level">6.8.4. resample cloud with octree at level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#resample-cloud-with-octree">6.8.5. resample cloud with octree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#statistical-outliers-removal-sor-filter">6.8.6. Statistical Outliers Removal (SOR) filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#subsample-cloud-with-octree-at-level">6.8.7. subsample cloud with octree at level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#subsample-cloud-with-octree">6.8.8. subsample cloud with octree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#filter-by-scalar-field-values">6.8.9. filter by scalar field values</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#generate-histograms">6.9. Generate histograms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#histogram-as-a-figure">6.9.1. histogram as a figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="userUseCases.html#histogram-as-a-csv-file">6.9.2. histogram as a csv file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#compute-a-2-5d-volume">6.10. Compute a 2.5D volume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#cloud-rasterization">6.11. Cloud rasterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#interpolate-scalar-fields-from-one-cloud-to-another">6.12. Interpolate scalar fields from one cloud to another</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#finding-an-optimal-bounding-box">6.13. Finding an optimal bounding box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#cloud-comparison-with-plugin-m3c2">6.14. Cloud comparison with plugin M3C2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#shadevis-ambiant-occlusion-with-plugin-pcv">6.15. ShadeVIS (ambiant occlusion) with Plugin PCV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#compute-hidden-point-removal-with-plugin-hpr">6.16. Compute Hidden Point Removal with plugin HPR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#boolean-operations-on-meshes-with-plugin-meshboolean">6.17. Boolean operations on meshes with plugin MeshBoolean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#finding-primitives-on-a-cloud-with-plugin-ransac-sd">6.18. Finding primitives on a cloud with plugin RANSAC-SD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#compute-cloth-simulation-filter-on-a-cloud-with-csf-plugin">6.19. compute Cloth Simulation Filter on a cloud with CSF plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#sclices-and-contours">6.20. Sclices and contours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#extractconnectedcomponents">6.21. ExtractConnectedComponents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="userUseCases.html#avoid-memory-leaks-in-an-iterative-process">6.22. Avoid memory leaks in an iterative process</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccPointCloud.html#ccpointcloud">2.1. ccPointCloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPointCloud.html#bases-classes-for-points-clouds">2.2. bases classes for Points Clouds</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccPolyline.html#ccpolyline">3.1. ccPolyline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPolyline.html#bases-classes-for-ccpolyline">3.2. bases classes for ccPolyline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccOctree.html#octrees">4.1. Octrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccOctree.html#descriptors-structures">4.2. Descriptors structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccOctree.html#neighbourhood-structures">4.3. Neighbourhood structures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccMesh.html#ccmesh">5.1. ccMesh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccMesh.html#bases-classes-for-meshes">5.2. bases classes for Meshes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#box">6.1. Box</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#cone">6.2. Cone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#cylinder">6.3. Cylinder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#plane">6.4. Plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#quadric">6.5. Quadric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#sphere">6.6. Sphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#torus">6.7. Torus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#dish">6.8. Dish</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#generic-primitive">6.9. Generic primitive</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccPrimitives.html#rotation-translation-matrix">7.1. Rotation Translation Matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccSensor.html#ccgblsensor">8.1. ccGBLSensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ccSensor.html#ccsensor">8.2. ccSensor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DistanceComputationTools.html#distance-computation">10.1. Distance computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DistanceComputationTools.html#distance-computation-parameters">10.2. Distance computation parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GeometricalAnalysisTools.html#geometrical-analysis">11.1. Geometrical Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cloudSamplingTools.html#cloud-sampling">12.1. cloud sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cloudSamplingTools.html#cloud-sampling-parameters">12.2. cloud sampling parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ccFacet.html#ccfacets">13.1. ccFacets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Neighbourhood.html#id1">14.1. Neighbourhood</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="colors.html#qcolor-from-qt">15.1. QColor (from Qt)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colors.html#other-useful-color-classes-from-qt">15.2. Other Useful Color classes (from Qt)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-right" title="1. cloudComPy: a first example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

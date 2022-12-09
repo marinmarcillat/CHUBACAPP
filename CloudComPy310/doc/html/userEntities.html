@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. Clouds, meshes, scalar fields: introspection, manipulation &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. operations on coordinates, scalar fields, colors, meshes with Numpy" href="userNumpy.html" />
+    <link rel="prev" title="3. Saving Clouds and other entities to files" href="userSave.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Clouds, meshes, scalar fields: introspection, manipulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#clouds-and-scalar-fields">4.1. Clouds and scalar fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-introspection">4.1.1. cloud introspection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-transformations">4.1.2. cloud transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-copy-destruction">4.1.3. cloud copy, destruction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-normals">4.1.4. cloud normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-colors">4.1.5. cloud colors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scalar-fields">4.1.6. scalar fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensors">4.1.7. sensors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#meshes">4.2. meshes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-mesh-from-a-cloud">4.2.1. create a mesh from a cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meshes-introspection">4.2.2. meshes introspection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meshes-modifications">4.2.3. meshes modifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-a-cloud-from-a-mesh">4.2.4. Generate a cloud from a mesh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mesh-copy-destruction">4.2.5. mesh copy, destruction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#primitives">4.3. primitives</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#box">4.3.1. Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cone">4.3.2. Cone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cylinder">4.3.3. Cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plane">4.3.4. Plane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quadric">4.3.5. Quadric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sphere">4.3.6. Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#torus">4.3.7. Torus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dish">4.3.8. Dish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#polylines">4.4. polylines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-polygons-facets">4.5. 2D polygons (facets)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#octrees">4.6. octrees</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>Clouds, meshes, scalar fields: introspection, manipulation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/userEntities.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clouds-meshes-scalar-fields-introspection-manipulation">
+<h1><span class="section-number">4. </span>Clouds, meshes, scalar fields: introspection, manipulation<a class="headerlink" href="#clouds-meshes-scalar-fields-introspection-manipulation" title="Permalink to this heading"></a></h1>
+<section id="clouds-and-scalar-fields">
+<h2><span class="section-number">4.1. </span>Clouds and scalar fields<a class="headerlink" href="#clouds-and-scalar-fields" title="Permalink to this heading"></a></h2>
+<section id="cloud-introspection">
+<h3><span class="section-number">4.1.1. </span>cloud introspection<a class="headerlink" href="#cloud-introspection" title="Permalink to this heading"></a></h3>
+<p>3D Clouds contains a set of indexed points and have several optional associated features:
+normals, several scalarFields, color, an octree structure, sensors…</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="s2">&quot;CloudComPy/Data/dataSample_5.0.xyz&quot;</span><span class="p">)</span>
+
+<span class="n">name</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>        <span class="c1"># &#39;dataSample_5 - Cloud&#39;</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;sampleCloud&quot;</span><span class="p">)</span>
+
+<span class="n">nbPoints</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>       <span class="c1"># 1000000</span>
+<span class="n">pt</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>    <span class="c1"># (-4.880000114440918, -1.5499999523162842, 0.08818499743938446)</span>
+
+<span class="n">bb</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getOwnBB</span><span class="p">()</span>         <span class="c1"># bounding box</span>
+<span class="n">minCorner</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">minCorner</span><span class="p">()</span>    <span class="c1"># (-5.0, -5.0, -1.0861680507659912)</span>
+<span class="n">maxCorner</span> <span class="o">=</span> <span class="n">bb</span><span class="o">.</span><span class="n">maxCorner</span><span class="p">()</span>    <span class="c1"># (4.989999771118164, 4.989999771118164, 5.0)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeGravityCenter</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Several methods based on neighbourood computations require a radius parameter,
+often estimated with an average neighbour points.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">radius</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">GetPointCloudRadius</span><span class="p">(</span><span class="n">clouds</span><span class="o">=</span><span class="p">[</span><span class="n">cloud</span><span class="p">],</span> <span class="n">nodes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The octree is used in a lot of methods, to speed up access to the neighbourhood of the points,
+and it is often computed automatically.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">octree</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getOctree</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">octree</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">octree</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeOctree</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Access to scalarFields: ScalarFields are accessible by the <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.getScalarField" title="cloudComPy.ccPointCloud.getScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getScalarField()</span></code></a>
+method from their index (integer).
+It is sometimes more convenient to find them by their name from the scalarFields dictionary,
+which gives the index from the name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nbSF</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getNumberOfScalarFields</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasScalarFields</span><span class="p">()</span>
+    <span class="n">dic</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarFieldDic</span><span class="p">()</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">exportCoordToSF</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">dic</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarFieldDic</span><span class="p">()</span>  <span class="c1"># {&#39;Coord. X&#39;: 0, &#39;Coord. Y&#39;: 1, &#39;Coord. Z&#39;: 2}</span>
+
+<span class="n">SFX</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;Coord. X&#39;</span><span class="p">])</span>
+<span class="n">sfmin</span> <span class="o">=</span> <span class="n">SFX</span><span class="o">.</span><span class="n">getMin</span><span class="p">()</span>             <span class="c1"># -5.0</span>
+<span class="n">sfmax</span> <span class="o">=</span> <span class="n">SFX</span><span class="o">.</span><span class="n">getMax</span><span class="p">()</span>             <span class="c1"># 4.989999771118164</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">variance</span> <span class="o">=</span> <span class="n">SFX</span><span class="o">.</span><span class="n">computeMeanAndVariance</span><span class="p">()</span>
+<span class="n">SFX</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>              <span class="c1"># -4.880000114440918</span>
+</pre></div>
+</div>
+<p>The cloud can have a color field that can be seen as a special type of scalarField.
+There are methods to convert scalarField to colors and vice-versa.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasColors</span><span class="p">():</span>
+    <span class="n">cloud</span><span class="o">.</span><span class="n">setCurrentScalarField</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cloud</span><span class="o">.</span><span class="n">convertCurrentScalarFieldToColors</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Normals can be computed with <code class="xref py py-meth docutils literal notranslate"><span class="pre">computeNormals()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasNormals</span><span class="p">():</span>
+    <span class="n">cc</span><span class="o">.</span><span class="n">computeNormals</span><span class="p">([</span><span class="n">cloud</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If you need to save clouds for reopening with CloudCompare GUI, with a predefined state of what is shown
+(colors, normals, scalar fields), use the <code class="docutils literal notranslate"><span class="pre">.bin</span></code> format and define the state with the following functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.showColors" title="cloudComPy.ccPointCloud.showColors"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showColors()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.showNormals" title="cloudComPy.ccPointCloud.showNormals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showNormals()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.showSF" title="cloudComPy.ccPointCloud.showSF"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showSF()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.colorsShown" title="cloudComPy.ccPointCloud.colorsShown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">colorsShown()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.normalsShown" title="cloudComPy.ccPointCloud.normalsShown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">normalsShown()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.sfShown" title="cloudComPy.ccPointCloud.sfShown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sfShown()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setCurrentDisplayedScalarField" title="cloudComPy.ccPointCloud.setCurrentDisplayedScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCurrentDisplayedScalarField()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="cloud-transformations">
+<h3><span class="section-number">4.1.2. </span>cloud transformations<a class="headerlink" href="#cloud-transformations" title="Permalink to this heading"></a></h3>
+<p>Basic transformations <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.translate" title="cloudComPy.ccPointCloud.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">translate()</span></code></a> and <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.scale" title="cloudComPy.ccPointCloud.scale"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scale()</span></code></a>
+allow to translate a cloud or rescale it, with separate factors along the 3 directions and an optional center (see
+<a class="reference download internal" download="" href="_downloads/c1caad034d24f0f7d34dfdec69f759d8/test001.py"><code class="xref download docutils literal notranslate"><span class="pre">test001.py</span></code></a>).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- get a reference before transformation</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeGravityCenter</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;gravityCenter: (</span><span class="si">%14.7e</span><span class="s2">, </span><span class="si">%14.7e</span><span class="s2">, </span><span class="si">%14.7e</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.9999999e-03</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.9999999e-03</span><span class="p">,</span> <span class="mf">9.6193114e-03</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="c1"># --- rescale the cloud along Z direction, center at origin</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeGravityCenter</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;gravityCenter: (</span><span class="si">%14.7e</span><span class="s2">, </span><span class="si">%14.7e</span><span class="s2">, </span><span class="si">%14.7e</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">4.9999999e-03</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.9999999e-03</span><span class="p">,</span> <span class="mf">1.9238623e-02</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="c1"># --- inverse scaling</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># --- a simple translation</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeGravityCenter</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;gravityCenter: (</span><span class="si">%14.7e</span><span class="s2">, </span><span class="si">%14.7e</span><span class="s2">, </span><span class="si">%14.7e</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0050000e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0050001e+00</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.9903808e+00</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="c1"># --- inverse translation</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">translate</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>More complex transformations, based on rotation, require a <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccGLMatrix</span></code></a> object to define the transformation,
+which is applied to the cloud with the method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.applyRigidTransformation" title="cloudComPy.ccPointCloud.applyRigidTransformation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">applyRigidTransformation()</span></code></a>.</p>
+<p>The method <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.initFromParameters" title="cloudComPy.ccGLMatrix.initFromParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initFromParameters()</span></code></a> allows to define the transformation with rotations
+(see <a class="reference external" href="https://en.wikipedia.org/wiki/Euler_angles">Euler angles</a>).
+The following code is extract from <a class="reference download internal" download="" href="_downloads/3628ce2f1da38e8991a2453dc86334e7/test026.py"><code class="xref download docutils literal notranslate"><span class="pre">test026.py</span></code></a>.</p>
+<p>Define a transformation from a rotation angle and axis, plus a translation,
+with <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.initFromParameters" title="cloudComPy.ccGLMatrix.initFromParameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">initFromParameters()</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr1</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.47</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">,</span> <span class="mf">6.3</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Sometimes, you need to store or retreive the transformation matrix data (4x4 matrix stored in major column order),
+use <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.toString" title="cloudComPy.ccGLMatrix.toString"><code class="xref py py-meth docutils literal notranslate"><span class="pre">toString()</span></code></a>, <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.fromString" title="cloudComPy.ccGLMatrix.fromString"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fromString()</span></code></a>
+and <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.data" title="cloudComPy.ccGLMatrix.data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">data()</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">m_data_str</span> <span class="o">=</span> <span class="n">tr1</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span>
+<span class="n">m_data</span> <span class="o">=</span> <span class="n">tr1</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+<span class="n">tr1b</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="o">.</span><span class="n">fromString</span><span class="p">(</span><span class="n">m_data_str</span><span class="p">)</span>
+<span class="n">m_datab</span> <span class="o">=</span> <span class="n">tr1b</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">m_datab</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>If you need to keep precision while iterating on transformations, for instance, it is better to work
+with double precision transformations <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrixd" title="cloudComPy.ccGLMatrixd"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccGLMatrixd</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrixd</span><span class="p">()</span>
+<span class="n">tr2</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.47</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">,</span> <span class="mf">6.3</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For these transformation examples, we create an ellipsoid cloud:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccSphere</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">sphere</span><span class="o">.</span><span class="n">samplePoints</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And we rotate it, with a transformation and the method <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.applyRigidTransformation" title="cloudComPy.ccPointCloud.applyRigidTransformation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">applyRigidTransformation()</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">transform1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">transform1</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">,</span> <span class="mf">6.3</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">applyRigidTransformation</span><span class="p">(</span><span class="n">transform1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can get the rotation parameters of a transformation in the form of a rotation angle and a vector
+with <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.getParameters1" title="cloudComPy.ccGLMatrix.getParameters1"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getParameters1()</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">matrixParams1</span> <span class="o">=</span> <span class="n">transform1</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">matrixParams1</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">matrixParams1</span><span class="o">.</span><span class="n">axis3D</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.211393</span><span class="p">,</span> <span class="mf">0.408694</span><span class="p">,</span> <span class="mf">0.887852</span><span class="p">),</span> <span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>You can also get the rotation parameters of a transformation in the form of the 3 angles phi, psi, theta
+with <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.getParameters2" title="cloudComPy.ccGLMatrix.getParameters2"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getParameters2()</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">matrixParams2</span> <span class="o">=</span> <span class="n">transform1</span><span class="o">.</span><span class="n">getParameters2</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">matrixParams2</span><span class="o">.</span><span class="n">phi_rad</span><span class="p">,</span> <span class="mf">0.225260</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">matrixParams2</span><span class="o">.</span><span class="n">psi_rad</span><span class="p">,</span> <span class="mf">0.0639141</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">matrixParams2</span><span class="o">.</span><span class="n">theta_rad</span><span class="p">,</span> <span class="mf">0.0954226</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">matrixParams2</span><span class="o">.</span><span class="n">t3D</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The product of two transformations gives a transformation</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">x</span> <span class="o">=</span><span class="n">transform1</span><span class="o">*</span><span class="n">transform1</span>
+
+<span class="n">mpx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">mpx</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">mpx</span><span class="o">.</span><span class="n">axis3D</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.211393</span><span class="p">,</span> <span class="mf">0.408694</span><span class="p">,</span> <span class="mf">0.887852</span><span class="p">),</span> <span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>To get the inverse of a transformation, use <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.inverse" title="cloudComPy.ccGLMatrix.inverse"><code class="xref py py-meth docutils literal notranslate"><span class="pre">inverse()</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">rotinv</span> <span class="o">=</span> <span class="n">transform1</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
+
+<span class="n">mpi</span> <span class="o">=</span> <span class="n">rotinv</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">mpi</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">mpi</span><span class="o">.</span><span class="n">axis3D</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.211393</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.408694</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.887852</span><span class="p">),</span> <span class="mf">1.e-5</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>Let’s play with the 3 rotations phi, psi, theta:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">rotphi</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">rotphi</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">rotphi</span><span class="o">.</span><span class="n">getParameters2</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">phi_rad</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">rotpsi</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">rotpsi</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">a2</span> <span class="o">=</span> <span class="n">rotpsi</span><span class="o">.</span><span class="n">getParameters2</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a2</span><span class="o">.</span><span class="n">psi_rad</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">rottheta</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">rottheta</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="n">a3</span> <span class="o">=</span> <span class="n">rottheta</span><span class="o">.</span><span class="n">getParameters2</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a3</span><span class="o">.</span><span class="n">theta_rad</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">rotTaitBryan</span> <span class="o">=</span> <span class="n">rotphi</span><span class="o">*</span><span class="n">rottheta</span><span class="o">*</span><span class="n">rotpsi</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">rotTaitBryan</span><span class="o">.</span><span class="n">getParameters2</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">((</span><span class="n">a</span><span class="o">.</span><span class="n">phi_rad</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">psi_rad</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">theta_rad</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The transposed version of a transformation gives an inverse rotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">mat1</span> <span class="o">=</span> <span class="n">rotTaitBryan</span><span class="o">.</span><span class="n">transposed</span><span class="p">()</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">rotTaitBryan</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="n">pt1</span> <span class="o">=</span> <span class="n">mat1</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="n">pt1</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="n">angle1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">axis3D</span>
+<span class="n">angle2</span> <span class="o">=</span> <span class="n">pt1</span><span class="o">.</span><span class="n">axis3D</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">angle1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">-</span> <span class="n">angle2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>Another way to check:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">mat</span> <span class="o">=</span> <span class="p">(</span><span class="n">rotTaitBryan</span><span class="o">.</span><span class="n">transposed</span><span class="p">())</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
+
+<span class="c1"># --- access to transformation data from numpy</span>
+
+<span class="n">v</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rotTaitBryan</span><span class="o">.</span><span class="n">data</span><span class="p">())</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">data</span><span class="p">())</span> <span class="c1"># should be null</span>
+
+<span class="n">d2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">d2</span><span class="o">&gt;</span><span class="mf">1e-12</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>An interpolation between transformations can be computed with <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.Interpolate" title="cloudComPy.ccGLMatrix.Interpolate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Interpolate()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">rot1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">rot1</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">rot2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">rot2</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">3.</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+<span class="n">rotation</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="o">.</span><span class="n">Interpolate</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rot1</span><span class="p">,</span> <span class="n">rot2</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">rotation</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">axis3D</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>There is also the method <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.FromToRotation" title="cloudComPy.ccGLMatrix.FromToRotation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FromToRotation()</span></code></a>
+to get a transformation matrix that rotates a vector to another:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">rot1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="o">.</span><span class="n">FromToRotation</span><span class="p">((</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">rot1</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">axis3D</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>You can generate a ‘viewing’ matrix from a looking vector and a ‘up’ direction
+with <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix.FromViewDirAndUpDir" title="cloudComPy.ccGLMatrix.FromViewDirAndUpDir"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FromViewDirAndUpDir()</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span>
+<span class="n">rot1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="o">.</span><span class="n">FromViewDirAndUpDir</span><span class="p">((</span><span class="mf">0.</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r2</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="n">r2</span><span class="p">,</span> <span class="n">r2</span><span class="p">))</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">rot1</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isCoordEqual</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">axis3D</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">alpha_rad</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">4.</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1.e-7</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+</section>
+<section id="cloud-copy-destruction">
+<h3><span class="section-number">4.1.3. </span>cloud copy, destruction<a class="headerlink" href="#cloud-copy-destruction" title="Permalink to this heading"></a></h3>
+<p>A cloud can be cloned with all its features except from the octree with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.cloneThis" title="cloudComPy.ccPointCloud.cloneThis"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloneThis()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloned</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">cloneThis</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To free memory, a cloud can be deleted with <a class="reference internal" href="cloudComPy.html#cloudComPy.deleteEntity" title="cloudComPy.deleteEntity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloudComPy.deleteEntity()</span></code></a>
+(<strong>WARNING</strong> be sure to have no more Python objects referencing the deleted object):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cc</span><span class="o">.</span><span class="n">deleteEntity</span><span class="p">(</span><span class="n">cloned</span><span class="p">)</span> <span class="c1"># delete the cloud copy</span>
+<span class="n">cloned</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/3628ce2f1da38e8991a2453dc86334e7/test026.py"><code class="xref download docutils literal notranslate"><span class="pre">test026.py</span></code></a>.</p>
+<p>Some methods give a selection from a cloud as a <a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="cloudComPy.ReferenceCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ReferenceCloud</span></code></a> which is a light structure
+referencing the selected nodes in the original cloud. To convert this selection in a new cloud, use the method
+<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.partialClone" title="cloudComPy.ccPointCloud.partialClone"><code class="xref py py-meth docutils literal notranslate"><span class="pre">partialClone()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud</span><span class="p">(</span><span class="mf">5.0</span><span class="p">))</span>
+
+<span class="n">refCloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">CloudSamplingTools</span><span class="o">.</span><span class="n">noiseFilter</span><span class="p">(</span><span class="n">cloud</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="c1"># selection on cloud</span>
+<span class="n">origCloud</span> <span class="o">=</span> <span class="n">refCloud</span><span class="o">.</span><span class="n">getAssociatedCloud</span><span class="p">()</span>            <span class="c1"># the original cloud ~ cloud</span>
+<span class="p">(</span><span class="n">noiseCloud</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="o">=</span> <span class="n">origCloud</span><span class="o">.</span><span class="n">partialClone</span><span class="p">(</span><span class="n">refCloud</span><span class="p">)</span> <span class="c1"># ccPointCloud from selection, status</span>
+<span class="n">noiseCloud</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;noiseCloud&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">refCloud</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">!=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ReferenceCloud</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">refCloud</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">7489</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">res</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/5d327f063b4613d64a4a287b15f97c01/test019.py"><code class="xref download docutils literal notranslate"><span class="pre">test019.py</span></code></a>.</p>
+</section>
+<section id="cloud-normals">
+<span id="id1"></span><h3><span class="section-number">4.1.4. </span>cloud normals<a class="headerlink" href="#cloud-normals" title="Permalink to this heading"></a></h3>
+<p>Once computed, normals can be exported to scalar fields with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.exportNormalToSF" title="cloudComPy.ccPointCloud.exportNormalToSF"><code class="xref py py-meth docutils literal notranslate"><span class="pre">exportNormalToSF()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">exportNormalToSF</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sf</span><span class="o">=</span><span class="n">cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">sf</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;Nz&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>Normals can also be converted to color with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.convertNormalToRGB" title="cloudComPy.ccPointCloud.convertNormalToRGB"><code class="xref py py-meth docutils literal notranslate"><span class="pre">convertNormalToRGB()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">convertNormalToRGB</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasColors</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>To compute strike and dip fields from normals, use <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.convertNormalToDipDirSFs" title="cloudComPy.ccPointCloud.convertNormalToDipDirSFs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">convertNormalToDipDirSFs()</span></code></a>
+(see definition for <a class="reference external" href="https://en.wikipedia.org/wiki/Strike_and_dip">Strike and dip</a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">convertNormalToDipDirSFs</span><span class="p">()</span>
+
+<span class="n">dicsf</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarFieldDic</span><span class="p">()</span>
+<span class="n">sfdip</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">dicsf</span><span class="p">[</span><span class="s1">&#39;Dip (degrees)&#39;</span><span class="p">])</span>
+<span class="n">sfdipd</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">dicsf</span><span class="p">[</span><span class="s1">&#39;Dip direction (degrees)&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Normals can be inverted with <a class="reference internal" href="cloudComPy.html#cloudComPy.invertNormals" title="cloudComPy.invertNormals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloudComPy.invertNormals()</span></code></a>,
+reoriented with a <a class="reference external" href="https://en.wikipedia.org/wiki/Fast_marching_method">Fast Marching method</a>
+or a <a class="reference external" href="https://en.wikipedia.org/wiki/Fast_marching_method">Minimum Spanning Tree method</a>,
+with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.orientNormalsWithFM" title="cloudComPy.ccPointCloud.orientNormalsWithFM"><code class="xref py py-meth docutils literal notranslate"><span class="pre">orientNormalsWithFM()</span></code></a>
+and <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.orientNormalsWithMST" title="cloudComPy.ccPointCloud.orientNormalsWithMST"><code class="xref py py-meth docutils literal notranslate"><span class="pre">orientNormalsWithMST()</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">orientNormalsWithFM</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">orientNormalsWithMST</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cc</span><span class="o">.</span><span class="n">invertNormals</span><span class="p">([</span><span class="n">cloud</span><span class="p">]):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/69ee5df4f18432919e8f9533221e46af/test014.py"><code class="xref download docutils literal notranslate"><span class="pre">test014.py</span></code></a>.</p>
+</section>
+<section id="cloud-colors">
+<span id="id2"></span><h3><span class="section-number">4.1.5. </span>cloud colors<a class="headerlink" href="#cloud-colors" title="Permalink to this heading"></a></h3>
+<p>The <a class="reference internal" href="colors.html#cloudComPy.QColor" title="cloudComPy.QColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.QColor</span></code></a> class wraps the <a class="reference external" href="https://doc.qt.io/qt-5/qcolor.html">Qt5 QColor</a> class
+and provides provides colors based on RGB, HSV or CMYK values.
+See <a class="reference download internal" download="" href="_downloads/f5dead73d0c089146aeb97c9efa9ffb2/test028.py"><code class="xref download docutils literal notranslate"><span class="pre">test028.py</span></code></a> for an example of use of <a class="reference internal" href="colors.html#cloudComPy.QColor" title="cloudComPy.QColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.QColor</span></code></a> methods.</p>
+<p>Several methods of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccPointCloud</span></code></a> allow to colorize the cloud:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.colorize" title="cloudComPy.ccPointCloud.colorize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">colorize()</span></code></a></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">fromRgb()</span></code></p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">fromRgbF()</span></code></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setColorGradient" title="cloudComPy.ccPointCloud.setColorGradient"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setColorGradient()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setColorGradientDefault" title="cloudComPy.ccPointCloud.setColorGradientDefault"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setColorGradientDefault()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setColorGradientBanded" title="cloudComPy.ccPointCloud.setColorGradientBanded"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setColorGradientBanded()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.changeColorLevels" title="cloudComPy.ccPointCloud.changeColorLevels"><code class="xref py py-meth docutils literal notranslate"><span class="pre">changeColorLevels()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.convertRGBToGreyScale" title="cloudComPy.ccPointCloud.convertRGBToGreyScale"><code class="xref py py-meth docutils literal notranslate"><span class="pre">convertRGBToGreyScale()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">colorize</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> 
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasColors</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">col</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">QColor</span><span class="o">.</span><span class="n">fromRgb</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">64</span><span class="p">)</span> 
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">c1</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">QColor</span><span class="o">.</span><span class="n">fromRgbF</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+<span class="n">c2</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">QColor</span><span class="o">.</span><span class="n">fromRgbF</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">setColorGradient</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">setColorGradientDefault</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">setColorGradientBanded</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">changeColorLevels</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">convertRGBToGreyScale</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>ScalarFields can be used to define or modify colors, colors can be used to define scalarFields:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.convertCurrentScalarFieldToColors" title="cloudComPy.ccPointCloud.convertCurrentScalarFieldToColors"><code class="xref py py-meth docutils literal notranslate"><span class="pre">convertCurrentScalarFieldToColors()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.enhanceRGBWithIntensitySF" title="cloudComPy.ccPointCloud.enhanceRGBWithIntensitySF"><code class="xref py py-meth docutils literal notranslate"><span class="pre">enhanceRGBWithIntensitySF()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.sfFromColor" title="cloudComPy.ccPointCloud.sfFromColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sfFromColor()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">exportCoordToSF</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setCurrentDisplayedScalarField</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">convertCurrentScalarFieldToColors</span><span class="p">(</span><span class="n">mixWithExistingColor</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">enhanceRGBWithIntensitySF</span><span class="p">(</span><span class="n">sfIdx</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="n">n1</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getNumberOfScalarFields</span><span class="p">()</span>
+
+<span class="n">cloud</span><span class="o">.</span><span class="n">sfFromColor</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="c1"># export R, G, B, not alpha, not composite</span>
+
+<span class="n">n2</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getNumberOfScalarFields</span><span class="p">()</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">n2</span><span class="o">-</span><span class="n">n1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>If you don’t need any more colors, it is possible to free some memory
+with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.unallocateColors" title="cloudComPy.ccPointCloud.unallocateColors"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unallocateColors()</span></code></a>
+(<strong>WARNING</strong> be sure to have no more Python objects referencing the deleted object):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">unallocateColors</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">cloud</span><span class="o">.</span><span class="n">hasColors</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>With two clouds “sharing a same region”, it is possible to define the color of one cloud
+by interpolation from the other cloud, with <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.interpolateColorsFrom" title="cloudComPy.ccPointCloud.interpolateColorsFrom"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interpolateColorsFrom()</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud1</span><span class="o">.</span><span class="n">interpolateColorsFrom</span><span class="p">(</span><span class="n">cloud</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/dcd76c574118dea079cde3f8f8fd82e6/test029.py"><code class="xref download docutils literal notranslate"><span class="pre">test029.py</span></code></a>.</p>
+</section>
+<section id="scalar-fields">
+<h3><span class="section-number">4.1.6. </span>scalar fields<a class="headerlink" href="#scalar-fields" title="Permalink to this heading"></a></h3>
+<p>when a scalar field is modified with Numpy (see <a class="reference internal" href="userNumpy.html#scalarfield-numpy"><span class="std std-ref">Read, modify or create a scalar field with Numpy</span></a>),
+you must reinitialise the min and max value of the scalar field with <a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.computeMinAndMax" title="cloudComPy.ScalarField.computeMinAndMax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">computeMinAndMax()</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">dic</span> <span class="o">=</span> <span class="n">cloud1</span><span class="o">.</span><span class="n">getScalarFieldDic</span><span class="p">()</span>
+<span class="n">sf1</span> <span class="o">=</span> <span class="n">cloud1</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">dic</span><span class="p">[</span><span class="s1">&#39;Coord. Z&#39;</span><span class="p">])</span>
+<span class="n">max1</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">getMax</span><span class="p">()</span>
+<span class="n">asf1</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">toNpArray</span><span class="p">()</span>   <span class="c1"># access to Numpy array, without copy</span>
+<span class="n">asf1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">max1</span>         <span class="c1"># modification in place</span>
+<span class="n">sf1</span><span class="o">.</span><span class="n">computeMinAndMax</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>General information and statistics are available with:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.getName" title="cloudComPy.ScalarField.getName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getName()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.getMin" title="cloudComPy.ScalarField.getMin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getMin()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.getMax" title="cloudComPy.ScalarField.getMax"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getMax()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.computeMeanAndVariance" title="cloudComPy.ScalarField.computeMeanAndVariance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">computeMeanAndVariance()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.getValue" title="cloudComPy.ScalarField.getValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getValue()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">sfname</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+<span class="n">sfmin</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">getMin</span><span class="p">()</span>
+<span class="n">sfmax</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">getMax</span><span class="p">()</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">computeMeanAndVariance</span><span class="p">()</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">getValue</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To change the scalar field name, set a value on a point, fill the scalar field with a uniform value, use:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.setName" title="cloudComPy.ScalarField.setName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setName()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.setValue" title="cloudComPy.ScalarField.setValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setValue()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ScalarField.html#cloudComPy.ScalarField.fill" title="cloudComPy.ScalarField.fill"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fill()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">sf1</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;aNewName&quot;</span><span class="p">)</span>
+<span class="n">sf1</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">sf1</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">2.25</span><span class="p">)</span> <span class="c1"># index, value</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/14b31ab6cf52c8144b8d705d443e1ee7/test002.py"><code class="xref download docutils literal notranslate"><span class="pre">test002.py</span></code></a>.</p>
+<p>Scalar fields can be built from normals or colors, and can be used to define colors:
+see <a class="reference internal" href="#cloud-normals"><span class="std std-ref">cloud normals</span></a> and <a class="reference internal" href="#cloud-colors"><span class="std std-ref">cloud colors</span></a>.</p>
+<p>To get a scalar field gradient, use <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.computeScalarFieldGradient" title="cloudComPy.ccPointCloud.computeScalarFieldGradient"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloudComPy.ccPointCloud.computeScalarFieldGradient()</span></code></a>
+with an appropriate radius:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">GetPointCloudRadius</span><span class="p">([</span><span class="n">cloud</span><span class="p">],</span> <span class="mi">12</span><span class="p">)</span> <span class="c1"># number of nodes wanted within the radius</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeScalarFieldGradient</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The previous code is extract from <a class="reference download internal" download="" href="_downloads/ea4008d98276703c031b28bf9ed31dfe/test003.py"><code class="xref download docutils literal notranslate"><span class="pre">test003.py</span></code></a>.</p>
+<p>Some methods of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccPointCloud</span></code></a>, directly wrapped from CloudCompare GUI,
+are used to select a current scalar field.
+This is required by some other methods, working with the current selected scalar field:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setCurrentDisplayedScalarField" title="cloudComPy.ccPointCloud.setCurrentDisplayedScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCurrentDisplayedScalarField()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setCurrentInScalarField" title="cloudComPy.ccPointCloud.setCurrentInScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCurrentInScalarField()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setCurrentOutScalarField" title="cloudComPy.ccPointCloud.setCurrentOutScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCurrentOutScalarField()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setCurrentScalarField" title="cloudComPy.ccPointCloud.setCurrentScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCurrentScalarField()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.getCurrentDisplayedScalarField" title="cloudComPy.ccPointCloud.getCurrentDisplayedScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCurrentDisplayedScalarField()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.getCurrentDisplayedScalarFieldIndex" title="cloudComPy.ccPointCloud.getCurrentDisplayedScalarFieldIndex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCurrentDisplayedScalarFieldIndex()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.getCurrentInScalarField" title="cloudComPy.ccPointCloud.getCurrentInScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCurrentInScalarField()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.getCurrentOutScalarField" title="cloudComPy.ccPointCloud.getCurrentOutScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCurrentOutScalarField()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>For instance, the <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.filterPointsByScalarValue" title="cloudComPy.ccPointCloud.filterPointsByScalarValue"><code class="xref py py-meth docutils literal notranslate"><span class="pre">filterPointsByScalarValue()</span></code></a> method
+relies on <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.setCurrentDisplayedScalarField" title="cloudComPy.ccPointCloud.setCurrentDisplayedScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setCurrentDisplayedScalarField()</span></code></a> to work.
+The points of the input cloud are filtered by keeping (or excluding) the points
+for which the value of the scalar field belongs to a (min,max) interval.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">dupSFindex</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">addScalarField</span><span class="p">(</span><span class="s2">&quot;DuplicateFlags&quot;</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setCurrentScalarField</span><span class="p">(</span><span class="n">dupSFindex</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">GeometricalAnalysisTools</span><span class="o">.</span><span class="n">FlagDuplicatePoints</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span> <span class="c1"># identify duplicated points</span>
+<span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">NoError</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="n">noDuplCloud</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">filterPointsByScalarValue</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">outside</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># remove duplicated pts</span>
+</pre></div>
+</div>
+<p>The previous code is extract from <a class="reference download internal" download="" href="_downloads/5d327f063b4613d64a4a287b15f97c01/test019.py"><code class="xref download docutils literal notranslate"><span class="pre">test019.py</span></code></a>.</p>
+<p>If you need to free some memory and do not need any more some scalar fields,
+you can use the following methods of <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccPointCloud</span></code></a>
+(<strong>WARNING</strong> be sure to have no more Python objects referencing the deleted object):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.deleteAllScalarFields" title="cloudComPy.ccPointCloud.deleteAllScalarFields"><code class="xref py py-meth docutils literal notranslate"><span class="pre">deleteAllScalarFields()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.deleteScalarField" title="cloudComPy.ccPointCloud.deleteScalarField"><code class="xref py py-meth docutils literal notranslate"><span class="pre">deleteScalarField()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="sensors">
+<h3><span class="section-number">4.1.7. </span>sensors<a class="headerlink" href="#sensors" title="Permalink to this heading"></a></h3>
+<p>Acquisition data files sometimes contain information on the sensors used to capture data.</p>
+<p>A short introduction to sensors in CloudCompare is given in
+<a class="reference external" href="https://www.cloudcompare.org/doc/wiki/index.php/Entities#Sensors">CloudCompare wiki - Sensors</a>.</p>
+<p>CloudComPy gives access to basic information on sensors:</p>
+<ul class="simple">
+<li><p>type of sensor,</p></li>
+<li><p>position and orientation,</p></li>
+<li><p>graphic scale,</p></li>
+<li><p>uncertainty.</p></li>
+</ul>
+<p>For the test, we need a data file to download
+<a class="reference external" href="http://sourceforge.net/projects/e57-3d-imgfmt/files/E57Example-data/manitouNoInvalidPoints.e57/download">here</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># example data available here: http://sourceforge.net/projects/e57-3d-imgfmt/files/E57Example-data/manitouNoInvalidPoints.e57/download</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">,</span><span class="s2">&quot;manitouNoInvalidPoints.e57&quot;</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.simulation.openfields.fr/index.php/download-binaries/send/3-cloudcompy-data-samples/30-manitounoinvalidpoints-e57&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">,</span><span class="s2">&quot;manitouNoInvalidPoints.e57&quot;</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        
+<span class="n">entities</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">importFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataExtDir</span><span class="p">,</span><span class="s2">&quot;manitouNoInvalidPoints.e57&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>There are several point clouds in the example, with one sensor per cloud.
+The <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud.getSensors" title="cloudComPy.ccPointCloud.getSensors"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getSensors()</span></code></a> method gives a list of sensors associated to the cloud.
+Generic sensor <a class="reference internal" href="ccSensor.html#cloudComPy.ccSensor" title="cloudComPy.ccSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccSensor</span></code></a> provides the following methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="ccSensor.html#cloudComPy.ccSensor.getType" title="cloudComPy.ccSensor.getType"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getType()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject.getClassID" title="cloudComPy.ccHObject.getClassID"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getClassID()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccSensor.html#cloudComPy.ccSensor.getGraphicScale" title="cloudComPy.ccSensor.getGraphicScale"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getGraphicScale()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccSensor.html#cloudComPy.ccSensor.getRigidTransformation" title="cloudComPy.ccSensor.getRigidTransformation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getRigidTransformation()</span></code></a></p></li>
+</ul>
+<p>The Ground Based Lidar (GBL) sensor <a class="reference internal" href="ccSensor.html#cloudComPy.ccGBLSensor" title="cloudComPy.ccGBLSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">cloudComPy.ccGBLSensor</span></code></a> provides also:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="ccSensor.html#cloudComPy.ccGBLSensor.getUncertainty" title="cloudComPy.ccGBLSensor.getUncertainty"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getUncertainty()</span></code></a></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">entity</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+    <span class="n">sensors</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getSensors</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sensors</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span>
+    <span class="n">sensor</span><span class="o">=</span> <span class="n">sensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">sensor</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cc</span><span class="o">.</span><span class="n">CC_SENSOR_TYPE</span><span class="o">.</span><span class="n">GROUND_BASED_LIDAR</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span>
+    <span class="k">if</span> <span class="n">sensor</span><span class="o">.</span><span class="n">getClassID</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cc</span><span class="o">.</span><span class="n">CC_TYPES</span><span class="o">.</span><span class="n">GBL_SENSOR</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span>
+    <span class="n">grscale</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">getGraphicScale</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;graphic scale:&quot;</span><span class="p">,</span> <span class="n">grscale</span><span class="p">)</span>
+    <span class="n">tr</span><span class="o">=</span><span class="n">sensor</span><span class="o">.</span><span class="n">getRigidTransformation</span><span class="p">()</span>
+    <span class="n">ret1</span><span class="o">=</span><span class="n">tr</span><span class="o">.</span><span class="n">getParameters1</span><span class="p">()</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">ret1</span><span class="o">.</span><span class="n">alpha_rad</span><span class="o">*</span><span class="mi">180</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;alpha:&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="n">ret1</span><span class="o">.</span><span class="n">axis3D</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;axis&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="n">trans</span> <span class="o">=</span> <span class="n">ret1</span><span class="o">.</span><span class="n">t3D</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;translation:&quot;</span><span class="p">,</span> <span class="n">trans</span><span class="p">)</span>
+    <span class="n">uncertainty</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">getUncertainty</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;uncertainty&quot;</span><span class="p">,</span> <span class="n">uncertainty</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sensors are also used to compute scattering angles with <a class="reference internal" href="ccSensor.html#cloudComPy.ccSensor.ComputeScatteringAngles" title="cloudComPy.ccSensor.ComputeScatteringAngles"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ComputeScatteringAngles()</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cc</span><span class="o">.</span><span class="n">computeNormals</span><span class="p">(</span><span class="n">entities</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+    <span class="n">sensors</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">getSensors</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sensors</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span>
+    <span class="n">sensor</span><span class="o">=</span> <span class="n">sensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">sensor</span><span class="o">.</span><span class="n">ComputeScatteringAngles</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/e63cdacbceb4552304d5bd81a3881c13/test041.py"><code class="xref download docutils literal notranslate"><span class="pre">test041.py</span></code></a>.</p>
+</section>
+</section>
+<section id="meshes">
+<h2><span class="section-number">4.2. </span>meshes<a class="headerlink" href="#meshes" title="Permalink to this heading"></a></h2>
+<section id="create-a-mesh-from-a-cloud">
+<h3><span class="section-number">4.2.1. </span>create a mesh from a cloud<a class="headerlink" href="#create-a-mesh-from-a-cloud" title="Permalink to this heading"></a></h3>
+<p>When a cloud represents a kind of 2.5D elevated surface, a mesh can be built using the nodes of a the cloud
+with <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.triangulate" title="cloudComPy.ccMesh.triangulate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloudComPy.ccMesh.triangulate()</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud2</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">cloud1</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;cloud1&quot;</span><span class="p">)</span>
+
+<span class="n">mesh1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccMesh</span><span class="o">.</span><span class="n">triangulate</span><span class="p">(</span><span class="n">cloud1</span><span class="p">,</span> <span class="n">cc</span><span class="o">.</span><span class="n">TRIANGULATION_TYPES</span><span class="o">.</span><span class="n">DELAUNAY_2D_AXIS_ALIGNED</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mesh1</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;mesh1&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/0accd3e5963f0da959e6810677fc905f/test011.py"><code class="xref download docutils literal notranslate"><span class="pre">test011.py</span></code></a>.</p>
+</section>
+<section id="meshes-introspection">
+<h3><span class="section-number">4.2.2. </span>meshes introspection<a class="headerlink" href="#meshes-introspection" title="Permalink to this heading"></a></h3>
+<p>In CloudCompare and CloudComPy 3D meshes are triangular meshes (<a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="cloudComPy.ccMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccMesh</span></code></a>),
+built on a set of vertices, which constitute an associated cloud.
+To get this cloud, use <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.getAssociatedCloud" title="cloudComPy.ccMesh.getAssociatedCloud"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getAssociatedCloud()</span></code></a> which gives a <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccPointCloud</span></code></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">meshply</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadMesh</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dataDir</span><span class="p">,</span> <span class="s2">&quot;mesh.ply&quot;</span><span class="p">))</span>
+<span class="n">cloud1</span> <span class="o">=</span> <span class="n">meshply</span><span class="o">.</span><span class="n">getAssociatedCloud</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/c844bc7c6d431f15e9308e6aea982299/test020.py"><code class="xref download docutils literal notranslate"><span class="pre">test020.py</span></code></a>.</p>
+<p>A mesh have a name, distinct of the associated cloud name, a size which is the number of triangles.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.getName" title="cloudComPy.ccMesh.getName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getName()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.setName" title="cloudComPy.ccMesh.setName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setName()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.size" title="cloudComPy.ccMesh.size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">size()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>A mesh can have normals, computed either on vertices or on triangles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud2</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">cloud1</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;cloud1&quot;</span><span class="p">)</span>
+<span class="n">plane</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPlane</span><span class="o">.</span><span class="n">Fit</span><span class="p">(</span><span class="n">cloud1</span><span class="p">)</span>
+<span class="n">mesh1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccMesh</span><span class="o">.</span><span class="n">triangulate</span><span class="p">(</span><span class="n">cloud1</span><span class="p">,</span> <span class="n">cc</span><span class="o">.</span><span class="n">TRIANGULATION_TYPES</span><span class="o">.</span><span class="n">DELAUNAY_2D_AXIS_ALIGNED</span><span class="p">)</span>
+<span class="n">mesh1</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;mesh1&quot;</span><span class="p">)</span>
+<span class="n">cc</span><span class="o">.</span><span class="n">computeNormals</span><span class="p">([</span><span class="n">mesh1</span><span class="p">],</span> <span class="n">computePerVertexNormals</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/69ee5df4f18432919e8f9533221e46af/test014.py"><code class="xref download docutils literal notranslate"><span class="pre">test014.py</span></code></a>.</p>
+<p>Normals on triangles can be deleted with <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.clearTriNormals" title="cloudComPy.ccMesh.clearTriNormals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">clearTriNormals()</span></code></a>.</p>
+<p>If you need to iterate through the triangles and their vertices, use <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.getTriangleVertIndexes" title="cloudComPy.ccMesh.getTriangleVertIndexes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getTriangleVertIndexes()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- access to triangle nodes, per triangle indice</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">mesh1</span><span class="o">.</span><span class="n">getAssociatedCloud</span><span class="p">()</span>
+<span class="n">indexes</span> <span class="o">=</span> <span class="n">mesh1</span><span class="o">.</span><span class="n">getTriangleVertIndexes</span><span class="p">(</span><span class="mi">453</span><span class="p">)</span>
+<span class="n">p0</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">indexes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/0accd3e5963f0da959e6810677fc905f/test011.py"><code class="xref download docutils literal notranslate"><span class="pre">test011.py</span></code></a>.</p>
+<p>If you want to save meshes to reopen them with the CloudCompare GUI, with a predefined state of what is displayed
+(colors, normals, scalar fields), use the <code class="docutils literal notranslate"><span class="pre">.bin</span></code> format and define the state with the following functions:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.showColors" title="cloudComPy.ccMesh.showColors"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showColors()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.showNormals" title="cloudComPy.ccMesh.showNormals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showNormals()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.showSF" title="cloudComPy.ccMesh.showSF"><code class="xref py py-meth docutils literal notranslate"><span class="pre">showSF()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.colorsShown" title="cloudComPy.ccMesh.colorsShown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">colorsShown()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.normalsShown" title="cloudComPy.ccMesh.normalsShown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">normalsShown()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.sfShown" title="cloudComPy.ccMesh.sfShown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sfShown()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="meshes-modifications">
+<h3><span class="section-number">4.2.3. </span>meshes modifications<a class="headerlink" href="#meshes-modifications" title="Permalink to this heading"></a></h3>
+<p>A mesh can be refined using <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.subdivide" title="cloudComPy.ccMesh.subdivide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">subdivide()</span></code></a>
+to force all triangles to have an area smaller than a given maximum. The result is a new mesh.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">mesh3</span> <span class="o">=</span> <span class="n">mesh2</span><span class="o">.</span><span class="n">subdivide</span><span class="p">(</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">mesh3</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;mesh3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The mesh can be “smoothed” with <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.laplacianSmooth" title="cloudComPy.ccMesh.laplacianSmooth"><code class="xref py py-meth docutils literal notranslate"><span class="pre">laplacianSmooth()</span></code></a>
+by moving the vertices slightly over several iterations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">mesh3</span><span class="o">.</span><span class="n">laplacianSmooth</span><span class="p">(</span><span class="n">nbIteration</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/0accd3e5963f0da959e6810677fc905f/test011.py"><code class="xref download docutils literal notranslate"><span class="pre">test011.py</span></code></a>.</p>
+</section>
+<section id="generate-a-cloud-from-a-mesh">
+<h3><span class="section-number">4.2.4. </span>Generate a cloud from a mesh<a class="headerlink" href="#generate-a-cloud-from-a-mesh" title="Permalink to this heading"></a></h3>
+<p>A mesh can be used to create a cloud with <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh.samplePoints" title="cloudComPy.ccMesh.samplePoints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">samplePoints()</span></code></a>,
+with a target either of number of points or of density of points:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud2</span><span class="o">=</span><span class="n">mesh1</span><span class="o">.</span><span class="n">samplePoints</span><span class="p">(</span><span class="n">densityBased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">samplingParameter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">withNormals</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cloud2</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;cloud2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/557bbbb6969478f515f36a798c6106d4/test015.py"><code class="xref download docutils literal notranslate"><span class="pre">test015.py</span></code></a>.</p>
+</section>
+<section id="mesh-copy-destruction">
+<h3><span class="section-number">4.2.5. </span>mesh copy, destruction<a class="headerlink" href="#mesh-copy-destruction" title="Permalink to this heading"></a></h3>
+<p>A mesh can be cloned with all its features, except from the octree, with :py:meth`~.cloudComPy.ccMesh.cloneMesh`:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">mesh2</span> <span class="o">=</span> <span class="n">mesh1</span><span class="o">.</span><span class="n">cloneMesh</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">mesh2</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;mesh1.clone&quot;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>To free memory, a mesh can be deleted with <a class="reference internal" href="cloudComPy.html#cloudComPy.deleteEntity" title="cloudComPy.deleteEntity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloudComPy.deleteEntity()</span></code></a>
+(<strong>WARNING</strong> be sure to have no more Python objects referencing the deleted object):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cc</span><span class="o">.</span><span class="n">deleteEntity</span><span class="p">(</span><span class="n">mesh3</span><span class="p">)</span>
+<span class="n">mesh3</span><span class="o">=</span><span class="kc">None</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/0accd3e5963f0da959e6810677fc905f/test011.py"><code class="xref download docutils literal notranslate"><span class="pre">test011.py</span></code></a>.</p>
+</section>
+</section>
+<section id="primitives">
+<h2><span class="section-number">4.3. </span>primitives<a class="headerlink" href="#primitives" title="Permalink to this heading"></a></h2>
+<p>Primitives regroups all the geometric generators provided by CloudCompare:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccBox" title="cloudComPy.ccBox"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccBox</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone" title="cloudComPy.ccCone"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccCone</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCylinder" title="cloudComPy.ccCylinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccCylinder</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane" title="cloudComPy.ccPlane"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccPlane</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccQuadric" title="cloudComPy.ccQuadric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccQuadric</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccSphere" title="cloudComPy.ccSphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccSphere</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccTorus" title="cloudComPy.ccTorus"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccTorus</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccDish" title="cloudComPy.ccDish"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccDish</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>All the primitives derives from <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGenericPrimitive" title="cloudComPy.ccGenericPrimitive"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGenericPrimitive</span></code></a>
+which is derived from <a class="reference internal" href="ccMesh.html#cloudComPy.ccMesh" title="cloudComPy.ccMesh"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccMesh</span></code></a>. Thus, all the mesh methods apply here.</p>
+<p>All primitive constructors use as argument: geometrical features, an optional drawing precision,
+an optional transformation (always possible afterwards).</p>
+<p>The primitives have some more methods than the meshes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGenericPrimitive.getTransformation" title="cloudComPy.ccGenericPrimitive.getTransformation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getTransformation()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGenericPrimitive.getTypeName" title="cloudComPy.ccGenericPrimitive.getTypeName"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getTypeName()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cylinder</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccCylinder</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">cylinder</span><span class="o">.</span><span class="n">getTypeName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;Cylinder&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">cylinder</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">96</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/0accd3e5963f0da959e6810677fc905f/test011.py"><code class="xref download docutils literal notranslate"><span class="pre">test011.py</span></code></a>.</p>
+<section id="box">
+<h3><span class="section-number">4.3.1. </span>Box<a class="headerlink" href="#box" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr1</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccBox</span><span class="p">((</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">),</span> <span class="n">tr1</span><span class="p">,</span> <span class="s2">&quot;aBox&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">box</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aBox&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">box</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">12</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+</section>
+<section id="cone">
+<h3><span class="section-number">4.3.2. </span>Cone<a class="headerlink" href="#cone" title="Permalink to this heading"></a></h3>
+<p>Cone axis corresponds to the ‘Z’ dimension by default.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr2</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">))</span>
+<span class="n">cone</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccCone</span><span class="p">(</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">tr2</span><span class="p">,</span> <span class="s2">&quot;aCone&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">cone</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aCone&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">cone</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">48</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>A <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone" title="cloudComPy.ccCone"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccCone</span></code></a> offers several methods to retreive its geometric features:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getBottomCenter" title="cloudComPy.ccCone.getBottomCenter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getBottomCenter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getBottomRadius" title="cloudComPy.ccCone.getBottomRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getBottomRadius()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getHeight" title="cloudComPy.ccCone.getHeight"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getHeight()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getLargeCenter" title="cloudComPy.ccCone.getLargeCenter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getLargeCenter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getLargeRadius" title="cloudComPy.ccCone.getLargeRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getLargeRadius()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getSmallCenter" title="cloudComPy.ccCone.getSmallCenter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getSmallCenter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getSmallRadius" title="cloudComPy.ccCone.getSmallRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getSmallRadius()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getTopCenter" title="cloudComPy.ccCone.getTopCenter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getTopCenter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone.getTopRadius" title="cloudComPy.ccCone.getTopRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getTopRadius()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="cylinder">
+<h3><span class="section-number">4.3.3. </span>Cylinder<a class="headerlink" href="#cylinder" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr3</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr3</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">))</span>
+<span class="n">cylinder</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccCylinder</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">tr3</span><span class="p">,</span> <span class="s1">&#39;aCylinder&#39;</span><span class="p">,</span> <span class="mi">48</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">cylinder</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aCylinder&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">cylinder</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">192</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>A <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCylinder" title="cloudComPy.ccCylinder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccCylinder</span></code></a> derives from a <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccCone" title="cloudComPy.ccCone"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccCone</span></code></a>.
+It is internally represented by a cone with the same top and bottom radius.</p>
+</section>
+<section id="plane">
+<span id="plane-properties"></span><h3><span class="section-number">4.3.4. </span>Plane<a class="headerlink" href="#plane" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr4</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr4</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">))</span>
+<span class="n">plane</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPlane</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="n">tr4</span><span class="p">,</span> <span class="s2">&quot;aPlane&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">plane</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aPlane&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">plane</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>By default, plane normal corresponds to ‘Z’ dimension.</p>
+<p>A <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane" title="cloudComPy.ccPlane"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccPlane</span></code></a> offers several methods to retreive its geometric features:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane.getCenter" title="cloudComPy.ccPlane.getCenter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCenter()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane.getEquation" title="cloudComPy.ccPlane.getEquation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getEquation()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane.getNormal" title="cloudComPy.ccPlane.getNormal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getNormal()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>The method <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane.Fit" title="cloudComPy.ccPlane.Fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Fit()</span></code></a> allows to adjust a plane primitive on a cloud:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud2</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">cloud1</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s2">&quot;cloud1&quot;</span><span class="p">)</span>
+<span class="n">tr1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr1</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">))</span>
+<span class="n">cloud1</span><span class="o">.</span><span class="n">applyRigidTransformation</span><span class="p">(</span><span class="n">tr1</span><span class="p">)</span>
+
+<span class="n">plane</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPlane</span><span class="o">.</span><span class="n">Fit</span><span class="p">(</span><span class="n">cloud1</span><span class="p">)</span>
+<span class="n">equation</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">getEquation</span><span class="p">()</span>
+<span class="n">tr2</span> <span class="o">=</span> <span class="n">plane</span><span class="o">.</span><span class="n">getTransformation</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/17fbf262a54ff651b642fda52dd02948/test012.py"><code class="xref download docutils literal notranslate"><span class="pre">test012.py</span></code></a>.</p>
+</section>
+<section id="quadric">
+<h3><span class="section-number">4.3.5. </span>Quadric<a class="headerlink" href="#quadric" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr7</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr7</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">))</span>
+<span class="n">quadric</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccQuadric</span><span class="p">((</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">),</span> <span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">transMat</span><span class="o">=</span><span class="n">tr7</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;aQuadric&quot;</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">quadric</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aQuadric&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">quadric</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">6962</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>Quadric orthogonal dimension is ‘Z’ by default.</p>
+</section>
+<section id="sphere">
+<h3><span class="section-number">4.3.6. </span>Sphere<a class="headerlink" href="#sphere" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr5</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr5</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">sphere</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccSphere</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">tr5</span><span class="p">,</span> <span class="s2">&quot;aSphere&quot;</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aSphere&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">sphere</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">10224</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>A <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccSphere" title="cloudComPy.ccSphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccSphere</span></code></a> offers the method <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccSphere.getRadius" title="cloudComPy.ccSphere.getRadius"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getRadius()</span></code></a>.</p>
+</section>
+<section id="torus">
+<h3><span class="section-number">4.3.7. </span>Torus<a class="headerlink" href="#torus" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr6</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr6</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">9.0</span><span class="p">))</span>
+<span class="n">torus</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccTorus</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">tr6</span><span class="p">,</span> <span class="s2">&quot;aTorus&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">torus</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aTorus&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">torus</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">964</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+</section>
+<section id="dish">
+<h3><span class="section-number">4.3.8. </span>Dish<a class="headerlink" href="#dish" title="Permalink to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">tr8</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccGLMatrix</span><span class="p">()</span>
+<span class="n">tr8</span><span class="o">.</span><span class="n">initFromParameters</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.0</span><span class="p">))</span>
+<span class="n">dish</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccDish</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">tr8</span><span class="p">,</span> <span class="s2">&quot;aDish&quot;</span><span class="p">,</span> <span class="mi">72</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">dish</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;aDish&#39;</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+<span class="k">if</span> <span class="n">dish</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">2520</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>Unless Otherwise noted, the above code snippets are from <a class="reference download internal" download="" href="_downloads/096775a56e6827f9b68a334890bdf7c2/test009.py"><code class="xref download docutils literal notranslate"><span class="pre">test009.py</span></code></a>.</p>
+</section>
+</section>
+<section id="polylines">
+<h2><span class="section-number">4.4. </span>polylines<a class="headerlink" href="#polylines" title="Permalink to this heading"></a></h2>
+<p>A <a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline" title="cloudComPy.ccPolyline"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccPolyline</span></code></a> is considered as a cloud of points (in a specific order)
+with a open/closed state information.
+Polylines are often used as tools to cut clouds (see <a class="reference internal" href="userUseCases.html#crop-cloud"><span class="std std-ref">Cut a cloud or a mesh with a polyline</span></a>).</p>
+<p>A polyline can be created from a cloud (the points have to be in the good order):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="s2">&quot;boundingBox1&quot;</span><span class="p">)</span>
+<span class="n">cloud1</span><span class="o">.</span><span class="n">coordsFromNPArray_copy</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+<span class="n">cloud1</span><span class="o">.</span><span class="n">applyRigidTransformation</span><span class="p">(</span><span class="n">transform1</span><span class="p">)</span>
+
+<span class="n">poly1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPolyline</span><span class="p">(</span><span class="n">cloud1</span><span class="p">)</span>
+<span class="n">poly1</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">cloud1</span><span class="p">)</span>
+<span class="n">poly1</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cloud1</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="n">poly1</span><span class="o">.</span><span class="n">setClosed</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Another way (here, we simulate the cloud creation):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">cloud2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPointCloud</span><span class="p">(</span><span class="s2">&quot;boundingBox2&quot;</span><span class="p">)</span>
+<span class="n">poly2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccPolyline</span><span class="p">(</span><span class="n">cloud2</span><span class="p">)</span>
+<span class="n">poly2</span><span class="o">.</span><span class="n">addChild</span><span class="p">(</span><span class="n">child</span><span class="o">=</span><span class="n">cloud2</span><span class="p">,</span> <span class="n">dependencyFlags</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">DEPENDENCY_FLAGS</span><span class="o">.</span><span class="n">DP_NONE</span><span class="p">,</span> <span class="n">insertIndex</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cloud2</span><span class="o">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">cloud1</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>   <span class="c1"># fill the cloud with ordered points</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cloud1</span><span class="o">.</span><span class="n">size</span><span class="p">()):</span>
+    <span class="n">cloud2</span><span class="o">.</span><span class="n">addPoint</span><span class="p">(</span><span class="n">cloud1</span><span class="o">.</span><span class="n">getPoint</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="n">cloud2</span><span class="o">.</span><span class="n">shrinkToFit</span><span class="p">()</span>
+<span class="n">poly2</span><span class="o">.</span><span class="n">addPointIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cloud2</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="n">poly2</span><span class="o">.</span><span class="n">setClosed</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/3628ce2f1da38e8991a2453dc86334e7/test026.py"><code class="xref download docutils literal notranslate"><span class="pre">test026.py</span></code></a>.</p>
+<p>A polyline can be imported from several formats (see <a class="reference internal" href="userLoad.html#load-formats"><span class="std std-ref">Known formats</span></a>).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">.poly</span></code> format is a very simple ASCII format, a line per point, x y z. for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mf">4.0</span>  <span class="mf">4.0</span>  <span class="mf">0.0</span>
+ <span class="mf">0.0</span>  <span class="mf">3.5</span>  <span class="mf">0.0</span>
+ <span class="mf">4.0</span>  <span class="mf">4.0</span>  <span class="mf">0.0</span>
+ <span class="mf">3.5</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>
+ <span class="mf">4.0</span> <span class="o">-</span><span class="mf">4.0</span>  <span class="mf">0.0</span>
+ <span class="mf">0.0</span> <span class="o">-</span><span class="mf">3.5</span>  <span class="mf">0.0</span>
+<span class="o">-</span><span class="mf">4.0</span> <span class="o">-</span><span class="mf">4.0</span>  <span class="mf">0.0</span>
+<span class="o">-</span><span class="mf">3.5</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>The class <a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline" title="cloudComPy.ccPolyline"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccPolyline</span></code></a> offers several information methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.isClosed" title="cloudComPy.ccPolyline.isClosed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">isClosed()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.is2DMode" title="cloudComPy.ccPolyline.is2DMode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is2DMode()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.segmentCount" title="cloudComPy.ccPolyline.segmentCount"><code class="xref py py-meth docutils literal notranslate"><span class="pre">segmentCount()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.size" title="cloudComPy.ccPolyline.size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">size()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.getAssociatedCloud" title="cloudComPy.ccPolyline.getAssociatedCloud"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getAssociatedCloud()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.getBoundingBox" title="cloudComPy.ccPolyline.getBoundingBox"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getBoundingBox()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>The status of the polyline can be modified:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.setClosed" title="cloudComPy.ccPolyline.setClosed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setClosed()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.set2DMode" title="cloudComPy.ccPolyline.set2DMode"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set2DMode()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>When creating the polyline from a cloud (see examples above) you will need:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.addChild" title="cloudComPy.ccPolyline.addChild"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addChild()</span></code></a></p></li>
+<li><p><a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.addPointIndex" title="cloudComPy.ccPolyline.addPointIndex"><code class="xref py py-meth docutils literal notranslate"><span class="pre">addPointIndex()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>The method <a class="reference internal" href="ccPolyline.html#cloudComPy.ccPolyline.smoothChaikin" title="cloudComPy.ccPolyline.smoothChaikin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">smoothChaikin()</span></code></a> is used to smooth the polyline
+by adding nodes over several iterations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">smoothChaikin</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code snippet is from <a class="reference download internal" download="" href="_downloads/e6c8880e2eb96f3c4f6fa753202fb3d4/test007.py"><code class="xref download docutils literal notranslate"><span class="pre">test007.py</span></code></a>.</p>
+</section>
+<section id="d-polygons-facets">
+<span id="d-polygons"></span><h2><span class="section-number">4.5. </span>2D polygons (facets)<a class="headerlink" href="#d-polygons-facets" title="Permalink to this heading"></a></h2>
+<p>The class <a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet" title="cloudComPy.ccFacet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccFacet</span></code></a> is a tool used to fit  a 2D polygon to a point cloud.
+It is very similar to the <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane.Fit" title="cloudComPy.ccPlane.Fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Fit()</span></code></a> method but the extents of the fitted plane
+follows the contour of the cloud (on its 2D projection on the plane).</p>
+<p>The 2D polygon is created using the static method <a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.Create" title="cloudComPy.ccFacet.Create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Create()</span></code></a>.
+If you want a convex contour, leave the argument <code class="docutils literal notranslate"><span class="pre">maxEdgeLength</span></code> to its default, 0.
+A positive value will gives a concave contour respecting maxEdgeLength.</p>
+<p>It is possible to provide a plane equation as optional argument (see <a class="reference internal" href="ccPrimitives.html#cloudComPy.ccPlane.getEquation" title="cloudComPy.ccPlane.getEquation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cloudComPy.ccPlane.getEquation()</span></code></a>).</p>
+<p>The class <a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet" title="cloudComPy.ccFacet"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccFacet</span></code></a> provides several useful methods:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 53%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.getCenter" title="cloudComPy.ccFacet.getCenter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getCenter()</span></code></a></p></td>
+<td><p>the facet plane center</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.getNormal" title="cloudComPy.ccFacet.getNormal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getNormal()</span></code></a></p></td>
+<td><p>the facet plane normal</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.getPlaneEquation" title="cloudComPy.ccFacet.getPlaneEquation"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getPlaneEquation()</span></code></a></p></td>
+<td><p>the facet plane equation: [a, b, c, d] as <code class="docutils literal notranslate"><span class="pre">ax+by+cz=d</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.getContour" title="cloudComPy.ccFacet.getContour"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getContour()</span></code></a></p></td>
+<td><p>the contour polyline</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.getContourVertices" title="cloudComPy.ccFacet.getContourVertices"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getContourVertices()</span></code></a></p></td>
+<td><p>the point cloud with the contour vertices</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ccFacet.html#cloudComPy.ccFacet.getSurface" title="cloudComPy.ccFacet.getSurface"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getSurface()</span></code></a></p></td>
+<td><p>the area of the polygon</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">polygon3</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccFacet</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">cloudCropZ</span><span class="p">,</span> <span class="n">maxEdgeLength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">center3</span> <span class="o">=</span> <span class="n">polygon3</span><span class="o">.</span><span class="n">getCenter</span><span class="p">()</span>
+<span class="n">normal3</span> <span class="o">=</span> <span class="n">polygon3</span><span class="o">.</span><span class="n">getNormal</span><span class="p">()</span>
+<span class="n">eq3</span> <span class="o">=</span> <span class="n">polygon3</span><span class="o">.</span><span class="n">getPlaneEquation</span><span class="p">()</span>
+<span class="n">contour3</span> <span class="o">=</span> <span class="n">polygon3</span><span class="o">.</span><span class="n">getContour</span><span class="p">()</span>
+<span class="n">vert3</span> <span class="o">=</span> <span class="n">polygon3</span><span class="o">.</span><span class="n">getContourVertices</span><span class="p">()</span>
+<span class="n">surface3</span> <span class="o">=</span> <span class="n">polygon3</span><span class="o">.</span><span class="n">getSurface</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">surface3</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">2e-02</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>With the plane equation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">polygon4</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">ccFacet</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">cloud</span><span class="o">=</span><span class="n">cloudCropZ</span><span class="p">,</span> <span class="n">maxEdgeLength</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">planeEquation</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">))</span>
+<span class="n">center4</span> <span class="o">=</span> <span class="n">polygon4</span><span class="o">.</span><span class="n">getCenter</span><span class="p">()</span>
+<span class="n">normal4</span> <span class="o">=</span> <span class="n">polygon4</span><span class="o">.</span><span class="n">getNormal</span><span class="p">()</span>
+<span class="n">eq4</span> <span class="o">=</span> <span class="n">polygon4</span><span class="o">.</span><span class="n">getPlaneEquation</span><span class="p">()</span>
+<span class="n">contour4</span> <span class="o">=</span> <span class="n">polygon4</span><span class="o">.</span><span class="n">getContour</span><span class="p">()</span>
+<span class="n">vert4</span> <span class="o">=</span> <span class="n">polygon4</span><span class="o">.</span><span class="n">getContourVertices</span><span class="p">()</span>
+<span class="n">surface4</span> <span class="o">=</span> <span class="n">polygon4</span><span class="o">.</span><span class="n">getSurface</span><span class="p">()</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">surface4</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1e-02</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/b6bd6171eda4bdb4d48c62b20be474a7/test021.py"><code class="xref download docutils literal notranslate"><span class="pre">test021.py</span></code></a>.</p>
+</section>
+<section id="octrees">
+<span id="id3"></span><h2><span class="section-number">4.6. </span>octrees<a class="headerlink" href="#octrees" title="Permalink to this heading"></a></h2>
+<p>The Octree structure of CloudCompare is very efficient for <em>nearest neighbour extraction</em> and used throughout CloudCompare.
+The <a class="reference external" href="https://www.cloudcompare.org/doc/wiki/index.php/Main_Page">CloudCompare wiki</a> provides a good introduction to
+the <a class="reference external" href="https://www.cloudcompare.org/doc/wiki/index.php/CloudCompare_octree">CloudCompare octree</a>.</p>
+<p>Most of the time, you don’t need to manipulate explicitely the octree, but some methods have been wrapped in CloudComPy,
+to allow for some very specific processing.</p>
+<p>If you need to search points in particular neighbourhood, <code class="xref py py-class docutils literal notranslate"><span class="pre">ccOctree</span></code> provides useful methods
+illustrated in the following example.</p>
+<p>Firstly, compute the octree. Define your neighbourhood either with a radius
+or the number of nodes you want in this neighbourhood.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- get a sample cloud, build the octree</span>
+
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="n">getSampleCloud</span><span class="p">(</span><span class="mf">5.0</span><span class="p">))</span>
+<span class="n">octree</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">computeOctree</span><span class="p">(</span><span class="n">progressCb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">autoAddChild</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">octree</span><span class="o">.</span><span class="n">getNumberOfProjectedPoints</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">1000000</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+
+<span class="c1"># --- search points in neighbourhood, within a given radius r</span>
+
+<span class="n">r</span><span class="o">=</span><span class="mf">0.05</span>
+<span class="n">level</span> <span class="o">=</span> <span class="n">octree</span><span class="o">.</span><span class="n">findBestLevelForAGivenNeighbourhoodSizeExtraction</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="n">level12</span> <span class="o">=</span> <span class="n">octree</span><span class="o">.</span><span class="n">findBestLevelForAGivenPopulationPerCell</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Search neighbours in a sphere:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- search in a sphere</span>
+
+<span class="n">neighbours</span> <span class="o">=</span> <span class="n">octree</span><span class="o">.</span><span class="n">getPointsInSphericalNeighbourhood</span><span class="p">((</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.026529</span><span class="p">),</span> <span class="n">r</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">37</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>Get information on the points found:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- get information on some points</span>
+
+<span class="n">pt</span> <span class="o">=</span> <span class="n">neighbours</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">point</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="n">neighbours</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pointIndex</span>
+<span class="n">sd</span> <span class="o">=</span> <span class="n">neighbours</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">squareDistd</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sd</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>It is also possible to search in a cylinder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- search in a cylinder</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">CylindricalNeighbourhood</span><span class="p">()</span>
+<span class="n">params</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+<span class="n">params</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">r</span>
+<span class="n">params</span><span class="o">.</span><span class="n">maxHalfLength</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">neighboursCyl</span> <span class="o">=</span> <span class="n">octree</span><span class="o">.</span><span class="n">getPointsInCylindricalNeighbourhood</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighboursCyl</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">81</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>or in a box:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># --- search in a box</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">BoxNeighbourhood</span><span class="p">()</span>
+<span class="n">params</span><span class="o">.</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.500000</span><span class="p">,</span> <span class="mf">2.000000</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.026529</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+<span class="n">params</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">)</span>
+
+<span class="n">neighboursBox</span> <span class="o">=</span> <span class="n">octree</span><span class="o">.</span><span class="n">getPointsInBoxNeighbourhood</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighboursBox</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span>
+</pre></div>
+</div>
+<p>The above code snippets are from <a class="reference download internal" download="" href="_downloads/0ad2461469e2a7c7168933f9ef0cd5b0/test016.py"><code class="xref download docutils literal notranslate"><span class="pre">test016.py</span></code></a> where you will find
+examples of how to use the other methods in the octree.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="userSave.html" class="btn btn-neutral float-left" title="3. Saving Clouds and other entities to files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="userNumpy.html" class="btn btn-neutral float-right" title="5. operations on coordinates, scalar fields, colors, meshes with Numpy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

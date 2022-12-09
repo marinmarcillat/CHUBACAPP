@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Polylines &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Octrees, descriptors and neighbourhood" href="ccOctree.html" />
+    <link rel="prev" title="2. Points Clouds" href="ccPointCloud.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Polylines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ccpolyline">3.1. ccPolyline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bases-classes-for-ccpolyline">3.2. bases classes for ccPolyline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>Polylines</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ccPolyline.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="polylines">
+<h1><span class="section-number">3. </span>Polylines<a class="headerlink" href="#polylines" title="Permalink to this heading"></a></h1>
+<section id="ccpolyline">
+<h2><span class="section-number">3.1. </span>ccPolyline<a class="headerlink" href="#ccpolyline" title="Permalink to this heading"></a></h2>
+<p>All the inherited members are given here for convenience.
+Most of the time, this class is used rather than the bases classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ccPolyline</span></span><a class="headerlink" href="#cloudComPy.ccPolyline" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cloudComPy.Polyline" title="_cloudComPy.Polyline"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polyline</span></code></a>, <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject" title="_cloudComPy.ccShiftedObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccShiftedObject</span></code></a></p>
+<p>The polyline is considered as a cloud of points
+(in a specific order) with a open/closed state information.</p>
+<p>Constructor:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>associatedCloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.GenericIndexedCloudPersist" title="cloudComPy.GenericIndexedCloudPersist"><em>GenericIndexedCloudPersist</em></a>) – the associated point cloud (i.e. the vertices)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.addChild">
+<span class="sig-name descname"><span class="pre">addChild</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self:</span> <span class="pre">_cloudComPy.ccHObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child:</span> <span class="pre">_cloudComPy.ccHObject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependencyFlags:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">&lt;DEPENDENCY_FLAGS.DP_NONE:</span> <span class="pre">0&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insertIndex:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.addChild" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a child.</p>
+<p><strong>warning</strong> the C++ default for DEPENDENCY_FLAGS (DP_PARENT_OF_OTHER) is replaced by DP_NONE in Python:
+The other values may induce a delete of the original child object in C++, not handled correctly on the Python side.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>child</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject"><em>ccHObject</em></a>) – child instance to append to the child list</p></li>
+<li><p><strong>dependencyFlags</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.DEPENDENCY_FLAGS" title="cloudComPy.DEPENDENCY_FLAGS"><em>DEPENDENCY_FLAGS</em></a><em>,</em><em>optional</em>) – dependency flags, default DP_NONE</p></li>
+<li><p><strong>insertIndex</strong> (<em>int</em><em>,</em><em>optional</em>) – insertion index, default -1: if &lt;0, child is simply appended to the children list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.addPointIndex">
+<span class="sig-name descname"><span class="pre">addPointIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.addPointIndex" title="Permalink to this definition"></a></dt>
+<dd><p>Point global index insertion mechanism (range), thread safe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>firstIndex</strong> (<em>int</em>) – first point global index of range</p></li>
+<li><p><strong>lastIndex</strong> (<em>int</em>) – last point global index of range (excluded)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>false if not enough memory</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.addPointIndexGlobal">
+<span class="sig-name descname"><span class="pre">addPointIndexGlobal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.addPointIndexGlobal" title="Permalink to this definition"></a></dt>
+<dd><p>Point global index insertion mechanism, Thread safe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>globalIndex</strong> (<em>int</em>) – a point global index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>false if not enough memory</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.colorsShown">
+<span class="sig-name descname"><span class="pre">colorsShown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.colorsShown" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the colors are shown, False otherwise.
+It is used to prepare the state of the entity when it is saved in a .bin format,
+for reopening in the GUI in a predefined state (colors, normal, scalarFields).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the colors are shown.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.computeLength">
+<span class="sig-name descname"><span class="pre">computeLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.computeLength" title="Permalink to this definition"></a></dt>
+<dd><p>Computes the polyline length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sum of segments length</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.enableScalarField">
+<span class="sig-name descname"><span class="pre">enableScalarField</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.enableScalarField" title="Permalink to this definition"></a></dt>
+<dd><p>Enables the scalar field associated to the cloud.</p>
+<p>If the scalar field structure is not yet initialized/allocated,
+this method gives the signal for its creation. Otherwise, if possible
+the structure size should be pre-reserved with the same number of
+elements as the point cloud.</p>
+<p><strong>Warning</strong> If the cloud is empty, the scalar field will be empty as well.
+The scalar field will be reserved with the same capacity as the cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>success</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.forwardIterator">
+<span class="sig-name descname"><span class="pre">forwardIterator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.forwardIterator" title="Permalink to this definition"></a></dt>
+<dd><p>Forwards the local element iterator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getAssociatedCloud">
+<span class="sig-name descname"><span class="pre">getAssociatedCloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.GenericIndexedCloudPersist" title="_cloudComPy.GenericIndexedCloudPersist"><span class="pre">_cloudComPy.GenericIndexedCloudPersist</span></a></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getAssociatedCloud" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the associated (source) cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the source cloud</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.GenericIndexedCloudPersist" title="cloudComPy.GenericIndexedCloudPersist">GenericIndexedCloudPersist</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getBoundingBox">
+<span class="sig-name descname"><span class="pre">getBoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List[Vector3Tpl&lt;T&gt;]</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getBoundingBox" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the octree bounding box.</p>
+<p>Method to request the octree bounding box limits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return limits</dt>
+<dd class="field-odd"><p>((Xmin,Ymin,Zmin), (Xmax,Ymax,Zmax))</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getChild">
+<span class="sig-name descname"><span class="pre">getChild</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getChild" title="Permalink to this definition"></a></dt>
+<dd><p>Get child by index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – index of child, see <a class="reference internal" href="#cloudComPy.ccPolyline.getChildrenNumber" title="cloudComPy.ccPolyline.getChildrenNumber"><code class="xref py py-meth docutils literal notranslate"><span class="pre">getChildrenNumber()</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>child object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject">ccHObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getChildCountRecursive">
+<span class="sig-name descname"><span class="pre">getChildCountRecursive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getChildCountRecursive" title="Permalink to this definition"></a></dt>
+<dd><p>Get the number of children of this object, recursively.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of children, recursively</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getChildrenNumber">
+<span class="sig-name descname"><span class="pre">getChildrenNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getChildrenNumber" title="Permalink to this definition"></a></dt>
+<dd><p>Get the number of direct children of this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of direct children</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getClassID">
+<span class="sig-name descname"><span class="pre">getClassID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getClassID" title="Permalink to this definition"></a></dt>
+<dd><p>Get the type of this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>type</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>CC_TYPE</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getCurrentPointCoordinates">
+<span class="sig-name descname"><span class="pre">getCurrentPointCoordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getCurrentPointCoordinates" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the coordinates of the point pointed by the current element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>coordinates</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getCurrentPointGlobalIndex">
+<span class="sig-name descname"><span class="pre">getCurrentPointGlobalIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getCurrentPointGlobalIndex" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the global index of the point pointed by the current element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>global index in the cloud</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getCurrentPointScalarValue">
+<span class="sig-name descname"><span class="pre">getCurrentPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getCurrentPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the current point associated scalar value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>scalar value</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getGlobalScale">
+<span class="sig-name descname"><span class="pre">getGlobalScale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject" title="_cloudComPy.ccShiftedObject"><span class="pre">_cloudComPy.ccShiftedObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getGlobalScale" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the scale applied to original coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the scale applied to original coordinates.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getGlobalShift">
+<span class="sig-name descname"><span class="pre">getGlobalShift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject" title="_cloudComPy.ccShiftedObject"><span class="pre">_cloudComPy.ccShiftedObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getGlobalShift" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the shift applied to original coordinates.</p>
+<p>Original coordinates are equal to ‘(P/scale - shift)’
+The shift is typically used when saving to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>applied shift (x, y, z)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getName">
+<span class="sig-name descname"><span class="pre">getName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getName" title="Permalink to this definition"></a></dt>
+<dd><p>Get the name of the polyline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getNextPoint">
+<span class="sig-name descname"><span class="pre">getNextPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getNextPoint" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the next point (relatively to the global iterator position).</p>
+<p>Virtual method to handle the cloud global iterator.
+Global iterator position should be increased by one each time
+this method is called.</p>
+<p>Warning:</p>
+<ul class="simple">
+<li><p>the returned object may not be persistent!</p></li>
+<li><p>THIS METHOD MAY NOT BE COMPATIBLE WITH PARALLEL STRATEGIES</p></li>
+</ul>
+<p>(see the DgmOctree::executeFunctionForAllCellsAtLevel_MT and
+DgmOctree::executeFunctionForAllCellsAtStartingLevel_MT methods).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>coordinates of next point (TODO: what if no more?)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getParent">
+<span class="sig-name descname"><span class="pre">getParent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getParent" title="Permalink to this definition"></a></dt>
+<dd><p>Get the parent of this object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>parent object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="cloudComPy.ccHObject">ccHObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getPoint">
+<span class="sig-name descname"><span class="pre">getPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Vector3Tpl&lt;T&gt;</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getPoint" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the ith point.</p>
+<p>Method to request a point with a specific index.</p>
+<p>WARNINGS:</p>
+<ul class="simple">
+<li><p>the returned object may not be persistent!</p></li>
+<li><p>THIS METHOD MAY NOT BE COMPATIBLE WITH PARALLEL STRATEGIES</p></li>
+</ul>
+<p>(see the DgmOctree::executeFunctionForAllCellsAtLevel_MT and
+DgmOctree::executeFunctionForAllCellsAtStartingLevel_MT methods).
+Consider the other version of getPoint instead or the
+GenericIndexedCloudPersist class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – index of the requested point (between 0 and the cloud size minus 1)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the requested point coordinates (undefined behavior if index is invalid)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getPointGlobalIndex">
+<span class="sig-name descname"><span class="pre">getPointGlobalIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getPointGlobalIndex" title="Permalink to this definition"></a></dt>
+<dd><p>Returns global index (i.e. relative to the associated cloud) of a given element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>localIndex</strong> (<em>int</em>) – local index (i.e. relative to the internal index container)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>global index</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.getPointScalarValue">
+<span class="sig-name descname"><span class="pre">getPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.getPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the ith point associated scalar value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – local index</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scalar value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.hasColors">
+<span class="sig-name descname"><span class="pre">hasColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.hasColors" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the entity has colors, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the entity has colors</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.hasNormals">
+<span class="sig-name descname"><span class="pre">hasNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.hasNormals" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the entity has normals, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the entity has normals</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.hasScalarFields">
+<span class="sig-name descname"><span class="pre">hasScalarFields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.hasScalarFields" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the entity has ScalarFields, False otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the entity has ScalarFields</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.is2DMode">
+<span class="sig-name descname"><span class="pre">is2DMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.is2DMode" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the polyline is considered as 2D or 3D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the polyline is considered as 2D</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.isA">
+<span class="sig-name descname"><span class="pre">isA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.isA" title="Permalink to this definition"></a></dt>
+<dd><p>Check the type of object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>CC_TYPES</em>) – type to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>OK if object is of this type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.isClosed">
+<span class="sig-name descname"><span class="pre">isClosed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.Polyline" title="_cloudComPy.Polyline"><span class="pre">_cloudComPy.Polyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.isClosed" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the polyline is closed or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the polyline is closed</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.isKindOf">
+<span class="sig-name descname"><span class="pre">isKindOf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.isKindOf" title="Permalink to this definition"></a></dt>
+<dd><p>Check the type of object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>CC_TYPES</em>) – type to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>OK if object is a kind of this type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.isScalarFieldEnabled">
+<span class="sig-name descname"><span class="pre">isScalarFieldEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.isScalarFieldEnabled" title="Permalink to this definition"></a></dt>
+<dd><p>Returns <cite>True</cite> if the scalar field is enabled, <cite>False</cite> otherwise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>is the ScalarField enabled?</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.isShifted">
+<span class="sig-name descname"><span class="pre">isShifted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject" title="_cloudComPy.ccShiftedObject"><span class="pre">_cloudComPy.ccShiftedObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.isShifted" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the cloud is shifted or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the cloud is shifted or not</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.normalsShown">
+<span class="sig-name descname"><span class="pre">normalsShown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.normalsShown" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the normals are shown, False otherwise.
+It is used to prepare the state of the entity when it is saved in a .bin format,
+for reopening in the GUI in a predefined state (colors, normal, scalarFields).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the normals are shown</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.placeIteratorAtBeginning">
+<span class="sig-name descname"><span class="pre">placeIteratorAtBeginning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.placeIteratorAtBeginning" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the cloud iterator at the beginning.</p>
+<p>Virtual method to handle the cloud global iterator</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.segmentCount">
+<span class="sig-name descname"><span class="pre">segmentCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.segmentCount" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the number of segments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of segments</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.set2DMode">
+<span class="sig-name descname"><span class="pre">set2DMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.set2DMode" title="Permalink to this definition"></a></dt>
+<dd><p>Defines if the polyline is considered as 2D or 3D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>bool</em>) – if <cite>True</cite>, the polyline is set 2D</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.setClosed">
+<span class="sig-name descname"><span class="pre">setClosed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.Polyline" title="_cloudComPy.Polyline"><span class="pre">_cloudComPy.Polyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.setClosed" title="Permalink to this definition"></a></dt>
+<dd><p>Sets whether the polyline is closed or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>bool</em>) – if <cite>True</cite>, the polyline is set closed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.setCurrentPointScalarValue">
+<span class="sig-name descname"><span class="pre">setCurrentPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.setCurrentPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the current point associated scalar value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>float</em>) – scalar value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.setGlobalScale">
+<span class="sig-name descname"><span class="pre">setGlobalScale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject" title="_cloudComPy.ccShiftedObject"><span class="pre">_cloudComPy.ccShiftedObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.setGlobalScale" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the scale applied to original coordinates (information storage only).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>double</em>) – scale applied</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.setGlobalShift">
+<span class="sig-name descname"><span class="pre">setGlobalShift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccShiftedObject" title="_cloudComPy.ccShiftedObject"><span class="pre">_cloudComPy.ccShiftedObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.setGlobalShift" title="Permalink to this definition"></a></dt>
+<dd><p>Sets shift applied to original coordinates (information storage only)</p>
+<p>Such a shift can typically be applied at loading time.
+Original coordinates are equal to ‘(P/scale - shift)’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>double</em>) – x shift</p></li>
+<li><p><strong>y</strong> (<em>double</em>) – y shift</p></li>
+<li><p><strong>z</strong> (<em>double</em>) – z shift</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.setName">
+<span class="sig-name descname"><span class="pre">setName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.setName" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the polyline name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – the name to give to the polyline</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.setPointScalarValue">
+<span class="sig-name descname"><span class="pre">setPointScalarValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><span class="pre">_cloudComPy.ReferenceCloud</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.setPointScalarValue" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the ith point associated scalar value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – local index</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – scalar value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.sfShown">
+<span class="sig-name descname"><span class="pre">sfShown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.sfShown" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the scalar fields are shown, False otherwise.
+It is used to prepare the state of the entity when it is saved in a .bin format,
+for reopening in the GUI in a predefined state (colors, normal, scalarFields).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the scalar fields are shown</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.showColors">
+<span class="sig-name descname"><span class="pre">showColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.showColors" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare the state of the entity when it is saved in a .bin format,
+for reopening in the GUI in a predefined state (colors, normal, scalarFields).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>isShown</strong> (<em>bool</em>) – whether to show or not the colors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.showNormals">
+<span class="sig-name descname"><span class="pre">showNormals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.showNormals" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare the state of the entity when it is saved in a .bin format,
+for reopening in the GUI in a predefined state (colors, normal, scalarFields).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>isShown</strong> (<em>bool</em>) – whether to show or not the normals.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.showSF">
+<span class="sig-name descname"><span class="pre">showSF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><span class="pre">_cloudComPy.ccHObject</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.showSF" title="Permalink to this definition"></a></dt>
+<dd><p>Prepare the state of the entity when it is saved in a .bin format,
+for reopening in the GUI in a predefined state (colors, normal, scalarFields).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>isShown</strong> (<em>bool</em>) – whether to show or not the ScalarFields.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.size" title="Permalink to this definition"></a></dt>
+<dd><p>Return the number of points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of points in the polyline</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccPolyline.smoothChaikin">
+<span class="sig-name descname"><span class="pre">smoothChaikin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.ccPolyline" title="_cloudComPy.ccPolyline"><span class="pre">_cloudComPy.ccPolyline</span></a></span></span><a class="headerlink" href="#cloudComPy.ccPolyline.smoothChaikin" title="Permalink to this definition"></a></dt>
+<dd><p>Smoothes the polyline (Chaikin algorithm).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratio</strong> (<em>float</em>) – between 0 and 0.5 (excluded)</p></li>
+<li><p><strong>iteration</strong> (<em>int</em>) – Count of iteration</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>smoothed polyline</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.ccPolyline" title="cloudComPy.ccPolyline">ccPolyline</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="bases-classes-for-ccpolyline">
+<h2><span class="section-number">3.2. </span>bases classes for ccPolyline<a class="headerlink" href="#bases-classes-for-ccpolyline" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.Polyline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">Polyline</span></span><a class="headerlink" href="#cloudComPy.Polyline" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="ccPointCloud.html#cloudComPy.ReferenceCloud" title="_cloudComPy.ReferenceCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReferenceCloud</span></code></a></p>
+<p>A simple polyline class (base class)</p>
+<p>The polyline is considered as a cloud of points
+(in a specific order) with a open/closed state information.</p>
+<p>Constructor:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>associatedCloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.GenericIndexedCloudPersist" title="cloudComPy.GenericIndexedCloudPersist"><em>GenericIndexedCloudPersist</em></a>) – the associated point cloud (i.e. the vertices)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.Polyline.isClosed">
+<span class="sig-name descname"><span class="pre">isClosed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.Polyline" title="_cloudComPy.Polyline"><span class="pre">_cloudComPy.Polyline</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.Polyline.isClosed" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the polyline is closed or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the polyline is closed</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.Polyline.setClosed">
+<span class="sig-name descname"><span class="pre">setClosed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.Polyline" title="_cloudComPy.Polyline"><span class="pre">_cloudComPy.Polyline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.Polyline.setClosed" title="Permalink to this definition"></a></dt>
+<dd><p>Sets whether the polyline is closed or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> (<em>bool</em>) – if <cite>True</cite>, the polyline is set closed</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ccPointCloud.html" class="btn btn-neutral float-left" title="2. Points Clouds" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ccOctree.html" class="btn btn-neutral float-right" title="4. Octrees, descriptors and neighbourhood" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

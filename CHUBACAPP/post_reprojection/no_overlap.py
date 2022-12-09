@@ -1,9 +1,8 @@
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 import numpy as np
 import os, imghdr
 from shutil import copy
 import pandas as pd
-from tqdm import tqdm
 from time import sleep
 from scipy.spatial import distance_matrix
 from PyQt5 import QtCore
@@ -150,7 +149,7 @@ def get_bounds(list_imgs, sfm_path, model_path, output_path, camera_model):
     annotations = pd.DataFrame(
         columns=['filename', 'shape_name', 'points', 'label_name', 'label_hierarchy', 'annotation_id'])
 
-    nb_processes = 8
+    nb_processes = cpu_count()
     img_list_split = np.array_split(list_imgs, nb_processes)
     args = []
     i = 0

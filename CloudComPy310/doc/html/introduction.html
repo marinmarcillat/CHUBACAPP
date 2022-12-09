@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. cloudComPy: a first example &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. license" href="license.html" />
+    <link rel="prev" title="cloudComPy: a Python interface for CloudCompare" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>cloudComPy: a first example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cloudcompy-a-first-example">
+<h1><span class="section-number">1. </span>cloudComPy: a first example<a class="headerlink" href="#cloudcompy-a-first-example" title="Permalink to this heading"></a></h1>
+<p>This project proposes a Python module to interface to <a class="reference external" href="https://cloudcompare.org">CloudCompare</a>,
+of equivalent level to the command mode of CloudCompare.</p>
+<p><a class="reference external" href="https://github.com/CloudCompare/CloudComPy">CloudComPy</a> does not yet cover all the features of CloudCompare.
+Features are added according to the needs reported by users,
+feel free to post issues in <a class="reference external" href="https://github.com/CloudCompare/CloudComPy/issues">GitHub</a>.</p>
+<p>Here is an example of a Python script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;_CCTRACE_&quot;</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;ON&quot;</span>                                           <span class="c1"># only if you want debug traces from C++</span>
+
+<span class="kn">import</span> <span class="nn">cloudComPy</span> <span class="k">as</span> <span class="nn">cc</span>                                                <span class="c1"># import the CloudComPy module</span>
+
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">loadPointCloud</span><span class="p">(</span><span class="s2">&quot;myCloud.xyz&quot;</span><span class="p">)</span>                               <span class="c1"># read a point cloud from a file</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;cloud name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">cloud</span><span class="o">.</span><span class="n">getName</span><span class="p">())</span>
+
+<span class="n">res</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">computeCurvature</span><span class="p">(</span><span class="n">cc</span><span class="o">.</span><span class="n">CurvatureType</span><span class="o">.</span><span class="n">GAUSSIAN_CURV</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="p">[</span><span class="n">cloud</span><span class="p">])</span> <span class="c1"># compute curvature as a scalar field</span>
+<span class="n">nsf</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getNumberOfScalarFields</span><span class="p">()</span>
+<span class="n">sfCurv</span><span class="o">=</span><span class="n">cloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">nsf</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">setCurrentOutScalarField</span><span class="p">(</span><span class="n">nsf</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">filteredCloud</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">filterBySFValue</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sfCurv</span><span class="o">.</span><span class="n">getMax</span><span class="p">(),</span> <span class="n">cloud</span><span class="p">)</span>         <span class="c1"># keep only the points above a given curvature</span>
+
+<span class="n">ok</span> <span class="o">=</span> <span class="n">filteredCloud</span><span class="o">.</span><span class="n">exportCoordToSF</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>                 <span class="c1"># Z coordinate as a scalar Field</span>
+<span class="n">nsf</span> <span class="o">=</span> <span class="n">cloud</span><span class="o">.</span><span class="n">getNumberOfScalarFields</span><span class="p">()</span>
+<span class="n">sf1</span><span class="o">=</span><span class="n">filteredCloud</span><span class="o">.</span><span class="n">getScalarField</span><span class="p">(</span><span class="n">nsf</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">sf1</span><span class="o">.</span><span class="n">computeMeanAndVariance</span><span class="p">()</span>
+
+<span class="c1"># using Numpy...</span>
+
+<span class="n">coordinates</span> <span class="o">=</span> <span class="n">filteredCloud</span><span class="o">.</span><span class="n">toNpArrayCopy</span><span class="p">()</span>                            <span class="c1"># coordinates as a numpy array</span>
+<span class="n">x</span><span class="o">=</span><span class="n">coordinates</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>                                                     <span class="c1"># x column</span>
+<span class="n">y</span><span class="o">=</span><span class="n">coordinates</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">z</span><span class="o">=</span><span class="n">coordinates</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">f</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>                                                      <span class="c1"># elementwise operation on arrays</span>
+
+<span class="n">asf1</span><span class="o">=</span><span class="n">sf1</span><span class="o">.</span><span class="n">toNpArray</span><span class="p">()</span>                                                   <span class="c1"># scalar field as a numpy array</span>
+<span class="n">sf1</span><span class="o">.</span><span class="n">fromNpArrayCopy</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>                                                 <span class="c1"># replace scalar field values by a numpy array</span>
+
+<span class="n">res</span><span class="o">=</span><span class="n">cc</span><span class="o">.</span><span class="n">SavePointCloud</span><span class="p">(</span><span class="n">filteredCloud</span><span class="p">,</span><span class="s2">&quot;myModifiedCloud.bin&quot;</span><span class="p">)</span>             <span class="c1">#save the point cloud to a file</span>
+</pre></div>
+</div>
+<p>As you can see, it is possible to read and write point clouds,
+access scalar fields from Numpy (with or without copy of data), call some CloudCompare functions to transform point clouds.</p>
+<p>From the Python interpreter, Docstrings provide some documentation on the available methods, the arguments.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="cloudComPy: a Python interface for CloudCompare" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="license.html" class="btn btn-neutral float-right" title="2. license" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

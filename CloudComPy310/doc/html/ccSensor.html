@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. Sensor &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. Scalar Fields" href="ScalarField.html" />
+    <link rel="prev" title="6. ccPrimitives" href="ccPrimitives.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Sensor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ccgblsensor">8.1. ccGBLSensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ccsensor">8.2. ccSensor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">15. Colors</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>Sensor</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ccSensor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sensor">
+<h1><span class="section-number">8. </span>Sensor<a class="headerlink" href="#sensor" title="Permalink to this heading"></a></h1>
+<section id="ccgblsensor">
+<h2><span class="section-number">8.1. </span>ccGBLSensor<a class="headerlink" href="#ccgblsensor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ccGBLSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ccGBLSensor</span></span><a class="headerlink" href="#cloudComPy.ccGBLSensor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccSensor</span></code></a></p>
+<p>Ground-based Laser sensor
+An implementation of the ccSensor interface that can be used to represent a depth sensor
+relying on 2 rotations relatively to two perpendicular axes, such as ground based laser
+scanners typically.</p>
+<p>constructor:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rotOrder</strong> (<a class="reference internal" href="#cloudComPy.ROTATION_ORDER" title="cloudComPy.ROTATION_ORDER"><em>ROTATION_ORDER</em></a><em>,</em><em>optional</em>) – default ROTATION_ORDER.YAW_THEN_PITCH</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccGBLSensor.getType">
+<span class="sig-name descname"><span class="pre">getType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccGBLSensor" title="_cloudComPy.ccGBLSensor"><span class="pre">_cloudComPy.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.CC_SENSOR_TYPE" title="_cloudComPy.CC_SENSOR_TYPE"><span class="pre">_cloudComPy.CC_SENSOR_TYPE</span></a></span></span><a class="headerlink" href="#cloudComPy.ccGBLSensor.getType" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the Sensor type, from <a class="reference internal" href="#cloudComPy.CC_SENSOR_TYPE" title="cloudComPy.CC_SENSOR_TYPE"><code class="xref py py-class docutils literal notranslate"><span class="pre">CC_SENSOR_TYPE</span></code></a>.
+Possibles values are UNKNOWN_SENSOR or GROUND_BASED_LIDAR</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Sensor type</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.CC_SENSOR_TYPE" title="cloudComPy.CC_SENSOR_TYPE"><code class="xref py py-class docutils literal notranslate"><span class="pre">CC_SENSOR_TYPE</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccGBLSensor.getUncertainty">
+<span class="sig-name descname"><span class="pre">getUncertainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccGBLSensor" title="_cloudComPy.ccGBLSensor"><span class="pre">_cloudComPy.ccGBLSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.ccGBLSensor.getUncertainty" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the Z-buffer uncertainty on depth values.
+The uncertainty is used to handle numerical inaccuracies.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Z-buffer uncertainty on depth values.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ROTATION_ORDER">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ROTATION_ORDER</span></span><a class="headerlink" href="#cloudComPy.ROTATION_ORDER" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>YAW_THEN_PITCH</p>
+<p>PITCH_THEN_YAW</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ROTATION_ORDER.PITCH_THEN_YAW">
+<span class="sig-name descname"><span class="pre">PITCH_THEN_YAW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ROTATION_ORDER.PITCH_THEN_YAW:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.ROTATION_ORDER.PITCH_THEN_YAW" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.ROTATION_ORDER.YAW_THEN_PITCH">
+<span class="sig-name descname"><span class="pre">YAW_THEN_PITCH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;ROTATION_ORDER.YAW_THEN_PITCH:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.ROTATION_ORDER.YAW_THEN_PITCH" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ROTATION_ORDER.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.ROTATION_ORDER.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.ROTATION_ORDER.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.ROTATION_ORDER.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="ccsensor">
+<h2><span class="section-number">8.2. </span>ccSensor<a class="headerlink" href="#ccsensor" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">ccSensor</span></span><a class="headerlink" href="#cloudComPy.ccSensor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccHObject" title="_cloudComPy.ccHObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccHObject</span></code></a></p>
+<p>Generic sensor interface</p>
+<p>Sensor information is provided in acquisition file with clouds,
+for instance in <code class="docutils literal notranslate"><span class="pre">.e57</span></code> format files.
+New sensor framework now relies on separate positions (stored
+in a buffer) as generated by a GPS/IMU. This way, sensor objects
+only contains intrinsic parameters. They are also associated
+to a ‘rigid transformation’ (e.g. a rigid mechanical link between
+the sensor ‘optical’ center and the GPS/IMU center position).</p>
+<p>constructor:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>string</em>) – sensor name.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.ComputeScatteringAngles">
+<span class="sig-name descname"><span class="pre">ComputeScatteringAngles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="_cloudComPy.ccPointCloud"><span class="pre">_cloudComPy.ccPointCloud</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toDegreeFlag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccSensor.ComputeScatteringAngles" title="Permalink to this definition"></a></dt>
+<dd><p>Compute scattering angles for this sensor.
+The result is a new or updated scalar field on the cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> (<a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><em>ccPointCloud</em></a><em>,</em><em>optional</em>) – cloud on which the scattering angles are computed, default parent point cloud</p></li>
+<li><p><strong>toDegreeFlag</strong> (<em>bool</em><em>,</em><em>optional</em>) – whether to convert angles in degrees or leave in radians, default True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.addPosition">
+<span class="sig-name descname"><span class="pre">addPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="_cloudComPy.ccGLMatrix"><span class="pre">_cloudComPy.ccGLMatrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.ccSensor.addPosition" title="Permalink to this definition"></a></dt>
+<dd><p>Adds a new position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>trans</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – transformation matrix associated to the new position.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>success</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.getGraphicScale">
+<span class="sig-name descname"><span class="pre">getGraphicScale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.ccSensor.getGraphicScale" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the sensor graphic representation scale</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the sensor graphic representation scale</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.getRigidTransformation">
+<span class="sig-name descname"><span class="pre">getRigidTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="_cloudComPy.ccGLMatrix"><span class="pre">_cloudComPy.ccGLMatrix</span></a></span></span><a class="headerlink" href="#cloudComPy.ccSensor.getRigidTransformation" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the rigid transformation between this sensor and its associated positions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a rigid transformation</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccGLMatrix</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.getType">
+<span class="sig-name descname"><span class="pre">getType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.CC_SENSOR_TYPE" title="_cloudComPy.CC_SENSOR_TYPE"><span class="pre">_cloudComPy.CC_SENSOR_TYPE</span></a></span></span><a class="headerlink" href="#cloudComPy.ccSensor.getType" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the Sensor type, from <a class="reference internal" href="#cloudComPy.CC_SENSOR_TYPE" title="cloudComPy.CC_SENSOR_TYPE"><code class="xref py py-class docutils literal notranslate"><span class="pre">CC_SENSOR_TYPE</span></code></a>.
+Possibles values are UNKNOWN_SENSOR or GROUND_BASED_LIDAR</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Sensor type</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.CC_SENSOR_TYPE" title="cloudComPy.CC_SENSOR_TYPE"><code class="xref py py-class docutils literal notranslate"><span class="pre">CC_SENSOR_TYPE</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.setGraphicScale">
+<span class="sig-name descname"><span class="pre">setGraphicScale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccSensor.setGraphicScale" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the sensor graphic representation scale</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>float</em>) – graphic representation scale</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.ccSensor.setRigidTransformation">
+<span class="sig-name descname"><span class="pre">setRigidTransformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.ccSensor" title="_cloudComPy.ccSensor"><span class="pre">_cloudComPy.ccSensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="_cloudComPy.ccGLMatrix"><span class="pre">_cloudComPy.ccGLMatrix</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.ccSensor.setRigidTransformation" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the rigid transformation between this sensor and its associated positions
+Rigid transformation goes from the sensor position(s) to the sensor “optical” center.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mat</strong> (<a class="reference internal" href="ccPrimitives.html#cloudComPy.ccGLMatrix" title="cloudComPy.ccGLMatrix"><em>ccGLMatrix</em></a>) – transformation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.CC_SENSOR_TYPE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">CC_SENSOR_TYPE</span></span><a class="headerlink" href="#cloudComPy.CC_SENSOR_TYPE" title="Permalink to this definition"></a></dt>
+<dd><p>Members:</p>
+<p>UNKNOWN_SENSOR</p>
+<p>GROUND_BASED_LIDAR</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_SENSOR_TYPE.GROUND_BASED_LIDAR">
+<span class="sig-name descname"><span class="pre">GROUND_BASED_LIDAR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_SENSOR_TYPE.GROUND_BASED_LIDAR:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_SENSOR_TYPE.GROUND_BASED_LIDAR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.CC_SENSOR_TYPE.UNKNOWN_SENSOR">
+<span class="sig-name descname"><span class="pre">UNKNOWN_SENSOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;CC_SENSOR_TYPE.UNKNOWN_SENSOR:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.CC_SENSOR_TYPE.UNKNOWN_SENSOR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_SENSOR_TYPE.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.CC_SENSOR_TYPE.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.CC_SENSOR_TYPE.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.CC_SENSOR_TYPE.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ccPrimitives.html" class="btn btn-neutral float-left" title="6. ccPrimitives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ScalarField.html" class="btn btn-neutral float-right" title="9. Scalar Fields" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

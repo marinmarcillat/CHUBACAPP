@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15. Colors &mdash; cloudComPy 2.12a documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. CSF plugin" href="CSF.html" />
+    <link rel="prev" title="14. Neighbourhood" href="Neighbourhood.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> cloudComPy
+          </a>
+              <div class="version">
+                2.12
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. cloudComPy: a first example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">2. license</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="userIntro.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userLoad.html">2. Loading clouds and other entities from files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userSave.html">3. Saving Clouds and other entities to files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userEntities.html">4. Clouds, meshes, scalar fields: introspection, manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userNumpy.html">5. operations on coordinates, scalar fields, colors, meshes with Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="userUseCases.html">6. Some use cases</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">cloudComPy Reference documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cloudComPy.html">1. cloudComPy module, functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPointCloud.html">2. Points Clouds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPolyline.html">3. Polylines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccOctree.html">4. Octrees, descriptors and neighbourhood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccMesh.html">5. Meshes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html">6. ccPrimitives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccPrimitives.html#transformations">7. transformations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccSensor.html">8. Sensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ScalarField.html">9. Scalar Fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DistanceComputationTools.html">10. Distance Computation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GeometricalAnalysisTools.html">11. Geometrical Analysis Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloudSamplingTools.html">12. Cloud Sampling Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ccFacet.html">13. 2D Polygons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Neighbourhood.html">14. Neighbourhood</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">15. Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#qcolor-from-qt">15.1. QColor (from Qt)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-useful-color-classes-from-qt">15.2. Other Useful Color classes (from Qt)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">plugins Reference documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="CSF.html">1. CSF plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HPR.html">2. HPR plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="M3C2.html">3. M3C2 plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MeshBoolean.html">4. MeshBoolean plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCL.html">5. PCL plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCV.html">6. PCV plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RANSAC_SD.html">7. RANSAC_SD plugin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MinimalBoundingBox.html">8. minimalBoundingBox Python plugin</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Indices and tables</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">1. general index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html#module-index">2. module index</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">cloudComPy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">15. </span>Colors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/colors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="colors">
+<h1><span class="section-number">15. </span>Colors<a class="headerlink" href="#colors" title="Permalink to this heading"></a></h1>
+<p>Color classes are useful for the functions related to color in <a class="reference internal" href="ccPointCloud.html#cloudComPy.ccPointCloud" title="cloudComPy.ccPointCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">ccPointCloud</span></code></a> class.</p>
+<section id="qcolor-from-qt">
+<h2><span class="section-number">15.1. </span>QColor (from Qt)<a class="headerlink" href="#qcolor-from-qt" title="Permalink to this heading"></a></h2>
+<p>The QColor class is the binding of the Qcolor class from Qt.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.QColor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">QColor</span></span><a class="headerlink" href="#cloudComPy.QColor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>The Qt QColor class provides colors based on RGB, HSV or CMYK values.
+See Qt documentation.</p>
+<p><strong>Constructors</strong>:</p>
+<ul class="simple">
+<li><p>default Constructor: invalid Color.</p></li>
+<li><p>copy Constructor</p></li>
+<li><p>Constructs a color with the RGB value r, g, b, and the alpha-channel (transparency) value a.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>int</em>) – red value (0 to 255)</p></li>
+<li><p><strong>g</strong> (<em>int</em>) – green value (0 to 255)</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – blue value (0 to 255)</p></li>
+<li><p><strong>a</strong> (<em>int</em>) – alpha value (0 to 255)</p></li>
+</ul>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Constructs a color with the value color. The alpha component is ignored and set to solid.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>int</em>) – an unsigned int equivalent to an ARGB quadruplet on the format #AARRGGBB.</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Construct a Color with the value rgba64 (<a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRgba64</span></code></a>).</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgba64</strong> (<a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64"><em>QRgba64</em></a>) – an rgba64 value.</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>Constructs a named color in the same way as <a class="reference internal" href="#cloudComPy.QColor.setNamedColor" title="cloudComPy.QColor.setNamedColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setNamedColor()</span></code></a> using the given name.</p></li>
+</ul>
+<p>The color is left invalid if the name cannot be parsed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>colorName</strong> (<em>string</em>) – the color name following the syntax in <a class="reference internal" href="#cloudComPy.QColor.setNamedColor" title="cloudComPy.QColor.setNamedColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setNamedColor()</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.alpha" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the alpha color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>alpha component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.alphaF">
+<span class="sig-name descname"><span class="pre">alphaF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.alphaF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the alpha color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>alpha component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.black">
+<span class="sig-name descname"><span class="pre">black</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.black" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the black color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>black component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.blackF">
+<span class="sig-name descname"><span class="pre">blackF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.blackF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the black color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>black component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.blue">
+<span class="sig-name descname"><span class="pre">blue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.blue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the blue color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>blue component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.blueF">
+<span class="sig-name descname"><span class="pre">blueF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.blueF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the blue color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>blue component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.colorNames">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">colorNames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">QString</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.colorNames" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of strings containing the color names Qt knows about.
+Static function.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of Qt valid color names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.convertTo">
+<span class="sig-name descname"><span class="pre">convertTo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColorSpec" title="_cloudComPy.QColorSpec"><span class="pre">_cloudComPy.QColorSpec</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.convertTo" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a copy of this color in the format specified by colorSpec.</p>
+<p>See <a class="reference internal" href="#cloudComPy.QColorSpec" title="cloudComPy.QColorSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">QColorSpec</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spec</strong> (<em>int</em>) – color spec</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>converted color</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.cyan">
+<span class="sig-name descname"><span class="pre">cyan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.cyan" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the cyan color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>cyan component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.cyanF">
+<span class="sig-name descname"><span class="pre">cyanF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.cyanF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the cyan color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>cyan component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.darker">
+<span class="sig-name descname"><span class="pre">darker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.darker" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a darker (or lighter) color, but does not change this object.</p>
+<p>If the factor is greater than 100, this functions returns a darker color.
+Setting factor to 300 returns a color that has one-third the brightness.
+If the factor is less than 100, the return color is lighter, 
+but we recommend using the lighter() function for this purpose.
+If the factor is 0 or negative, the return value is unspecified.</p>
+<p>The function converts the current RGB color to HSV,
+divides the value (V) component by factor and converts the color back to RGB.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>factor</strong> (<em>int</em><em>,</em><em>optional</em>) – default value 200</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new color object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromCmyk">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromCmyk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromCmyk" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the given CMYK color values:
+c (cyan), m (magenta), y (yellow), k (black), and a (alpha-channel, i.e. transparency).
+All the values must be in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>int</em>) – cyan</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – magenta</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – yellow</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – black</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default 255</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a CMYK QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromCmykF">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromCmykF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromCmykF" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the given CMYK color values:
+c (cyan), m (magenta), y (yellow), k (black), and a (alpha-channel, i.e. transparency).
+All the values must be in the range [0., 1.].
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>float</em>) – cyan</p></li>
+<li><p><strong>m</strong> (<em>float</em>) – magenta</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – yellow</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – black</p></li>
+<li><p><strong>a</strong> (<em>float</em><em>,</em><em>optional</em>) – alpha, default 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a CMYK QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromHsl">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromHsl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromHsl" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the HSL color values:
+h (hue), s (saturation), l (lightness), and a (alpha-channel, i.e. transparency).
+The value of s, l, and a must all be in the range 0-255; the value of h must be in the range 0-359.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>int</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – saturation</p></li>
+<li><p><strong>l</strong> (<em>int</em>) – lightness</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default 255</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an HSL QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromHslF">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromHslF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromHslF" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the HSL color values:
+h (hue), s (saturation), l (lightness), and a (alpha-channel, i.e. transparency).
+All the values must be in the range 0.0-1.0.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>float</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>float</em>) – saturation</p></li>
+<li><p><strong>l</strong> (<em>float</em>) – lightness</p></li>
+<li><p><strong>a</strong> (<em>float</em><em>,</em><em>optional</em>) – alpha, default 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an HSL QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromHsv">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromHsv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromHsv" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the HSV color values:
+h (hue), s (saturation), v (value), and a (alpha-channel, i.e. transparency).
+The value of s, v, and a must all be in the range 0-255; the value of h must be in the range 0-359.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>int</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – saturation</p></li>
+<li><p><strong>v</strong> (<em>int</em>) – value</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default 255</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an HSV QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromHsvF">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromHsvF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromHsvF" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the HSV color values:
+h (hue), s (saturation), v (value), and a (alpha-channel, i.e. transparency).
+All the values must be in the range 0.0-1.0.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>float</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>float</em>) – saturation</p></li>
+<li><p><strong>v</strong> (<em>float</em>) – value</p></li>
+<li><p><strong>a</strong> (<em>float</em><em>,</em><em>optional</em>) – alpha, default 255</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an HSV QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">QColor.fromRgb(r:</span> <span class="pre">int,</span> <span class="pre">g:</span> <span class="pre">int,</span> <span class="pre">g:</span> <span class="pre">int,</span> <span class="pre">a:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">255)</span> <span class="pre">-&gt;</span> <span class="pre">_cloudComPy.QColor</span></span></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the RGB color values,
+r (red), g (green), b (blue), and a (alpha-channel, i.e. transparency).
+All the values must be in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>int</em>) – red</p></li>
+<li><p><strong>g</strong> (<em>int</em>) – green</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – blue</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default 255</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an RGB QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromRgbF">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgbF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromRgbF" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the RGB color values,
+r (red), g (green), b (blue), and a (alpha-channel, i.e. transparency).
+All the values must be in the range 0.0-1.0.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>float</em>) – red</p></li>
+<li><p><strong>g</strong> (<em>float</em>) – green</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – blue</p></li>
+<li><p><strong>a</strong> (<em>float</em><em>,</em><em>optional</em>) – alpha, default 1.0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an RGB QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromRgbUInt">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgbUInt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromRgbUInt" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from
+the given unsigned integer value rgb (ARGB quadruplet on the format #AARRGGBB).
+The alpha component of rgb is ignored (i.e. it is automatically set to 255),
+use the <a class="reference internal" href="#cloudComPy.QColor.fromRgba" title="cloudComPy.QColor.fromRgba"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fromRgba()</span></code></a> function to include the alpha-channel specified by the given QRgb value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>int</em>) – ARGB quadruplet on the format #AARRGGBB).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an RGB QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromRgba">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromRgba" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from 
+the given unsigned integer value rgb (ARGB quadruplet on the format #AARRGGBB).
+Unlike the <a class="reference internal" href="#cloudComPy.QColor.fromRgbUInt" title="cloudComPy.QColor.fromRgbUInt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fromRgbUInt()</span></code></a> function, the alpha-channel specified by the given QRgb value is included.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>int</em>) – ARGB quadruplet on the format #AARRGGBB).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an RGB QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">QColor.fromRgba64(r:</span> <span class="pre">int,</span> <span class="pre">g:</span> <span class="pre">int,</span> <span class="pre">g:</span> <span class="pre">int,</span> <span class="pre">a:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">65535)</span> <span class="pre">-&gt;</span> <span class="pre">_cloudComPy.QColor</span></span></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the RGBA64 color values,
+r (red), g (green), b (blue), and a (alpha-channel, i.e. transparency).
+All values: unsigned short = 16bit range 0..65535
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>int</em>) – red</p></li>
+<li><p><strong>g</strong> (<em>int</em>) – green</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – blue</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default 65535</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an RGB QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.fromRgba64Q">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgba64Q</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.fromRgba64Q" title="Permalink to this definition"></a></dt>
+<dd><p>Static convenience function that returns a QColor constructed from the given <a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRgba64</span></code></a> value rgba64.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgba64</strong> (<a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64"><em>QRgba64</em></a>) – an rgba64 value.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an RGB QColor</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getCmyk">
+<span class="sig-name descname"><span class="pre">getCmyk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getCmyk" title="Permalink to this definition"></a></dt>
+<dd><p>Get the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color’s CMYK value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (c, m, y, k, a), int values from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getCmykF">
+<span class="sig-name descname"><span class="pre">getCmykF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getCmykF" title="Permalink to this definition"></a></dt>
+<dd><p>Get the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color’s CMYK value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (c, m, y, k, a), float values from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getHsl">
+<span class="sig-name descname"><span class="pre">getHsl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getHsl" title="Permalink to this definition"></a></dt>
+<dd><p>Get the hue, saturation, lightness and alpha-channel (transparency) components of the color’s HSL value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (h, s, l, a), int values from [-1..359] for hue, [0..255] for saturation, lightness and alpha-channel</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getHslF">
+<span class="sig-name descname"><span class="pre">getHslF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getHslF" title="Permalink to this definition"></a></dt>
+<dd><p>Get the hue, saturation, lightness and alpha-channel (transparency) components of the color’s HSL value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (h, s, l, a), float values from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getHsv">
+<span class="sig-name descname"><span class="pre">getHsv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getHsv" title="Permalink to this definition"></a></dt>
+<dd><p>Get the hue, saturation, value and alpha-channel (transparency) components of the color’s HSL value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (h, s, v, a), int values from [-1..359] for hue, [0..255] for saturation, lightness and alpha-channel</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getHsvF">
+<span class="sig-name descname"><span class="pre">getHsvF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getHsvF" title="Permalink to this definition"></a></dt>
+<dd><p>Get the hue, saturation, value and alpha-channel (transparency) components of the color’s HSL value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (h, s, v, a), float values from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getRgb">
+<span class="sig-name descname"><span class="pre">getRgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getRgb" title="Permalink to this definition"></a></dt>
+<dd><p>Get the the red, green, blue, and alpha-channel (transparency) components of the color’s RGB value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (r, g, b, a), int values from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.getRgbF">
+<span class="sig-name descname"><span class="pre">getRgbF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cloudComPy.QColor.getRgbF" title="Permalink to this definition"></a></dt>
+<dd><p>Get the the red, green, blue, and alpha-channel (transparency) components of the color’s RGB value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a tuple (r, g, b, a), float values from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.green">
+<span class="sig-name descname"><span class="pre">green</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.green" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the green color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>green component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.greenF">
+<span class="sig-name descname"><span class="pre">greenF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.greenF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the green color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>green component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hslHue">
+<span class="sig-name descname"><span class="pre">hslHue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hslHue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSL hue color component of this color. (-1 means achromatic)
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the HSL hue color component of this color, value from [-1..359]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hslHueF">
+<span class="sig-name descname"><span class="pre">hslHueF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hslHueF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSL hue color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the HSL hue color component of this color, value from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hslSaturation">
+<span class="sig-name descname"><span class="pre">hslSaturation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hslSaturation" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSL saturation color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the HSL saturation color component of this color, value from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hslSaturationF">
+<span class="sig-name descname"><span class="pre">hslSaturationF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hslSaturationF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSL saturation color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the HSL saturation color component of this color, value from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hsvHue">
+<span class="sig-name descname"><span class="pre">hsvHue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hsvHue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the hsv hue color component of this color. (-1 means achromatic)
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hsv hue color component of this color, value from [-1..359]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hsvHueF">
+<span class="sig-name descname"><span class="pre">hsvHueF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hsvHueF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the hsv hue color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hsv hue color component of this color, value from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hsvSaturation">
+<span class="sig-name descname"><span class="pre">hsvSaturation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hsvSaturation" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the hsv saturation color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hsv saturation color component of this color, value from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hsvSaturationF">
+<span class="sig-name descname"><span class="pre">hsvSaturationF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hsvSaturationF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the hsv saturation color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hsv saturation color component of this color, value from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hue">
+<span class="sig-name descname"><span class="pre">hue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSV hue color component of this color. (-1 means achromatic)</p>
+<p>The color is implicitly converted to HSV.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hsv hue color component of this color, value from [-1..359]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.hueF">
+<span class="sig-name descname"><span class="pre">hueF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.hueF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSV hue color component of this color.</p>
+<p>The color is implicitly converted to HSV.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the hsv hue color component of this color, value from [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.isValid">
+<span class="sig-name descname"><span class="pre">isValid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.QColor.isValid" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the color is valid; otherwise returns False.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the color is valid.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.isValidColor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">isValidColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.QColor.isValidColor" title="Permalink to this definition"></a></dt>
+<dd><p>Returns True if the name is a valid color name and can be used to construct a valid QColor object, otherwise returns false.</p>
+<p>It uses the same algorithm used in <a class="reference internal" href="#cloudComPy.QColor.setNamedColor" title="cloudComPy.QColor.setNamedColor"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setNamedColor()</span></code></a>.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the color name is valid.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.lighter">
+<span class="sig-name descname"><span class="pre">lighter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">150</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.lighter" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a lighter (or darker) color, but does not change this object.</p>
+<p>If the factor is greater than 100, this functions returns a lighter color.
+Setting factor to 150 returns a color that is 50% brighter.
+If the factor is less than 100, the return color is darker,
+but we recommend using the darker() function for this purpose.
+If the factor is 0 or negative, the return value is unspecified.</p>
+<p>The function converts the current RGB color to HSV,
+multiplies the value (V) component by factor and converts the color back to RGB.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>factor</strong> (<em>int</em><em>,</em><em>optional</em>) – default value 150</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new color object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.lightness">
+<span class="sig-name descname"><span class="pre">lightness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.lightness" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the lightness color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>lightness in [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.lightnessF">
+<span class="sig-name descname"><span class="pre">lightnessF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.lightnessF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the lightness color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>lightness in [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.magenta">
+<span class="sig-name descname"><span class="pre">magenta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.magenta" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the magenta color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>magenta component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.magentaF">
+<span class="sig-name descname"><span class="pre">magentaF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.magentaF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the magenta color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>magenta component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#cloudComPy.QColor.name" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the name of the color in the format “#RRGGBB”; i.e. a “#” character followed by three two-digit hexadecimal numbers.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>name of the color in the format “#RRGGBB”.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.nameARGB">
+<span class="sig-name descname"><span class="pre">nameARGB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QString</span></span></span><a class="headerlink" href="#cloudComPy.QColor.nameARGB" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the name of the color in the format “#AARRGGBB”; i.e. a “#” character followed by four two-digit hexadecimal numbers.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>name of the color in the format “#AARRGGBB”.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.red">
+<span class="sig-name descname"><span class="pre">red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.red" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the red color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>red component int from [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.redF">
+<span class="sig-name descname"><span class="pre">redF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.redF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the red color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>red component float from range [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.rgb">
+<span class="sig-name descname"><span class="pre">rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.rgb" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the RGB value of the color. The alpha value is opaque.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>rgb value (unsigned int equivalent to an ARGB quadruplet on the format #AARRGGBB)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.rgba">
+<span class="sig-name descname"><span class="pre">rgba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.rgba" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the RGB value of the color, including its alpha.</p>
+<p>unsigned int equivalent to an ARGB quadruplet on the format #AARRGGBB
+rgb = blue + green*256 + red*256**2 + alpha*256**3 (blue, green, red, alpha: unsigned char)
+For an invalid color, the alpha value of the returned color is unspecified.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>rgb value (unsigned int equivalent to an ARGB quadruplet on the format #AARRGGBB)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.rgba64">
+<span class="sig-name descname"><span class="pre">rgba64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.rgba64" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the RGB64 value of the color, including its alpha.</p>
+<p>For an invalid color, the alpha value of the returned color is unspecified.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>QRgba64 value</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.saturation">
+<span class="sig-name descname"><span class="pre">saturation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.saturation" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSV saturation color component of this color.</p>
+<p>The color is implicitly converted to HSV.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>saturation in [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.saturationF">
+<span class="sig-name descname"><span class="pre">saturationF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.saturationF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the HSV saturation color component of this color.</p>
+<p>The color is implicitly converted to HSV.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>saturation in [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setAlpha">
+<span class="sig-name descname"><span class="pre">setAlpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setAlpha" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the alpha of this color to alpha. Integer alpha is specified in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alpha</strong> (<em>int</em>) – alpha is specified in the range 0-255.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setAlphaF">
+<span class="sig-name descname"><span class="pre">setAlphaF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setAlphaF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the alpha of this color to alpha. float alpha is specified in the range [0., 1.]
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alpha</strong> (<em>float</em>) – alpha is specified in the range [0., 1.].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setBlue">
+<span class="sig-name descname"><span class="pre">setBlue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setBlue" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the Blue of this color to Blue. Integer Blue is specified in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Blue</strong> (<em>int</em>) – Blue is specified in the range 0-255.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setBlueF">
+<span class="sig-name descname"><span class="pre">setBlueF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setBlueF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the Blue of this color to Blue. float Blue is specified in the range [0., 1.]
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Blue</strong> (<em>float</em>) – Blue is specified in the range [0., 1.].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setCmyk">
+<span class="sig-name descname"><span class="pre">setCmyk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setCmyk" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color’s CMYK value.</p>
+<p>These components can be retrieved individually using the <a class="reference internal" href="#cloudComPy.QColor.cyan" title="cloudComPy.QColor.cyan"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cyan()</span></code></a>, py:meth:<cite>magenta</cite>, py:meth:<cite>yellow</cite>, py:meth:<cite>black</cite> and py:meth:<cite>alpha</cite> functions.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>int</em>) – cyan value (0 to 255)</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – magenta value (0 to 255)</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – yellow value (0 to 255)</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – black value (0 to 255)</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha value (0 to 255), default 255</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setCmykF">
+<span class="sig-name descname"><span class="pre">setCmykF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setCmykF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color’s CMYK value.</p>
+<p>These components can be retrieved individually using the <a class="reference internal" href="#cloudComPy.QColor.cyan" title="cloudComPy.QColor.cyan"><code class="xref py py-meth docutils literal notranslate"><span class="pre">cyan()</span></code></a>, py:meth:<cite>magenta</cite>, py:meth:<cite>yellow</cite>, py:meth:<cite>black</cite> and py:meth:<cite>alpha</cite> functions.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<em>float</em>) – cyan value from [0., 1.]</p></li>
+<li><p><strong>m</strong> (<em>float</em>) – magenta value from [0., 1.]</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – yellow value from [0., 1.]</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – black value  from [0., 1.]</p></li>
+<li><p><strong>a</strong> (<em>float</em><em>,</em><em>optional</em>) – alpha value from [0., 1.] default 1.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setGreen">
+<span class="sig-name descname"><span class="pre">setGreen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setGreen" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the Green of this color to Green. Integer Green is specified in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Green</strong> (<em>int</em>) – Green is specified in the range 0-255.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setGreenF">
+<span class="sig-name descname"><span class="pre">setGreenF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setGreenF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the Green of this color to Green. float Green is specified in the range [0., 1.]
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Green</strong> (<em>float</em>) – Green is specified in the range [0., 1.].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setHsl">
+<span class="sig-name descname"><span class="pre">setHsl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setHsl" title="Permalink to this definition"></a></dt>
+<dd><p>Sets a HSL color value; h is the hue, s is the saturation, l is the lightness and a is the alpha component of the HSL color.</p>
+<p>The saturation, lightness and alpha-channel values must be in the range 0-255, and the hue value must be greater than -1. [0..359]
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>int</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – saturation</p></li>
+<li><p><strong>l</strong> (<em>int</em>) – lightness</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default value 255</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setHslF">
+<span class="sig-name descname"><span class="pre">setHslF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setHslF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets a HSL color value; h is the hue, s is the saturation, l is the lightness and a is the alpha component of the HSL color.</p>
+<p>All the values must be in the range 0.0-1.0.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>int</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – saturation</p></li>
+<li><p><strong>l</strong> (<em>int</em>) – lightness</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default value 1.0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setHsv">
+<span class="sig-name descname"><span class="pre">setHsv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setHsv" title="Permalink to this definition"></a></dt>
+<dd><p>Sets a HSV color value; h is the hue, s is the saturation, v is the value and a is the alpha component of the HSV color.</p>
+<p>The saturation, value and alpha-channel values must be in the range 0-255, and the hue value must be greater than -1. [0..359]
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>int</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – saturation</p></li>
+<li><p><strong>v</strong> (<em>int</em>) – value</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default value 255</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setHsvF">
+<span class="sig-name descname"><span class="pre">setHsvF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setHsvF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets a HSV color value; h is the hue, s is the saturation, v is the value and a is the alpha component of the HSV color.</p>
+<p>All the values must be in the range 0.0-1.0.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h</strong> (<em>int</em>) – hue</p></li>
+<li><p><strong>s</strong> (<em>int</em>) – saturation</p></li>
+<li><p><strong>v</strong> (<em>int</em>) – value</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha, default value 1.0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setNamedColor">
+<span class="sig-name descname"><span class="pre">setNamedColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setNamedColor" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the RGB value of this QColor to name, which may be in one of these formats:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>#RGB (each of R, G, and B is a single hex digit)</p></li>
+<li><p>#RRGGBB</p></li>
+<li><p>#AARRGGBB (Since 5.2)</p></li>
+<li><p>#RRRGGGBBB</p></li>
+<li><p>#RRRRGGGGBBBB</p></li>
+<li><p>A name from the list of colors defined in the list of SVG color keyword names provided by the World Wide Web Consortium;
+for example, “steelblue” or “gainsboro”. These color names work on all platforms.</p></li>
+<li><p>transparent - representing the absence of a color.</p></li>
+</ul>
+</div></blockquote>
+<p>The color is invalid if name cannot be parsed.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>colorName</strong> (<em>string</em>) – color name. see <a class="reference internal" href="#cloudComPy.QColor.colorNames" title="cloudComPy.QColor.colorNames"><code class="xref py py-meth docutils literal notranslate"><span class="pre">colorNames()</span></code></a> for a list of valid keyword names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setRed">
+<span class="sig-name descname"><span class="pre">setRed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setRed" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the Red of this color to Red. Integer Red is specified in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Red</strong> (<em>int</em>) – Red is specified in the range 0-255.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setRedF">
+<span class="sig-name descname"><span class="pre">setRedF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setRedF" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the Red of this color to Red. float Red is specified in the range [0., 1.]
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Red</strong> (<em>float</em>) – Green is specified in the range [0., 1.].</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setRgb">
+<span class="sig-name descname"><span class="pre">setRgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setRgb" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the RGB value to r, g, b and the alpha value to a.</p>
+<p>All the values must be in the range 0-255.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>int</em>) – red</p></li>
+<li><p><strong>g</strong> (<em>int</em>) – green</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – blue</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>,</em><em>optional</em>) – alpha</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">QColor.setRgbF(self:</span> <span class="pre">_cloudComPy.QColor,</span> <span class="pre">r:</span> <span class="pre">float,</span> <span class="pre">g:</span> <span class="pre">float,</span> <span class="pre">g:</span> <span class="pre">float,</span> <span class="pre">a:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0)</span> <span class="pre">-&gt;</span> <span class="pre">None</span></span></dt>
+<dd><p>Sets the color channels of this color to r (red), g (green), b (blue) and a (alpha, transparency).</p>
+<p>All values must be in the range 0.0-1.0.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>r</strong> (<em>float</em>) – red</p></li>
+<li><p><strong>g</strong> (<em>float</em>) – green</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – blue</p></li>
+<li><p><strong>a</strong> (<em>float</em><em>,</em><em>optional</em>) – alpha</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setRgbUInt">
+<span class="sig-name descname"><span class="pre">setRgbUInt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setRgbUInt" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the RGB value to rgb (unsigned integer color code). The alpha value is set to opaque.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>int</em>) – unsigned integer color code (ARGB quadruplet on the format #AARRGGBB)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.setRgba64">
+<span class="sig-name descname"><span class="pre">setRgba64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QColor.setRgba64" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the RGB64 value to rgba, including its alpha.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgba</strong> (<a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64"><em>QRgba64</em></a>) – 64-bit RGB color structure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.spec">
+<span class="sig-name descname"><span class="pre">spec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColorSpec" title="_cloudComPy.QColorSpec"><span class="pre">_cloudComPy.QColorSpec</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.spec" title="Permalink to this definition"></a></dt>
+<dd><p>Returns how the color was specified.</p>
+<p>See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>spec value</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QColorSpec" title="cloudComPy.QColorSpec">QColorSpec</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.toCmyk">
+<span class="sig-name descname"><span class="pre">toCmyk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.toCmyk" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and returns a CMYK QColor based on this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a CMYK QColor based on this color.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.toHsl">
+<span class="sig-name descname"><span class="pre">toHsl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.toHsl" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and returns an HSL QColor based on this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an HSL QColor based on this color.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.toHsv">
+<span class="sig-name descname"><span class="pre">toHsv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.toHsv" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and returns an HSV QColor based on this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an HSV QColor based on this color.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.toRgb">
+<span class="sig-name descname"><span class="pre">toRgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></span><a class="headerlink" href="#cloudComPy.QColor.toRgb" title="Permalink to this definition"></a></dt>
+<dd><p>Creates and returns an RGB QColor based on this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an RGB QColor based on this color.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QColor" title="cloudComPy.QColor">QColor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.value">
+<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.value" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the value color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>value color component [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.valueF">
+<span class="sig-name descname"><span class="pre">valueF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.valueF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the value color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>value color component [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.yellow">
+<span class="sig-name descname"><span class="pre">yellow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QColor.yellow" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the yellow color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>yellow color component [0..255]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QColor.yellowF">
+<span class="sig-name descname"><span class="pre">yellowF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QColor" title="_cloudComPy.QColor"><span class="pre">_cloudComPy.QColor</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#cloudComPy.QColor.yellowF" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the yellow color component of this color.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>yellow color component [0., 1.]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="other-useful-color-classes-from-qt">
+<h2><span class="section-number">15.2. </span>Other Useful Color classes (from Qt)<a class="headerlink" href="#other-useful-color-classes-from-qt" title="Permalink to this heading"></a></h2>
+<p>The QRgba64 class from Qt provide a 64bit data structure to manipulate 16-bit color channels: Red, green, blue and alpha.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">QRgba64</span></span><a class="headerlink" href="#cloudComPy.QRgba64" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_object</span></code></p>
+<p>The QRgba64 struct contains a 64-bit RGB color.</p>
+<p>QRgba64 is a 64-bit data-structure containing four 16-bit color channels: Red, green, blue and alpha.
+QRgba64 can be used as a replacement for QRgb when higher precision is needed. 
+In particular a premultiplied QRgba64 can operate on unpremultiplied QRgb without loss of precision except for alpha 0.
+See Qt documentation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.alpha" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the 16-bit alpha channel.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>alpha 16 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.alpha8">
+<span class="sig-name descname"><span class="pre">alpha8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.alpha8" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the alpha channel as an 8-bit.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>alpha 8 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.blue">
+<span class="sig-name descname"><span class="pre">blue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.blue" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the 16-bit blue color component.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>blue 16 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.blue8">
+<span class="sig-name descname"><span class="pre">blue8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.blue8" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the blue color component as an 8-bit.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>blue 8 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.fromArgb32">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromArgb32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.fromArgb32" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs a QRgba64 value from the 32bit ARGB value rgb.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgb</strong> (<em>int</em>) – 32bit ARGB value</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.fromQuint64">
+<span class="sig-name descname"><span class="pre">fromQuint64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.fromQuint64" title="Permalink to this definition"></a></dt>
+<dd><p>Return the color from a 64bit unsigned integer RGBA.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgba</strong> (<em>int</em>) – a 64bit unsigned integer RGBA.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.fromRgba">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.fromRgba" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs a QRgba64 value from the four 8-bit color channels red, green, blue and alpha.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>red</strong> (<em>int</em>) – 8bit red value.</p></li>
+<li><p><strong>green</strong> (<em>int</em>) – 8bit green value.</p></li>
+<li><p><strong>blue</strong> (<em>int</em>) – 8bit blue value.</p></li>
+<li><p><strong>alpha</strong> (<em>int</em>) – 8bit alpha value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.fromRgba64">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgba64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg3</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.fromRgba64" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs a QRgba64 value from the four 16-bit color channels red, green, blue and alpha.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>red</strong> (<em>int</em>) – 16bit red value.</p></li>
+<li><p><strong>green</strong> (<em>int</em>) – 16bit green value.</p></li>
+<li><p><strong>blue</strong> (<em>int</em>) – 16bit blue value.</p></li>
+<li><p><strong>alpha</strong> (<em>int</em>) – 16bit alpha value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.fromRgba64Q">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fromRgba64Q</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.fromRgba64Q" title="Permalink to this definition"></a></dt>
+<dd><p>Constructs a QRgba64 value from a 64bit unsigned integer RGBA.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rgba</strong> (<em>int</em>) – a 64bit unsigned integer RGBA.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>color.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.green">
+<span class="sig-name descname"><span class="pre">green</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.green" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the 16-bit green color component.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>green 16 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.green8">
+<span class="sig-name descname"><span class="pre">green8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.green8" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the green color component as an 8-bit.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>green 8 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.isOpaque">
+<span class="sig-name descname"><span class="pre">isOpaque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.isOpaque" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the color is fully opaque.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the color is fully opaque.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.isTransparent">
+<span class="sig-name descname"><span class="pre">isTransparent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.isTransparent" title="Permalink to this definition"></a></dt>
+<dd><p>Returns whether the color is transparent.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the color is transparent.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.premultiplied">
+<span class="sig-name descname"><span class="pre">premultiplied</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.premultiplied" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the color with the alpha premultiplied.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>color premultiplied.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.red">
+<span class="sig-name descname"><span class="pre">red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.red" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the 16-bit red color component.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>red 16 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.red8">
+<span class="sig-name descname"><span class="pre">red8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.red8" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the red color component as an 8-bit.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>red 8 bits</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.setAlpha">
+<span class="sig-name descname"><span class="pre">setAlpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.setAlpha" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the alpha of this color to alpha.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>alpha</strong> (<em>int</em>) – alpha value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.setBlue">
+<span class="sig-name descname"><span class="pre">setBlue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.setBlue" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the blue color component of this color to blue.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>blue</strong> (<em>int</em>) – blue value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.setGreen">
+<span class="sig-name descname"><span class="pre">setGreen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.setGreen" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the green color component of this color to green.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>green</strong> (<em>int</em>) – green value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.setRed">
+<span class="sig-name descname"><span class="pre">setRed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.setRed" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the red color component of this color to red.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>red</strong> (<em>int</em>) – red value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.toArgb32">
+<span class="sig-name descname"><span class="pre">toArgb32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.toArgb32" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the color as a 32-bit ARGB value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>32 bits ARGB color</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.toQuint64">
+<span class="sig-name descname"><span class="pre">toQuint64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.toQuint64" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the color as a 64bit unsigned integer RGBA.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>64bit unsigned integer RGBA.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.toRgb16">
+<span class="sig-name descname"><span class="pre">toRgb16</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#cloudComPy.QRgba64.toRgb16" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the color as a 16-bit RGB value.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>16 bits RGB color</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cloudComPy.QRgba64.unpremultiplied">
+<span class="sig-name descname"><span class="pre">unpremultiplied</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#cloudComPy.QRgba64" title="_cloudComPy.QRgba64"><span class="pre">_cloudComPy.QRgba64</span></a></span></span><a class="headerlink" href="#cloudComPy.QRgba64.unpremultiplied" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the color with the alpha unpremultiplied.
+See Qt documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>color unpremultiplied.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#cloudComPy.QRgba64" title="cloudComPy.QRgba64">QRgba64</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cloudComPy.</span></span><span class="sig-name descname"><span class="pre">QColorSpec</span></span><a class="headerlink" href="#cloudComPy.QColorSpec" title="Permalink to this definition"></a></dt>
+<dd><p>The type of color specified, either RGB, HSV, CMYK or HSL.
+See Qt documentation.</p>
+<p>Members:</p>
+<blockquote>
+<div><p>Invalid</p>
+<p>Rgb</p>
+<p>Hsv</p>
+<p>Cmyk</p>
+<p>Hsl</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.Cmyk">
+<span class="sig-name descname"><span class="pre">Cmyk</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;QColorSpec.Cmyk:</span> <span class="pre">3&gt;</span></em><a class="headerlink" href="#cloudComPy.QColorSpec.Cmyk" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.Hsl">
+<span class="sig-name descname"><span class="pre">Hsl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;QColorSpec.Hsl:</span> <span class="pre">4&gt;</span></em><a class="headerlink" href="#cloudComPy.QColorSpec.Hsl" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.Hsv">
+<span class="sig-name descname"><span class="pre">Hsv</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;QColorSpec.Hsv:</span> <span class="pre">2&gt;</span></em><a class="headerlink" href="#cloudComPy.QColorSpec.Hsv" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.Invalid">
+<span class="sig-name descname"><span class="pre">Invalid</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;QColorSpec.Invalid:</span> <span class="pre">0&gt;</span></em><a class="headerlink" href="#cloudComPy.QColorSpec.Invalid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.Rgb">
+<span class="sig-name descname"><span class="pre">Rgb</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;QColorSpec.Rgb:</span> <span class="pre">1&gt;</span></em><a class="headerlink" href="#cloudComPy.QColorSpec.Rgb" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#cloudComPy.QColorSpec.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cloudComPy.QColorSpec.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#cloudComPy.QColorSpec.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Neighbourhood.html" class="btn btn-neutral float-left" title="14. Neighbourhood" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CSF.html" class="btn btn-neutral float-right" title="1. CSF plugin" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2022, Paul RASCLE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

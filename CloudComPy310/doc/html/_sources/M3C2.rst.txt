@@ -1,0 +1,12 @@
+
+=============================
+M3C2 plugin
+=============================
+
+.. automodule:: cloudComPy.M3C2
+
+.. autofunction:: computeM3C2
+ 
+.. autofunction:: initTrace_M3C2
+
+.. autofunction:: M3C2guessParamsToFile

@@ -57,7 +57,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(QtGui.QIcon('Logo-Ifremer.png'))
 
         # setting  the geometry of window
-        self.setGeometry(0, 0, 1600, 1200)
+        self.setGeometry(100, 100, 1600, 1200)
+        #self.showMaximized()
 
         self.connectActions()
 
@@ -73,8 +74,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.statusBar().addPermanentWidget(self.progress_bar)
         self.progress_bar.hide()
 
-        self.model = 54
-        self.label_tree_id = 23
+        self.api_volume = 54
+        self.api_label_tree = 23
 
         self.window = 8
         self.alpha_val = [0.5, 0.2, 0.1, 0.05, 0.02, 0.01, 0.005, 0.002, 0.001, 0.0001, 0]
@@ -82,9 +83,11 @@ class Window(QMainWindow, Ui_MainWindow):
         self.conf_val = [0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95]
         self.confidence = 0.3
 
+        self.api = 0
+
     def normalOutputWritten(self, text):
         """Append text to the QTextEdit."""
-        debug_wins = [self.BiRe_Debug, self.RemBlu_Debug, self.PrePro_Debug, self.tools_debug, self.PR_debug, self.DIS_debug]
+        debug_wins = [self.BiRe_Debug, self.RemBlu_Debug, self.PrePro_Debug, self.tools_debug, self.PR_debug, self.DIS_debug, self.TM_Debug]
         for output_win in debug_wins:
             cursor = output_win.textCursor()
             cursor.movePosition(QtGui.QTextCursor.End)
@@ -136,6 +139,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
         self.BiRe_3DRun.clicked.connect(self.blender2shp)
 
+        # topographic metrics
+        self.TM_model_B.clicked.connect(lambda: self.selectFile(self.TM_model, "*.ply"))
+        self.TM_output_B.clicked.connect(lambda: self.selectDir(self.TM_output))
+        self.TM_run.clicked.connect(self.launch_tm)
+
         # Reclassifier
         self.Dir_b.clicked.connect(lambda: self.selectDir(self.Dir))
         self.Run_b.clicked.connect(self.start_class)
@@ -150,6 +158,15 @@ class Window(QMainWindow, Ui_MainWindow):
         self.sel_lab2.clicked.connect(lambda: self.nextimage(self.sel_lab2))
         self.sel_lab3.clicked.connect(lambda: self.nextimage(self.sel_lab3))
         self.sel_lab4.clicked.connect(lambda: self.nextimage(self.sel_lab4))
+
+        # Biigle DL
+        self.connect_2.clicked.connect(self.on_connect)
+        self.AD_model_B.clicked.connect(lambda: self.selectFile(self.AD_model, "*.pt"))
+        self.AD_classes_B.clicked.connect(lambda: self.selectFile(self.AD_classes, "*.names"))
+        self.AD_Dir_B.clicked.connect(lambda: self.selectDir(self.AD_Dir))
+        self.AD_output_B.clicked.connect(lambda: self.selectDir(self.AD_output))
+        self.AD_run.clicked.connect(self.launch_inference)
+
 
         # plot
         self.plot_model_path_B.clicked.connect(lambda: self.selectFile(self.plot_model_path, "model file (*.ply *.obj)"))
@@ -189,11 +206,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def set_api(self):
         if self.set_api_vol.text() == "" or self.set_api_LT.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
-            self.model = self.set_api_vol.text()
-            self.label_tree_id = self.set_api_LT.text()
+            self.api_volume = self.set_api_vol.text()
+            self.api_label_tree = self.set_api_LT.text()
             print("Set API done !")
 
     def select_label(self, txt):
@@ -228,7 +245,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def launch_dis(self):
         if self.DIS_sfm_path.text() == "" or self.DIS_model.text() == "" or self.DIS_img_dir.text() == "" or self.DIS_method.currentText() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             self.progress_bar.show()
@@ -249,9 +266,35 @@ class Window(QMainWindow, Ui_MainWindow):
         self.DIS_img_dir.setText("")
         print("Disjoint image selection done !")
 
+    def launch_tm(self):
+        if self.TM_output.text() == "" or self.TM_model.text() == "" or self.TM_scales.text() == "":
+            print("Some required inputs missing")
+            return 0
+        else:
+            self.progress_bar.show()
+            model_path = self.TM_model.text()
+            output_path = self.TM_output.text()
+            scales = list(map(float, self.TM_scales.text().split(',')))
+            metrics_cb = (self.TM_slope, self.TM_aspect, self.TM_roughness, self.TM_TRI, self.TM_BPI, self.TM_GM, self.TM_GC)
+            metrics = [b.checkState() for b in metrics_cb]
+            
+            import CHUBACAPP.post_reprojection.topographic_metrics as tm
+
+            self.tm_thread = tm.pcdGenThread(model_path, scales, output_path, metrics)
+            self.tm_thread.prog_val.connect(self.setProgressVal)
+            self.tm_thread.finished.connect(self.end_tm)
+            self.tm_thread.start()
+
+    def end_tm(self):
+        self.progress_bar.hide()
+        self.TM_model.setText("")
+        self.TM_output.setText("")
+        print("Topographic metrics computed !")
+
+
     def ann2shp(self):
         if self.BiRe_Csv.text() == "" or self.BiRe_2DInput.text() == "" or self.BiRe_ExpName.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             data_path = self.BiRe_2DInput.text()
@@ -278,7 +321,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def blender2shp(self):
         if self.BiRe_Csv.text() == "" or self.BiRe_Model.text() == "" or self.BiRe_sfm.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             model_path = self.BiRe_Model.text()
@@ -319,14 +362,14 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def auto_detect(self):
         if self.AD_model.text() == "" or self.AD_Dir.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             print("Not ready yet")
 
     def blur_detect(self):
         if self.RemBlu_Input.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             images_path = self.RemBlu_Input.text()
@@ -354,7 +397,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def blur_filter(self):
         if self.RemBlu_Input.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             images_path = self.RemBlu_Input.text()
@@ -373,7 +416,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def filter_nav(self):
         if self.FN_Dir.text() == "" or self.FN_Nav.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             data_path = self.FN_Dir.text()
@@ -392,7 +435,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def image_list(self):
         if self.ImgList_Dir.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             Img_List_Dir = self.ImgList_Dir.text()
@@ -405,10 +448,10 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def post_proj_process(self):
         if self.PR_input.text() == "" or self.PR_output.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         elif (self.PR_homogenize.checkState() and self.PR_data_config.text() == ""):
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         elif (not self.PR_homogenize.checkState() and not self.PR_filter.checkState()):
             print("No operations conducted. Please select at least one")
@@ -435,7 +478,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def preprocessing(self):
         if self.PrePro_Input.text() == "" or self.PrePro_OutputPath.text() == "" or self.NavName.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             data_path = self.PrePro_Input.text()
@@ -459,15 +502,50 @@ class Window(QMainWindow, Ui_MainWindow):
         self.PrePro_OutputPath.setText("")
 
     def on_connect(self):
-        self.api = utils.connect(self.mail.text(), self.credentials.text())
+        if self.mail.text() != "" and self.credentials.text() != "":
+            self.api = utils.connect(self.mail.text(), self.credentials.text())
+        elif self.mail_2.text() != "" and self.credentials_2.text() != "":
+            self.api = utils.connect(self.mail_2.text(), self.credentials_2.text())
         if self.api != 0:
             self.connect.setText("Connected")
-            self.labels = self.api.get('label-trees/{}'.format(self.label_tree_id)).json()["labels"]
+            self.connect_2.setText("Connected")
+            self.labels = self.api.get('label-trees/{}'.format(self.api_label_tree)).json()["labels"]
             self.Lab1.setEnabled(True)
             self.Lab2.setEnabled(True)
             self.Lab3.setEnabled(True)
             self.Lab4.setEnabled(True)
             self.Origin.setEnabled(True)
+
+    def launch_inference(self):
+        if self.AD_model.text() != "" and self.AD_Dir.text() != "":
+            print("Missing inputs")
+        else:
+            model_path = self.AD_model.text()
+            img_dir = self.AD_Dir.text()
+            output_path = self.AD_output.text()
+            classes_path = self.AD_classes.text()
+            download = self.AD_download.checkState()
+            exp_biigle = self.Exp_biigle.checkState()
+            if exp_biigle:
+                if self.api == 0:
+                    print("Missing api...")
+                    return 0
+                else:
+                    api = self.api
+            else:
+                api = None
+                
+            self.inferenceThread = detect_yoloV5.inferenceThread(model_path, img_dir, classes_path, output_path, download, api, self.confidence, self.api_label_tree, self.api_volume)
+            
+            
+
+
+    def end_inference(self):
+        self.progress_bar.hide()
+        self.AD_model.setText("")
+
+        print("Inference done !")
+
 
     def start_class(self):
         if self.Dir.text() == "" or self.Lab1_txt.text() == "" or self.Lab2_txt.text() == "" or self.connect.text() != "Connected":
@@ -485,11 +563,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
             if self.download.checkState():
                 if self.cat == "Largo":
-                    if utils.download_largo(self.api, self.model, label, self.dir_path) != 1:
+                    if utils.download_largo(self.api, self.api_volume, label, self.dir_path) != 1:
                         print("error")
                         return 0
                 if self.cat == 'Label':
-                    if utils.download_image(self.api, self.model, label, self.dir_path) != 1:
+                    if utils.download_image(self.api, self.api_volume, label, self.dir_path) != 1:
                         print("error")
                         return 0
 
@@ -547,7 +625,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def start_plot(self):
         if self.plot_model_path.text() == "":
-            print("Required inputs missing")
+            print("Some required inputs missing")
             return 0
         else:
             model_path = self.plot_model_path.text()
