@@ -4,8 +4,9 @@ import concurrent.futures
 from multiprocessing import Pool, cpu_count
 from PyQt5 import QtCore
 
-sys.path.append(os.path.join(os.path.abspath(os.path.join(__file__ ,"../../..")), 'CloudComPy310\CloudCompare'))
+sys.path.append(os.path.join(os.path.abspath(os.path.join(__file__, "../../..")), 'CloudComPy310\CloudCompare'))
 import cloudComPy as cc
+
 
 class pcdGenThread(QtCore.QThread):
     """Detects the blurry image and store their reference for later suppression"""
@@ -31,12 +32,12 @@ class pcdGenThread(QtCore.QThread):
         print("Starting topographic metrics processes...")
         nb_processes = min(len(self.scales), cpu_count())
         inputs = ((self.model, scale, self.output_path, self.metrics) for scale in self.scales)
-        pool = Pool(processes=nb_processes)
-        for i in inputs:
-            pool.apply_async(thread_generate_pcd, args=i, callback=self.update_pbar)
-        pool.close()
-        # wait for all tasks to finish
-        pool.join()
+        with Pool(processes=nb_processes) as pool:
+            for i in inputs:
+                pool.apply_async(thread_generate_pcd, args=i, callback=self.update_pbar)
+            pool.close()
+            # wait for all tasks to finish
+            pool.join()
 
         print("Done !")
         self.prog_val.emit(0)
@@ -49,7 +50,8 @@ def calc_tri_bpi(ref, points, a0, a1, a2, a3):
     BPI = 0
     d_ref = (a0 * ref[0] + a1 * ref[1] + a2 * ref[2] - a3) / math.sqrt(a0 ** 2 + a1 ** 2 + a2 ** 2)
     for point in points:
-        d = (a0 * point[0] + a1 * point[1] + a2 * point[2] - a3) / math.sqrt(a0 ** 2 + a1 ** 2 + a2 ** 2)  # Distance to plane
+        d = (a0 * point[0] + a1 * point[1] + a2 * point[2] - a3) / math.sqrt(
+            a0 ** 2 + a1 ** 2 + a2 ** 2)  # Distance to plane
         TRI += abs(d - d_ref)
         BPI += d
     TRI = TRI / len(points)
@@ -60,16 +62,16 @@ def calc_tri_bpi(ref, points, a0, a1, a2, a3):
 def thread_cpd_compute(cloud, octree, scale, level):
     np_tri = np.empty(shape=(len(cloud), 1))
     np_bpi = np.empty(shape=(len(cloud), 1))
-    errors = 0
     for i in range(len(cloud)):
         neighbours = octree.getPointsInSphericalNeighbourhood(cloud[i].tolist(), scale, level)
         points = np.empty(shape=(len(neighbours), 3))
         for j in range(len(neighbours)):
             points[j] = neighbours[j].point
-        if len(points) >= 3:
-            n_cloud = cc.ccPointCloud("N_cloud")
-            n_cloud.coordsFromNPArray_copy(points)
-            plane = cc.ccPlane.Fit(n_cloud)
+
+        n_cloud = cc.ccPointCloud("N_cloud")
+        n_cloud.coordsFromNPArray_copy(points)
+        plane = cc.ccPlane.Fit(n_cloud)
+        if plane is not None:
             a0, a1, a2, a3 = plane.getEquation()
             np_tri[i], np_bpi[i] = calc_tri_bpi(cloud[i], points, a0, a1, a2, a3)
         else:
@@ -91,7 +93,6 @@ def thread_generate_pcd(model, scale, output_path, metrics):
 
     cloud = mesh.samplePoints(True, density)
     np_cloud = cloud.toNpArrayCopy()
-    cloud_merged = cloud.toNpArrayCopy()
 
     if slope or aspect:
         cc.computeNormals([cloud], model=cc.LOCAL_MODEL_TYPES.QUADRIC, defaultRadius=scale)
@@ -174,3 +175,11 @@ def thread_generate_pcd(model, scale, output_path, metrics):
 
     return scale
 
+
+if __name__ == "__main__":
+    model = r"D:\chereef_marin\scripts\example_wall_chereef\MyProcessing_1_mesh.ply"
+    metrics = [0,0,0,1,1,0,0]
+    scale = 0.02
+    output_path = r'D:\chereef_marin\scripts\example_wall_chereef\metrics'
+
+    thread_generate_pcd(model, scale, output_path, metrics)
