@@ -27,9 +27,16 @@ Installation
 
 Warning: You need a fast and reliable internet connection during this operation
 
-Download the latest installer from the release page on Github : `Latest release <https://github.com/marinmarcillat/CHUBACAPP/releases/latest>`_
+-   Download the latest installer from the release page on Github : `Latest release <https://github.com/marinmarcillat/CHUBACAPP/releases/latest>`_
 
-Run the installer
+-   Run the installer
+
+If you installed Chubacapp prior to version 1.7.1, be sure you have removed any previously installed CHUBACAPP environments by opening a conda shell and using the command:
+
+::
+
+    conda env remove -n chubacapp
+
 
 What it does:
 This configures a python environment with the right Python libraries to run all the program (according to the environment.yml file). This chubacapp environment will be accessible for advanced users and debugging.
