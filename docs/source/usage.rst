@@ -306,3 +306,6 @@ The installer is created using NSIS. Install it, and install the following plugi
 -   Locate
 -   FileFunc
 -   LogicLib
+-   inetc
+-   Nsis7z
+-   nsExec
