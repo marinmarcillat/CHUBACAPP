@@ -7,9 +7,7 @@ Launching
 The easy way
 ------------
 
-Launch (double click) the ``launch_app.bat`` command file.
-
-What it does: It will launch the main python script in the Conda environment we just created
+Use the shortcut created during the installation phase
 
 The advanced way
 ----------------
@@ -295,3 +293,16 @@ This filtered sfm is stored as a temp_sfm_data.bin.
 
 In the Chubacapp software, when a sfm file is required, you can provide any of (from slowest to fastest) sfm_data.bin, sfm_data.json or temp_sfm_data.bin.
 Please be aware that if you add or remove images during the pipeline, you might be required to provide the sfm_data.json for the program to filter it again.
+
+
+For developers
+***************
+
+Compiling the installer
+-----------------------
+
+The installer is created using NSIS. Install it, and install the following plugins:
+
+-   Locate
+-   FileFunc
+-   LogicLib

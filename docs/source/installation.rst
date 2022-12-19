@@ -22,12 +22,15 @@ Anaconda is required for this software. If you haven’t already, visit the offi
 
 -   Once your installation is completed, reboot your computer.
 
-Installation script
-*******************
+Installation
+************
 
 Warning: You need a fast and reliable internet connection during this operation
 
-The installation of the python environment is automated using a .bat command file. Run it (double click it). A command line interface (CLI) will pop up during installation. If everything goes well, no error message will show up. Close the CLI when the installation is done.
+Download the latest installer from the release page on Github : `Latest release <https://github.com/marinmarcillat/CHUBACAPP/releases/latest>`_
+
+Run the installer
 
 What it does:
 This configures a python environment with the right Python libraries to run all the program (according to the environment.yml file). This chubacapp environment will be accessible for advanced users and debugging.
+The installer also creates a shortcut to run Chubacapp, and an uninstaller.
