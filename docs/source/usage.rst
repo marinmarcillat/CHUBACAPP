@@ -226,6 +226,35 @@ Where the first column corresponds to the annotation name, the third to its shap
 
 The input path is a directory containing the polygon and the point annotations under the name polygon.shp and point.shp. The output path must be a directory.
 
+Topographic metrics
+*******************
+
+This widget allows you to compute 3D topographic metrics using Cloud compare.
+It can compute slope, aspect (slope direction), roughness, Gaussian curvature, mean curvature, Benthic Positional Index (BPI) and Topographic Roughness Index (TRI).
+
+For BPI and TRI computation, we use custom algorithms derived from Wilson et al., 2007:
+
+.. math::
+    TRI_{(n)}=\frac{\sum_{i=0}^{N}|Z_i-Z|}{N-1}
+
+.. math::
+    BPI_{(n)}=Z - \frac{\sum_{i=0}^{N}Z_i}{N}
+
+Where n is the given scale, N  the number of neighbors within the scale radius from the studied point, Z the elevation above the fitted plane of the studied point and Z_i the elevation above the fitted plane of neighbor i.
+
+*Input*
+
+-   ``.ply`` 3D model
+-   An output directory path
+-   The metrics you want to compute
+-   The different scales in meters, separated by a comma
+
+*Output*
+
+-   A ``.pcd`` point cloud data with a Scalar field (SF) for each topographic metric. You can visualize it in Cloud Compare.
+
+
+
 .. _sfm data:
 
 Quick guide to Matisse3D outputs and the sfm_data files
