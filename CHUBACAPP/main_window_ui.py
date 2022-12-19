@@ -1492,7 +1492,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.875pt;\"><br /></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "tools"))
-        self.label_16.setText(_translate("MainWindow", "ChubacApp V1.6.0"))
+        self.label_16.setText(_translate("MainWindow", "ChubacApp V1.7.0"))
         self.label_17.setText(_translate("MainWindow", "Marin Marcillat, 2022, Ifremer Brest, BEEP-LEP, marinmarcillat@gmail.com"))
         self.label_30.setText(_translate("MainWindow", "Contributors: L├®naick Menot, Loic Van Audenhaege, Catherine Borremans"))
         self.label_18.setText(_translate("MainWindow", "<html><head/><body><p>Github: <a href=\"https://github.com/marinmarcillat/CHUBACAPP\"><span style=\" text-decoration: underline; color:#0000ff;\">CHUBACAPP</span></a></p></body></html>"))
