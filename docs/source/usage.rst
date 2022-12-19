@@ -268,13 +268,13 @@ When you reconstruct a 3D model using Matisse3D, you will be provided the follow
     │ ├── ModelPart_0
     │ │ ├── sfm_data.bin
     │ │ └── ...
-    │ ├── ModelPart_1 									(if more than one 3D model is produced)
+    │ ├── ModelPart_1     (if more than one 3D model is produced)
     │ └── ...
     ├── MyProcessing_0_mesh.ply
     ├── MyProcessing_0_texrecon.obj
-    ├── MyProcessing_0_texrecon.mtl                     (associated to .obj)
-    ├── MyProcessing_0_texrecon_material0000_map_Kd.png (texture file for .obj)
-    └── model_origin.txt								(geographic origin of the 3D model)
+    ├── MyProcessing_0_texrecon.mtl     (associated to .obj)
+    ├── MyProcessing_0_texrecon_material0000_map_Kd.png     (texture file for .obj)
+    └── model_origin.txt     (geographic origin of the 3D model)
 
 The ``.ply`` and ``.obj`` are the same 3D model, but the ``.obj`` is textured.
 
