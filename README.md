@@ -4,7 +4,16 @@
 ![sphinx](https://img.shields.io/badge/Made%20with-Sphinx-1f425f.svg)
 ![docs](https://readthedocs.org/projects/chubacapp/badge/?version=latest&style=flat)
 
-Usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
+Welcome ! Chubacapp is a toolbox to process images, 3D models and annotation data from ROV and AUV.
+
+Main features:
+- Annotation reprojection on 3D models to get precisely geolocated 3D annotations 
+- 3D annotation viewer
+- YoloV5 inference and export to Biigle via API
+- Disjoint image selection using 3D model and image imprint reprojection
+- 3D topographic metrics calculation from 3D models
+
+It contains usefull tools for image mosaics analysis and faunal annotation processing, as part of a complete process pipeline to treat underwater imaging transects.
 A methodological paper is in preparation, and will be added here after publishing.
 
 Documentation: [Chubacapp](https://chubacapp.readthedocs.io/en/latest/index.html)

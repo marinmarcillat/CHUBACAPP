@@ -135,7 +135,7 @@ Annotations can be exported through:
 
 You can filter annotations based on your chosen confidence level.
 
-*This feature is still under work and will be significantly modified in the future.*
+Documentation ongoing ...
 
 
 Annotation conversion
