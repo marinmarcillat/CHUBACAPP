@@ -32,7 +32,7 @@ To download 3D Metrics (3D models and annotations visualization): [3D Metrics](h
 
 The installation requires anaconda's [latest version.](https://www.anaconda.com/products/distribution)
 
-Launch the installation .bat file. It will install the required conda environment.
+Launch the installation .exe file. It will install the required conda environment.
 
 # Using the chubacapp interface
 
